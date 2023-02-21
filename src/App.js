@@ -14,14 +14,14 @@ function App() {
     <>
       <div className="App">JIMMY SOCCER</div>
       <BrowserRouter>
-        <Link to={"/"}>
+        <Link to={"/Jimmy_Soccer"}>
           <div>HOME</div>
         </Link>
         <Link to={"/personal"}>
           <div>Personal Life</div>
         </Link>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/Jimmy_Soccer" element={<Home></Home>}></Route>
           <Route path="personal" element={<Personal></Personal>}></Route>
         </Routes>
       </BrowserRouter>
