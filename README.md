@@ -10,6 +10,8 @@ npm run deploy
 ```
 4. After this is deployed successfully, you'll be able to visit https://jimmysoccer.github.io/Jimmy_Soccer/ and see its updates
 
+* Note: default home page is "/Jimmy_Soccer"
+
 ## Reference
 This website is originated from the tutorial of react-gh-pages repository created by gitname.<br>
 https://github.com/gitname/react-gh-pages
