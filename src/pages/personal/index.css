@@ -1,0 +1,9 @@
+.data-container {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: yellowgreen;
+  color: black;
+  left: 50%;
+  transform: translateX(-50%);
+}
