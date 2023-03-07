@@ -9,22 +9,16 @@ export default function Personal() {
     axios
       .get("https://cynosdb.tencentcloudapi.com", {
         //注意使用V3方法还是V1方法
-        headers: {
+        params: {
           Timestamp: Date.now(),
           Action: "DescribeAccounts",
-          Host: "cynosdb.tencentcloudapi.com",
           Version: "2019-01-07",
+          Region: "ap-shanghai",
+          ClusterId: "cynosdbmysql-b19kz1gu",
+          Nonce: 40,
+          SecretId: "",
+          Signature: "",
         },
-        // params: {
-        //   Timestamp: Date.now(),
-        //   Action: "DescribeAccounts",
-        //   Version: "2019-01-07",
-        //   Region: "ap-shanghai",
-        //   ClusterId: "cynosdbmysql-b19kz1gu",
-        //   Nonce: 40,
-        //   SecretId: "",
-        //   Signature: "",
-        // },
       })
       .then((res) => {
         console.log(res);
