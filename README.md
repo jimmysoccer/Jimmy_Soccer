@@ -12,6 +12,9 @@ npm run deploy
 
 * Note: default home page is "/Jimmy_Soccer"
 
+## Server
+server folder contains all the files working as backend server. They are used to accept http requests from front end and post the methods to database to achieve the data.
+
 ## Reference
 This website is originated from the tutorial of react-gh-pages repository created by gitname.<br>
 https://github.com/gitname/react-gh-pages
