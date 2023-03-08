@@ -1,5 +1,12 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/getAllList", function (req, res) {
   res.setHeader("Content-Type", "application/json");
@@ -7,7 +14,7 @@ app.get("/getAllList", function (req, res) {
 
   const mysql = require("mysql");
 
-  console.log("*****req parameters*****\n", req.query);
+  console.log("*****getAllList parameters*****\n", req.query);
   var query = "no query";
   query = req.query.sqlQuery;
 
@@ -47,6 +54,47 @@ app.get("/getAllList", function (req, res) {
 app.get("/test", function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.json("test only");
+});
+
+app.post("/insertData", function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,Content-Type"
+  );
+  let query = req.body.query;
+
+  console.log("*****insertData parameter*****\n", query);
+
+  const mysql = require("mysql");
+
+  // set authentication to database
+  const connection = mysql.createConnection({
+    host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
+    port: "26028",
+
+    user: "root",
+    database: "test-data",
+
+    password: "092700Jimmy",
+  });
+
+  //connect to database
+  connection.connect();
+
+  //set query SQL
+  connection.query(query, function (error, results, fields) {
+    if (error) {
+      console.log("******error*********\n", error);
+      connection.end();
+      res.json("error");
+      return;
+    }
+
+    //return searched results to response
+    res.json(results);
+  });
 });
 
 app.get("/getTencentAccounts", function (req, res) {

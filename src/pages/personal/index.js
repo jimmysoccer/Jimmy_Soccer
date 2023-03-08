@@ -34,6 +34,19 @@ export default function Personal() {
       .catch();
   }
 
+  function insertSqlData(query) {
+    axios
+      .post("http://localhost:8080/insertData", {
+        query: query,
+      })
+      .then((res) => {
+        console.log("post res", res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+
   return (
     <div>
       <h2 style={{ textAlign: "center" }}>personal life</h2>
@@ -42,10 +55,20 @@ export default function Personal() {
         <div
           style={{ cursor: "pointer", textAlign: "center" }}
           onClick={() => {
-            fetchSqlData("SELECT * FROM restaurants WHERE rating >= 4.0");
+            fetchSqlData("SELECT * FROM restaurants");
           }}
         >
           Refresh
+        </div>
+        <div
+          style={{ cursor: "pointer", textAlign: "center" }}
+          onClick={() => {
+            insertSqlData(
+              "INSERT INTO restaurants VALUES ('taco bell2','bultler plaze',8.9,100)"
+            );
+          }}
+        >
+          insert data
         </div>
         {data.map((item, index) => {
           return (
