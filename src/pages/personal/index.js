@@ -3,37 +3,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Personal() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
 
-  function getData() {
+  function getTencentAccounts() {
     axios
-      .get("http://localhost:8080/getAccounts", {
-        //注意使用V3方法还是V1方法
-        params: {
-          Timestamp: Date.now(),
-          Action: "DescribeAccounts",
-          Version: "2019-01-07",
-          Region: "ap-shanghai",
-          ClusterId: "cynosdbmysql-b19kz1gu",
-          Nonce: 40,
-          SecretId: "AKIDFOPmz1pPmwsjWH2lP0ZAjGi9ScuBLK5b",
-          Signature: "",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        console.log("error code", res.data.Response.Error.Code);
-        setData(res);
-      })
-      .catch((e) => {
-        console.log("error", e);
-        setData(e.code);
-      });
-  }
-
-  function fetchFromLocalWebServer() {
-    axios
-      .get("http://localhost:8080/", {
+      .get("http://localhost:8080/getTencentAccounts", {
         params: {
           region: "ap-shanghai",
           endpoint: "cynosdb.tencentcloudapi.com",
@@ -45,31 +19,41 @@ export default function Personal() {
       })
       .catch();
   }
-  function fetchFromSql() {
+
+  function fetchSqlData(query) {
     axios
-      .get("http://localhost:8080/", {
+      .get("http://localhost:8080/getAllList", {
         params: {
-          path: "getAllList",
+          sqlQuery: query,
         },
       })
       .then((res) => {
         console.log("fetch from sql\n", res);
+        setData(res.data);
       })
       .catch();
   }
-
-  useEffect(() => {
-    // getData();
-    // fetchFromLocalWebServer();
-    fetchFromSql();
-  }, []);
 
   return (
     <div>
       <h2 style={{ textAlign: "center" }}>personal life</h2>
       <div className="data-container">
         Mongodb --- TEST DATABASE
-        <div>data</div>
+        <div
+          style={{ cursor: "pointer", textAlign: "center" }}
+          onClick={() => {
+            fetchSqlData("SELECT * FROM restaurants WHERE rating >= 4.0");
+          }}
+        >
+          Refresh
+        </div>
+        {data.map((item, index) => {
+          return (
+            <>
+              <div>{item.name}</div>
+            </>
+          );
+        })}
       </div>
     </div>
   );

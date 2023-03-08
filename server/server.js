@@ -1,9 +1,70 @@
-getDatabase();
+const express = require("express");
+const app = express();
 
-function tencent() {
+app.get("/getAllList", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  const mysql = require("mysql");
+
+  console.log("*****req parameters*****\n", req.query);
+  var query = "no query";
+  query = req.query.sqlQuery;
+
+  // set authentication to database
+  const connection = mysql.createConnection({
+    host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
+    port: "26028",
+
+    user: "root",
+    database: "test-data",
+
+    password: "092700Jimmy",
+  });
+
+  //connect to database
+  connection.connect();
+
+  //set query SQL
+  connection.query(
+    query === "no query" ? "SELECT * FROM restaurants" : query,
+    function (error, results, fields) {
+      if (error) {
+        console.log("******error*********\n", error);
+        connection.end();
+        return;
+      }
+
+      //return searched results to response
+      res.json(results);
+    }
+  );
+
+  //end database connection
+  connection.end();
+});
+
+app.get("/test", function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.json("test only");
+});
+
+app.get("/getTencentAccounts", function (req, res) {
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  tencentGetAccounts(req, res);
+});
+
+//monitor server
+app.listen(8080, function (req, res) {
+  console.log("8080 serveer is running...");
+});
+
+function tencentGetAccounts(req, res) {
+  //set tencent parameters
   // Depends on tencentcloud-sdk-nodejs version 4.0.3 or higher
   const tencentcloud = require("tencentcloud-sdk-nodejs");
-
   const CynosdbClient = tencentcloud.cynosdb.v20190107.Client;
 
   //parameters
@@ -17,8 +78,8 @@ function tencent() {
   // 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取
   var clientConfig = {
     credential: {
-      secretId: "AKIDFOPmz1pPmwsjWH2lP0ZAjGi9ScuBLK5b",
-      secretKey: "NYXNB2pV7f293pSsIaj8KG4g7NRIwNgq",
+      secretId: "secretId",
+      secretKey: "secretKey",
     },
     region: region,
     profile: {
@@ -27,107 +88,27 @@ function tencent() {
       },
     },
   };
+  region = req.query.region;
+  endpoint = req.query.endpoint;
+  console.log("request parameters", region, endpoint);
 
-  //set local web server
+  clientConfig.region = region;
+  clientConfig.profile.httpProfile.endpoint = endpoint;
 
-  var express = require("express");
-  var app = express();
+  // 实例化要请求产品的client对象,clientProfile是可选的
+  var client = new CynosdbClient(clientConfig);
+  var params = {
+    ClusterId: req.query.ClusterId,
+  };
 
-  app.get("/getAccounts", function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-
-    region = req.query.region;
-    endpoint = req.query.endpoint;
-    console.log("request parameters", region, endpoint);
-
-    clientConfig.region = region;
-    clientConfig.profile.httpProfile.endpoint = endpoint;
-
-    // 实例化要请求产品的client对象,clientProfile是可选的
-    var client = new CynosdbClient(clientConfig);
-    var params = {
-      ClusterId: req.query.ClusterId,
-    };
-
-    client.SearchClusterTables(params).then(
-      (response) => {
-        data = response;
-        res.json(data);
-      },
-      (err) => {
-        console.error("error", err);
-        res.json(err);
-      }
-    );
-  });
-
-  app.listen(8080, function (req, res) {
-    console.log("Server is running at port 8080 for tencent data");
-  });
+  client.SearchClusterTables(params).then(
+    (response) => {
+      data = response;
+      res.json(data);
+    },
+    (err) => {
+      console.error("error", err);
+      res.json(err);
+    }
+  );
 }
-
-function getDatabase() {
-  var express = require("express");
-  var app = express();
-
-  app.get("/", function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-    console.log(req.query);
-
-    // get the client
-
-    const mysql = require("mysql");
-
-    // create the connection to database
-
-    const connection = mysql.createConnection({
-      host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
-      port: "26028",
-
-      user: "root",
-      database: "test-data",
-
-      password: "092700Jimmy",
-    });
-
-    connection.connect();
-
-    connection.query(
-      "SELECT * FROM restaurants",
-      function (error, results, fields) {
-        if (error) {
-          console.log("******error*********\n", error);
-          connection.end();
-          return;
-        }
-        res.json(results);
-      }
-    );
-
-    connection.end();
-  });
-
-  //   app.get("/test", function (req, res) {
-  //     res.setHeader("Content-Type", "application/json");
-  //     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  //     res.json("lalala");
-  //   });
-
-  var server = app.listen(8080, function (req, res) {
-    console.log("Server is running..");
-  });
-}
-
-// const express = require("express");
-// const router = express.Router();
-// const app = express();
-
-// const databaseRoute = require("./database");
-
-// app.use("./database", databaseRoute);
-
-// app.listen(8080, function (req, res) {
-//   console.log("8080 serveer is running...");
-// });
