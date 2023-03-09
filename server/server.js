@@ -8,33 +8,60 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+var username = ""; //username to TDSQL-C SQL database default: root
+var password = ""; //password to TDSQL-C SQL database
+
+app.post("/login", async function (req, res) {
+  username = req.body.username;
+  password = req.body.password;
+
+  try {
+    const mysql = require("mysql");
+    // set authentication to database
+    const connection = mysql.createConnection({
+      host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
+      port: "26028",
+      database: "test-data",
+
+      user: username,
+      password: password,
+    });
+
+    //connect to database
+    await connection.connect();
+
+    res.json("login done");
+
+    connection.end();
+  } catch (error) {
+    console.log("***error****\n", error);
+  }
+});
+
 app.get("/getAllList", function (req, res) {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 
   const mysql = require("mysql");
 
-  console.log("*****getAllList parameters*****\n", req.query);
-  var query = "no query";
-  query = req.query.sqlQuery;
-
   // set authentication to database
   const connection = mysql.createConnection({
     host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
     port: "26028",
-
-    user: "root",
     database: "test-data",
 
-    password: "092700Jimmy",
+    user: username,
+    password: password,
   });
+
+  console.log("*****get All list*****\n");
 
   //connect to database
   connection.connect();
 
   //set query SQL
   connection.query(
-    query === "no query" ? "SELECT * FROM restaurants" : query,
+    "SELECT * FROM restaurants",
     function (error, results, fields) {
       if (error) {
         console.log("******error*********\n", error);
@@ -49,11 +76,6 @@ app.get("/getAllList", function (req, res) {
 
   //end database connection
   connection.end();
-});
-
-app.get("/test", function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.json("test only");
 });
 
 app.post("/insertData", function (req, res) {
@@ -73,11 +95,10 @@ app.post("/insertData", function (req, res) {
   const connection = mysql.createConnection({
     host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
     port: "26028",
-
-    user: "root",
     database: "test-data",
 
-    password: "092700Jimmy",
+    user: username,
+    password: password,
   });
 
   //connect to database
