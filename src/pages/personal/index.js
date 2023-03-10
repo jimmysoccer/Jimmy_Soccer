@@ -65,10 +65,7 @@ export default function Personal() {
 
   return (
     <div className="main-content">
-      <div
-        className="main-container"
-        style={{ width: "100%", height: "auto", overflow: "scroll" }}
-      >
+      <div className="main-container" style={{ width: "100%", height: "auto" }}>
         <h2 style={{ textAlign: "center" }}>Developing & Test use</h2>
         <h3 style={{ textAlign: "center" }}>Tencent Cloud TDSQL-C DATABASE</h3>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -137,22 +134,20 @@ export default function Personal() {
             </span>
           </div>
         </div>
+        <div className="row">
+          <div className="column header">id</div>
+          <div className="column header">name</div>
+          <div className="column header">address</div>
+          <div className="column header">rating</div>
+          <div className="column header">max capacity</div>
+        </div>
         <div
-          className="main-container"
           style={{
-            width: "100%",
-            height: "auto",
-            margin: "0",
-            overflow: "scroll",
+            overflowY: "scroll",
+            margin: "3px 0 10px 0",
+            height: "200px",
           }}
         >
-          <div className="row">
-            <div className="column header">id</div>
-            <div className="column header">name</div>
-            <div className="column header">address</div>
-            <div className="column header">rating</div>
-            <div className="column header">max capacity</div>
-          </div>
           {data.map((item, index) => {
             let name = item.name;
             let address = item.address;
