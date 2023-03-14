@@ -10,7 +10,7 @@ export default function Personal() {
 
   function getTencentAccounts() {
     axios
-      .get("http://localhost:8080/getTencentAccounts", {
+      .get("https://serverservice-u2y2a.kinsta.app/getTencentAccounts", {
         params: {
           region: "ap-shanghai",
           endpoint: "cynosdb.tencentcloudapi.com",
@@ -25,9 +25,12 @@ export default function Personal() {
 
   function login(username, password) {
     axios
-      .post("http://localhost:8080/login", {
+      .post("https://serverservice-u2y2a.kinsta.app/login", {
         username: username,
         password: password,
+        host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
+        port: "26028",
+        database: "test-data",
       })
       .then((res) => {
         console.log("login status", res);
@@ -39,7 +42,7 @@ export default function Personal() {
 
   function fetchSqlData() {
     axios
-      .get("http://localhost:8080/getAllList", {})
+      .get("https://serverservice-u2y2a.kinsta.app/getAllList", {})
       .then((res) => {
         console.log("fetch from sql\n", res);
         setData(res.data);
@@ -49,7 +52,7 @@ export default function Personal() {
 
   function insertSqlData(query) {
     axios
-      .post("http://localhost:8080/insertData", {
+      .post("https://serverservice-u2y2a.kinsta.app/insertData", {
         query: query,
       })
       .then((res) => {
@@ -66,7 +69,7 @@ export default function Personal() {
   return (
     <div className="main-content">
       <div className="main-container" style={{ width: "100%", height: "auto" }}>
-        <h2 style={{ textAlign: "center" }}>Developing & Test use</h2>
+        <h2 style={{ textAlign: "center" }}>Developing & Test use update</h2>
         <h3 style={{ textAlign: "center" }}>Tencent Cloud TDSQL-C DATABASE</h3>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <div>

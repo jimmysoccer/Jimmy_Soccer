@@ -125,8 +125,12 @@ app.get("/getTencentAccounts", function (req, res) {
   tencentGetAccounts(req, res);
 });
 
+app.get("/test/", function (req, res) {
+  res.json("successfully return callback value");
+});
+
 //monitor server
-app.listen(8080, function (req, res) {
+app.listen(443, "185.199.108.153", function (req, res) {
   console.log("8080 serveer is running...");
 });
 
