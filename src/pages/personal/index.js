@@ -2,6 +2,8 @@ import "./index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const urlLink = "https://serverservice-u2y2a.kinsta.app";
+const localLink = "http://localhost:6060";
 export default function Personal() {
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
@@ -10,7 +12,7 @@ export default function Personal() {
 
   function getTencentAccounts() {
     axios
-      .get("https://serverservice-u2y2a.kinsta.app/getTencentAccounts", {
+      .get(`${urlLink}/getTencentAccounts`, {
         params: {
           region: "ap-shanghai",
           endpoint: "cynosdb.tencentcloudapi.com",
@@ -25,7 +27,7 @@ export default function Personal() {
 
   function login(username, password) {
     axios
-      .post("https://serverservice-u2y2a.kinsta.app/login", {
+      .post(`${urlLink}/login`, {
         username: username,
         password: password,
         host: "sh-cynosdbmysql-grp-lm5tq7yq.sql.tencentcdb.com",
@@ -42,7 +44,7 @@ export default function Personal() {
 
   function fetchSqlData() {
     axios
-      .get("https://serverservice-u2y2a.kinsta.app/getAllList", {})
+      .get(`${urlLink}/getAllList`, {})
       .then((res) => {
         console.log("fetch from sql\n", res);
         setData(res.data);
@@ -52,7 +54,7 @@ export default function Personal() {
 
   function insertSqlData(query) {
     axios
-      .post("https://serverservice-u2y2a.kinsta.app/insertData", {
+      .post(`${urlLink}/insertData`, {
         query: query,
       })
       .then((res) => {
