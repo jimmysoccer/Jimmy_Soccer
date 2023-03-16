@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -10,22 +11,44 @@ import Home from "./pages/homePage";
 import Personal from "./pages/personal";
 
 function App() {
+  function setHeadTitle(headTitle) {
+    document.getElementById("head-title").innerText = headTitle;
+  }
+
   return (
     <>
       <BrowserRouter>
         <ul className="nav-bar">
           <li>
-            <Link to={"/Jimmy_Soccer"} className="title">
+            <Link
+              to={"/Jimmy_Soccer"}
+              onClick={() => {
+                setHeadTitle("Jimmy | Home");
+              }}
+              className="title"
+            >
               Jimmy Soccer
             </Link>
           </li>
           <li>
-            <Link to={"/Jimmy_Soccer"} className={"nav-block"}>
+            <Link
+              to={"/Jimmy_Soccer"}
+              onClick={() => {
+                setHeadTitle("Jimmy | Home");
+              }}
+              className={"nav-block"}
+            >
               HOME
             </Link>
           </li>
           <li>
-            <Link to={"/developer"} className={"nav-block"}>
+            <Link
+              to={"/developer"}
+              onClick={() => {
+                setHeadTitle("Jimmy | Test");
+              }}
+              className={"nav-block"}
+            >
               Developing
             </Link>
           </li>

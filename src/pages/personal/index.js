@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const urlLink = "https://serverservice-u2y2a.kinsta.app";
-const localLink = "http://localhost:6060";
+const localLink = "http://localhost:8080";
 export default function Personal() {
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
@@ -50,6 +50,12 @@ export default function Personal() {
         setData(res.data);
       })
       .catch();
+  }
+
+  function test() {
+    axios.get(`${urlLink}/getUserNum`, {}).then((res) => {
+      console.log("res", res);
+    });
   }
 
   function insertSqlData(query) {
@@ -112,6 +118,7 @@ export default function Personal() {
           <button
             onClick={() => {
               fetchSqlData();
+              // test();
             }}
           >
             Refresh
