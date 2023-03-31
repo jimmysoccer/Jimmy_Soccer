@@ -8,6 +8,13 @@ export default function Home() {
         <h2>Home page</h2>
       </div>
       <div
+        className="main-container"
+        style={{ textAlign: "center", width: "100%" }}
+      >
+        <h2>Quick guide to technical questions</h2>
+      </div>
+
+      <div
         style={{
           display: "flex",
           justifyContent: "space-between",

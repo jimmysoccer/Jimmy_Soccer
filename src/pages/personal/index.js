@@ -2,7 +2,7 @@ import "./index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const urlLink = "http://124.221.98.15:80";
+const urlLink = "http://124.221.98.15:443";
 const localLink = "http://localhost:8080";
 export default function Personal() {
   const [data, setData] = useState([]);
