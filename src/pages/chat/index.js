@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:3001";
-const socket = io.connect(ENDPOINT);
+const ENDPOINT = "124.221.98.15:3001";
 
 export default function Chat() {
+  //socket connection
+  const [socket, setSocket] = useState(null);
   //Room State
   const [room, setRoom] = useState("");
 
@@ -32,10 +33,17 @@ export default function Chat() {
   }
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived((prev) => [...prev, data.message]);
-      console.log("message received", messageReceived);
-    });
+    if (socket === null) {
+      setSocket(io(ENDPOINT));
+    }
+    if (socket) {
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+      socket.on("receive_message", (data) => {
+        setMessageReceived((prev) => [...prev, data.message]);
+      });
+    }
   }, [socket]);
 
   return (
@@ -68,9 +76,17 @@ export default function Chat() {
       <button className="chat-send" onClick={disconnect}>
         Disconnect
       </button>
+      <button
+        className="chat-send"
+        onClick={() => {
+          setMessageReceived([]);
+        }}
+      >
+        Clear all messages
+      </button>
       <div
         className="main-container"
-        style={{ width: "100%", padding: "10px" }}
+        style={{ width: "100%", padding: "10px", overflow: "scroll" }}
       >
         {messageReceived.map((item, index) => {
           return <div key={index}>{item}</div>;
