@@ -3,6 +3,7 @@ import "./index.css";
 import io from "socket.io-client";
 
 const ENDPOINT = "124.221.98.15:3001";
+// const ENDPOINT = "localhost:3001";
 
 export default function Chat() {
   //socket connection
@@ -23,13 +24,14 @@ export default function Chat() {
   const sendMessage = () => {
     socket.emit("send_message", { message, room });
     // setMessageReceived(...messageReceived, message);
-    setMessageReceived((prev) => [...prev, message]);
+    setMessageReceived((prev) => [
+      ...prev,
+      { direction: "send", message: message },
+    ]);
   };
 
   function disconnect() {
-    socket.on("disconnect", () => {
-      console.log("disconnected");
-    });
+    socket.disconnect();
   }
 
   useEffect(() => {
@@ -41,7 +43,10 @@ export default function Chat() {
         console.log("connected");
       });
       socket.on("receive_message", (data) => {
-        setMessageReceived((prev) => [...prev, data.message]);
+        setMessageReceived((prev) => [
+          ...prev,
+          { direction: "receive", message: data.message },
+        ]);
       });
     }
   }, [socket]);
@@ -89,7 +94,12 @@ export default function Chat() {
         style={{ width: "100%", padding: "10px", overflow: "scroll" }}
       >
         {messageReceived.map((item, index) => {
-          return <div key={index}>{item}</div>;
+          return (
+            <div key={index}>
+              {item.direction === "send" ? "Me: " : "He/She: "}
+              {item.message}
+            </div>
+          );
         })}
       </div>
     </div>
