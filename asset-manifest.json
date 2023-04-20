@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Jimmy_Soccer/static/css/main.12f5a000.css",
-    "main.js": "/Jimmy_Soccer/static/js/main.6aaee405.js",
+    "main.js": "/Jimmy_Soccer/static/js/main.05d02383.js",
     "static/js/787.28cb0dcd.chunk.js": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js",
     "index.html": "/Jimmy_Soccer/index.html",
     "main.12f5a000.css.map": "/Jimmy_Soccer/static/css/main.12f5a000.css.map",
-    "main.6aaee405.js.map": "/Jimmy_Soccer/static/js/main.6aaee405.js.map",
+    "main.05d02383.js.map": "/Jimmy_Soccer/static/js/main.05d02383.js.map",
     "787.28cb0dcd.chunk.js.map": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.12f5a000.css",
-    "static/js/main.6aaee405.js"
+    "static/js/main.05d02383.js"
   ]
 }
