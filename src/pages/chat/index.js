@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import io from "socket.io-client";
 
-const ENDPOINT = "124.221.98.15:3001";
+const ENDPOINT = "chat.uucircle.com";
 // const ENDPOINT = "localhost:3001";
 
 export default function Chat() {
