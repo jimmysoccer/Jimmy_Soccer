@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import io from "socket.io-client";
 
-const ENDPOINT = "chat.uucircle.com";
+const ENDPOINT = "https://chat.uucircle.com";
 // const ENDPOINT = "localhost:3001";
 
 export default function Chat() {
@@ -89,6 +89,7 @@ export default function Chat() {
       >
         Clear all messages
       </button>
+      <div className="chat-send"> Version 0.0.3(https)</div>
       <div
         className="main-container"
         style={{ width: "100%", padding: "10px", overflow: "scroll" }}
