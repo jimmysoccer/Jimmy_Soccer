@@ -75,7 +75,7 @@
   width: auto;
   height: 50px;
   margin: 5px;
-  background-color: yellowgreen;
+  border: 1px solid white;
   cursor: pointer;
 }
 .friend-container .name {

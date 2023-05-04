@@ -2,8 +2,8 @@ import { useEffect, useId, useState } from "react";
 import "./index.css";
 import io from "socket.io-client";
 
-// const ENDPOINT = "https://chat.uucircle.com";
-const ENDPOINT = "localhost:3001";
+const ENDPOINT = "https://chat.uucircle.com";
+// const ENDPOINT = "localhost:3001";
 const socket = io(ENDPOINT, { autoConnect: false });
 
 export default function Chat() {
@@ -192,29 +192,32 @@ export default function Chat() {
           ""
         )}
         {friend.map((item, index) => {
-          if (item.username !== userName) {
-            return (
-              <div
-                className="friend-container"
-                onClick={() => setFriendSelected(item.userID)}
-              >
-                <div className="name">{item.username}</div>
-                <div className="status">
-                  <div
-                    className="dot"
-                    style={{
-                      backgroundColor: item.connected ? "green" : "red",
-                    }}
-                  ></div>
-                  <div style={{ marginLeft: "5px" }}>
-                    {item.connected ? "online" : "offline"}
-                  </div>
+          return (
+            <div
+              className="friend-container"
+              style={{
+                backgroundColor:
+                  item.userID === friendSelected ? "yellowgreen" : "",
+              }}
+              onClick={() => setFriendSelected(item.userID)}
+            >
+              <div className="name">
+                {item.username}
+                {item.username === userName ? "(self)" : ""}
+              </div>
+              <div className="status">
+                <div
+                  className="dot"
+                  style={{
+                    backgroundColor: item.connected ? "green" : "red",
+                  }}
+                ></div>
+                <div style={{ marginLeft: "5px" }}>
+                  {item.connected ? "online" : "offline"}
                 </div>
               </div>
-            );
-          } else {
-            return <></>;
-          }
+            </div>
+          );
         })}
       </div>
       <div className="chat-content">
