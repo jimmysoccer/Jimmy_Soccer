@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import io from "socket.io-client";
 
@@ -10,7 +10,6 @@ export default function Chat() {
   const [loginStatus, setLoginStatus] = useState(false);
 
   //Room State
-  const [userName, setUserName] = useState("");
   const [friend, setFriend] = useState([]);
   const [friendSelected, setFriendSelected] = useState(""); //socket userID
 
@@ -19,14 +18,23 @@ export default function Chat() {
 
   //check if localStorage has info
   useEffect(() => {
-    // const sessionID = localStorage.getItem("sessionID");
-    // if (sessionID) {
-    //   socket.auth = { sessionID };
-    //   socket.connect();
-    //   setLoginStatus(true);
-    //   console.log("trying to auto connect my local storage session ID");
-    // }
+    const sessionID = localStorage.getItem("sessionID");
+    if (sessionID) {
+      socket.auth = { sessionID };
+      socket.connect();
+      setLoginStatus(true);
+      console.log("trying to auto connect my local storage session ID");
+    }
   }, []);
+
+  //check if socket connected
+  useEffect(() => {
+    if (friend.length !== 0) {
+      setLoginStatus(true);
+    } else {
+      setLoginStatus(false);
+    }
+  }, [friend]);
 
   socket.onAny((e, ...args) => {
     // console.log(e, args);
@@ -47,7 +55,6 @@ export default function Chat() {
 
   //first fetch all users list
   socket.on("users", (users) => {
-    console.log("socket users");
     let temp = users;
     for (let i = 0; i < temp.length; i++) {
       temp[i].history = [];
@@ -57,8 +64,8 @@ export default function Chat() {
   });
 
   //when a new user is online
-  socket.on("user connected", (user) => {
-    console.log("socket user connected");
+  socket.off("user connected").on("user connected", (user) => {
+    //a new user connected
     if (!friend.some((e) => user.userID === e.userID)) {
       let arr = [...friend];
       let temp = user;
@@ -66,11 +73,16 @@ export default function Chat() {
       temp.connected = true;
       arr.push(temp);
       setFriend(arr);
+    } else {
+      //an existed user reconnected
+      let index = friend.findIndex((item) => item.userID === user.userID);
+      let arr = [...friend];
+      arr[index].connected = true;
+      setFriend(arr);
     }
   });
 
   socket.on("user disconnected", (data) => {
-    console.log("disconnect", data);
     for (let i = 0; i < friend.length; i++) {
       if (friend[i].userID === data.userID) {
         let arr = [...friend];
@@ -81,7 +93,6 @@ export default function Chat() {
   });
 
   socket.off("private message").on("private message", ({ content, from }) => {
-    console.log("socket private message", "from", from, "to", userName);
     for (let i = 0; i < friend.length; i++) {
       if (friend[i].userID === from) {
         let arr = [...friend];
@@ -93,14 +104,16 @@ export default function Chat() {
 
   function sendMessage(message) {
     if (friendSelected !== "") {
-      console.log("send message", friendSelected);
       socket.emit("private message", {
         content: message,
         to: friendSelected,
       });
       let index = friend.findIndex((a) => a.userID === friendSelected);
       let arr = [...friend];
-      arr[index].history.push({ from: userName, message: message });
+      arr[index].history.push({
+        from: socket.userID,
+        message: message,
+      });
       setFriend(arr);
     }
   }
@@ -148,7 +161,7 @@ export default function Chat() {
             return (
               <>
                 {item.history.map((content) => {
-                  if (content.from === userName) {
+                  if (content.from === socket.userID) {
                     return sendText(content.message);
                   } else {
                     return receiveText(content.message);
@@ -179,7 +192,6 @@ export default function Chat() {
               className="center"
               onClick={() => {
                 let temp = window.prompt("type your username");
-                setUserName(temp);
                 socket.auth = { username: temp };
                 socket.connect();
                 setLoginStatus(true);
@@ -191,34 +203,51 @@ export default function Chat() {
         ) : (
           ""
         )}
-        {friend.map((item, index) => {
-          return (
-            <div
-              className="friend-container"
-              style={{
-                backgroundColor:
-                  item.userID === friendSelected ? "yellowgreen" : "",
-              }}
-              onClick={() => setFriendSelected(item.userID)}
-            >
-              <div className="name">
-                {item.username}
-                {item.username === userName ? "(self)" : ""}
-              </div>
-              <div className="status">
+        {loginStatus
+          ? friend.map((item, index) => {
+              return (
                 <div
-                  className="dot"
+                  className="friend-container"
                   style={{
-                    backgroundColor: item.connected ? "green" : "red",
+                    backgroundColor:
+                      item.userID === friendSelected ? "yellowgreen" : "",
                   }}
-                ></div>
-                <div style={{ marginLeft: "5px" }}>
-                  {item.connected ? "online" : "offline"}
+                  onClick={() => setFriendSelected(item.userID)}
+                >
+                  <div className="name">
+                    {item.username}
+                    {item.userID === socket.userID ? "(self)" : ""}
+                  </div>
+                  <div className="status">
+                    <div
+                      className="dot"
+                      style={{
+                        backgroundColor: item.connected ? "green" : "red",
+                      }}
+                    ></div>
+                    <div style={{ marginLeft: "5px" }}>
+                      {item.connected ? "online" : "offline"}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })
+          : ""}
+        {loginStatus ? (
+          <div className="friend-container" style={{ cursor: "auto" }}>
+            <button
+              className="center"
+              onClick={() => {
+                socket.disconnect();
+                setLoginStatus(false);
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <div className="chat-content">
         <div className="chat-history">
