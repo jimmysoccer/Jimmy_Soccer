@@ -3,7 +3,7 @@ import "./index.css";
 import io from "socket.io-client";
 
 const ENDPOINT = "https://chat.uucircle.com";
-// const ENDPOINT = "localhost:3001";
+// const ENDPOINT = "localhost:5222";
 const socket = io(ENDPOINT, { autoConnect: false });
 
 export default function Chat() {
@@ -239,6 +239,7 @@ export default function Chat() {
               className="center"
               onClick={() => {
                 socket.disconnect();
+                localStorage.removeItem("sessionID");
                 setLoginStatus(false);
               }}
             >
