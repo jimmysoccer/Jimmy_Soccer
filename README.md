@@ -1,6 +1,15 @@
 # Jimmy Soccer Personal Website
 ## Description
 This is Jimmy's personal website. It may include blogs, gallaries, or any other Jimmy's interested topics including astronomy (CASA), technology, etc.
+## Start Guide
+1. install all dependencies in terminal
+    ```
+    npm install
+    ```
+2. start the frontend server, the website will pop up automatically
+   ```
+   npm start
+   ```
 ## Deploy Guide
 1. modify code on text editor
 2. git commit and git push modified codes to main branch
