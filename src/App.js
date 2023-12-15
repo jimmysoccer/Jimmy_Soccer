@@ -1,11 +1,4 @@
-import { useEffect } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-} from 'react-router-dom';
+import { Routes, Route, Link, HashRouter } from 'react-router-dom';
 import './App.css';
 import Home from './pages/homePage';
 import Personal from './pages/personal';
@@ -18,11 +11,11 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <ul className='nav-bar'>
           <li>
             <Link
-              to={'/Jimmy_Soccer'}
+              to={'/'}
               onClick={() => {
                 setHeadTitle('Jimmy | Home');
               }}
@@ -33,7 +26,7 @@ function App() {
           </li>
           <li>
             <Link
-              to={'/Jimmy_Soccer'}
+              to={'/'}
               onClick={() => {
                 setHeadTitle('Jimmy | Home');
               }}
@@ -44,7 +37,7 @@ function App() {
           </li>
           <li>
             <Link
-              to={'/Jimmy_Soccer/developer'}
+              to={'/developer'}
               onClick={() => {
                 setHeadTitle('Jimmy | Test');
               }}
@@ -55,7 +48,7 @@ function App() {
           </li>
           <li>
             <Link
-              to={'/Jimmy_Soccer/chat'}
+              to={'/chat'}
               onClick={() => {
                 setHeadTitle('Jimmy | Chat');
               }}
@@ -66,14 +59,11 @@ function App() {
           </li>
         </ul>
         <Routes>
-          <Route path='/Jimmy_Soccer' element={<Home></Home>}></Route>
-          <Route
-            path='/Jimmy_Soccer/developer'
-            element={<Personal></Personal>}
-          ></Route>
-          <Route path='/Jimmy_Soccer/chat' element={<Chat></Chat>}></Route>
+          <Route path='/' element={<Home></Home>}></Route>
+          <Route path='developer' element={<Personal></Personal>}></Route>
+          <Route path='chat' element={<Chat></Chat>}></Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
