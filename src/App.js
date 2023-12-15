@@ -15,7 +15,7 @@ function App() {
         <ul className='nav-bar'>
           <li>
             <Link
-              to={'/'}
+              to={'/home'}
               onClick={() => {
                 setHeadTitle('Jimmy | Home');
               }}
@@ -26,7 +26,7 @@ function App() {
           </li>
           <li>
             <Link
-              to={'/'}
+              to={'/home'}
               onClick={() => {
                 setHeadTitle('Jimmy | Home');
               }}
@@ -59,7 +59,7 @@ function App() {
           </li>
         </ul>
         <Routes>
-          <Route path='/' element={<Home></Home>}></Route>
+          <Route path='/home' element={<Home></Home>}></Route>
           <Route path='developer' element={<Personal></Personal>}></Route>
           <Route path='chat' element={<Chat></Chat>}></Route>
         </Routes>
