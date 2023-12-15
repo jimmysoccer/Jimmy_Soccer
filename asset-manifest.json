@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/JimmySoccer/static/css/main.ea400e5d.css",
-    "main.js": "/JimmySoccer/static/js/main.be19194b.js",
-    "static/js/787.28cb0dcd.chunk.js": "/JimmySoccer/static/js/787.28cb0dcd.chunk.js",
-    "index.html": "/JimmySoccer/index.html",
-    "main.ea400e5d.css.map": "/JimmySoccer/static/css/main.ea400e5d.css.map",
-    "main.be19194b.js.map": "/JimmySoccer/static/js/main.be19194b.js.map",
-    "787.28cb0dcd.chunk.js.map": "/JimmySoccer/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/Jimmy_Soccer/static/css/main.ea400e5d.css",
+    "main.js": "/Jimmy_Soccer/static/js/main.aac649d0.js",
+    "static/js/787.28cb0dcd.chunk.js": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/Jimmy_Soccer/index.html",
+    "main.ea400e5d.css.map": "/Jimmy_Soccer/static/css/main.ea400e5d.css.map",
+    "main.aac649d0.js.map": "/Jimmy_Soccer/static/js/main.aac649d0.js.map",
+    "787.28cb0dcd.chunk.js.map": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ea400e5d.css",
-    "static/js/main.be19194b.js"
+    "static/js/main.aac649d0.js"
   ]
 }
