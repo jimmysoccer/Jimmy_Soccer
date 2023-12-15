@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.ea400e5d.css",
-    "main.js": "/static/js/main.d778f762.js",
-    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
-    "index.html": "/index.html",
-    "main.ea400e5d.css.map": "/static/css/main.ea400e5d.css.map",
-    "main.d778f762.js.map": "/static/js/main.d778f762.js.map",
-    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/JimmySoccer/static/css/main.ea400e5d.css",
+    "main.js": "/JimmySoccer/static/js/main.6c1340d6.js",
+    "static/js/787.28cb0dcd.chunk.js": "/JimmySoccer/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/JimmySoccer/index.html",
+    "main.ea400e5d.css.map": "/JimmySoccer/static/css/main.ea400e5d.css.map",
+    "main.6c1340d6.js.map": "/JimmySoccer/static/js/main.6c1340d6.js.map",
+    "787.28cb0dcd.chunk.js.map": "/JimmySoccer/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ea400e5d.css",
-    "static/js/main.d778f762.js"
+    "static/js/main.6c1340d6.js"
   ]
 }
