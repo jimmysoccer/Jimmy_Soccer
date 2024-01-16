@@ -28,6 +28,7 @@ npm run deploy
 4. After this is deployed successfully, you'll be able to visit https://jimmysoccer.github.io/Jimmy_Soccer/ and see its updates
 
 - Note: default home page is "/Jimmy_Soccer"
+- Note: the home page has to be the same with repository name
 
 ## Server
 
