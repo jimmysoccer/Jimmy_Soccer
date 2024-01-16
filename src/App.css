@@ -4,29 +4,30 @@
 .nav-bar {
   position: relative;
   list-style: none;
-  display: flex;
-  justify-content: end;
-  background-color: #02a28f;
   height: 70px;
-  padding-right: 10%;
   margin: 0;
 }
-.nav-bar .title {
-  position: absolute;
-  left: 10%;
+.nav-list {
+  position: relative;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 25px;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  height: 70%;
+  border-radius: 25px;
+  display: flex;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.nav-bar .nav-block {
-  font-size: 20px;
-  color: white;
-  margin: 0 10px;
+.nav-list li {
+  height: 100%;
   text-decoration: none;
-  line-height: 70px;
+  margin: 0 25px 0 25px;
+}
+.nav-block {
+  line-height: 49px;
+  font-size: 20px;
+  color: #14b8a6;
+  text-decoration: none;
 }
 .main-content {
   margin: 0 10%;
