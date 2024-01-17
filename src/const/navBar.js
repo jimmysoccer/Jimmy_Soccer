@@ -9,6 +9,11 @@ export const NAV_BAR = {
     title: 'About',
     header_title: 'Jimmy | About',
   },
+  projects: {
+    path: '/projects',
+    title: 'Projects',
+    header_title: 'Jimmy | Projects',
+  },
   developer: {
     path: '/developer',
     title: 'Developer',

@@ -1,0 +1,59 @@
+.introduction {
+  width: 100%;
+  margin: 10px 0;
+}
+.introduction-main-content {
+  display: flex;
+}
+.introduction-main-content-text {
+  width: 60%;
+  color: gray;
+}
+.introduction-main-content-text-title {
+  font-size: 45px;
+  margin: 15px;
+  text-align: center;
+  color: black;
+}
+.introduction-main-content-image {
+  width: 30%;
+}
+.introduction-icon-list {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+.introduction-icon {
+  margin: 0 10px;
+}
+.project-list {
+  width: 100%;
+  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.project {
+  width: 33.3%;
+}
+.project-logo {
+  /* height: 30px; */
+}
+.project-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.project-description {
+  padding-top: 15px;
+  color: gray;
+}
+.project-link {
+  padding-top: 10px;
+  display: flex;
+}
+.project-link-icon {
+  color: gray;
+}
+.project-link-text {
+  padding-left: 20px;
+  color: gray;
+}
