@@ -4,6 +4,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import JavascriptIcon from '@mui/icons-material/Javascript';
 import LinkIcon from '@mui/icons-material/Link';
+import { fullStackImage } from '../../imgs/images';
+import Projects from '../projects';
 export default function Home() {
   return (
     <div className='main-content'>
@@ -24,7 +26,7 @@ export default function Home() {
             </text>
           </div>
           <div className='introduction-main-content-image'>
-            <image></image>
+            <img src={fullStackImage} alt='full stack'></img>
           </div>
         </div>
         <div className='introduction-icon-list'>
@@ -32,101 +34,25 @@ export default function Home() {
             className='introduction-icon'
             color='action'
             fontSize='large'
+            onClick={() => window.open('https://github.com/jimmysoccer')}
           ></GitHubIcon>
           <EmailIcon
             className='introduction-icon'
             color='action'
             fontSize='large'
+            onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
           ></EmailIcon>
           <LinkedInIcon
             className='introduction-icon'
             color='action'
             fontSize='large'
+            onClick={() =>
+              window.open('https://www.linkedin.com/in/jimmysoccer/')
+            }
           ></LinkedInIcon>
         </div>
       </div>
-      <div className='project-list'>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50, backgroundColor: 'yellow' }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 1</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 2</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 3</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 4</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-      </div>
+      <Projects style={{ margin: '0', width: '100%' }}></Projects>
     </div>
   );
 }

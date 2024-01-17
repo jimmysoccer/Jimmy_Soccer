@@ -1,89 +1,31 @@
-import JavascriptIcon from '@mui/icons-material/Javascript';
+import './index.css';
 import LinkIcon from '@mui/icons-material/Link';
-export default function Projects() {
+import { projects } from '../../const/projects';
+import TechStackIcon from '../components/techStackIcon';
+export default function Projects(props) {
+  const { style } = props;
   return (
-    <div className='main-content'>
+    <div className='main-content' style={style}>
       <div className='project-list'>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50, backgroundColor: 'yellow' }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 1</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
+        {projects.map((project) => {
+          return (
+            <div className='project'>
+              <div className='project-logo-list'>
+                {project.techStack.map((tech) => (
+                  <TechStackIcon stack={tech} />
+                ))}
+              </div>
+              <div className='project-title'>{project.title}</div>
+              <div className='project-description'>{project.description}</div>
+              <div className='project-link' onClick={() => {}}>
+                <div className='project-link-icon'>
+                  <LinkIcon></LinkIcon>
+                </div>
+                <div className='project-link-text'>View Project</div>
+              </div>
             </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 2</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 3</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
-        <div className='project'>
-          <div className='project-logo'>
-            <JavascriptIcon
-              className='icon-item'
-              color='action'
-              sx={{ fontSize: 50 }}
-            ></JavascriptIcon>
-          </div>
-          <div className='project-title'>Project 4</div>
-          <div className='project-description'>
-            Lorem ipsum dolor sit amet. Et incidunt voluptatem ex tempore
-            repellendus qui dicta nemo sit deleniti minima.
-          </div>
-          <div className='project-link'>
-            <div className='project-link-icon'>
-              <LinkIcon></LinkIcon>
-            </div>
-            <div className='project-link-text'>View Project</div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

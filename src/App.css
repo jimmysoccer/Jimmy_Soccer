@@ -26,8 +26,11 @@
 .nav-block {
   line-height: 49px;
   font-size: 20px;
-  color: #14b8a6;
+  color: black;
   text-decoration: none;
+}
+.nav-block:hover {
+  color: #14b8a6;
 }
 .main-content {
   margin: 0 10%;

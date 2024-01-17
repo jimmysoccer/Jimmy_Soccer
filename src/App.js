@@ -6,12 +6,21 @@ import Chat from './pages/chat';
 import { NAV_BAR } from './const/navBar';
 import About from './pages/about';
 import Projects from './pages/projects';
+import { useState } from 'react';
+import Contact from './pages/contact';
 
 function App() {
+  const path = window.location.href;
+
+  const [currentTab, setCurrentTab] = useState(mapUrlToNavBar(path));
   function setHeadTitle(headTitle) {
     document.getElementById('head-title').innerText = headTitle;
   }
-
+  function mapUrlToNavBar(path = '') {
+    if (path.includes(NAV_BAR.about.path)) return NAV_BAR.about.path;
+    else if (path.includes(NAV_BAR.projects.path)) return NAV_BAR.projects.path;
+    else return NAV_BAR.home.path;
+  }
   return (
     <>
       <HashRouter>
@@ -23,8 +32,12 @@ function App() {
                   to={navItem.path}
                   onClick={() => {
                     setHeadTitle(navItem.header_title);
+                    setCurrentTab(navItem.path);
                   }}
                   className={'nav-block'}
+                  style={
+                    currentTab === navItem.path ? { color: '#14b8a6' } : {}
+                  }
                 >
                   {navItem.title}
                 </Link>
@@ -40,10 +53,14 @@ function App() {
             element={<Projects></Projects>}
           ></Route>
           <Route
+            path={NAV_BAR.contact.path}
+            element={<Contact></Contact>}
+          ></Route>
+          {/* <Route
             path={NAV_BAR.developer.path}
             element={<Personal></Personal>}
           ></Route>
-          <Route path={NAV_BAR.chat.path} element={<Chat></Chat>}></Route>
+          <Route path={NAV_BAR.chat.path} element={<Chat></Chat>}></Route> */}
         </Routes>
         <div className='footer'>
           <div className='footer-nav-list'>
@@ -52,8 +69,10 @@ function App() {
                 to={navItem.path}
                 onClick={() => {
                   setHeadTitle(navItem.header_title);
+                  setCurrentTab(navItem.path);
                 }}
                 className={'footer-nav'}
+                style={currentTab === navItem.path ? { color: '#14b8a6' } : {}}
               >
                 {navItem.title}
               </Link>

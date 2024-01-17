@@ -1,0 +1,20 @@
+.contact {
+  color: gray;
+  margin: 30px 0 10px 0;
+}
+.contact-title {
+  text-align: left;
+  width: 60%;
+  font-size: 45px;
+  margin: 15px;
+  color: black;
+}
+.contact-description {
+  color: gray;
+}
+.contact-icon-container {
+  display: flex;
+  justify-content: left;
+  margin: 10px;
+  cursor: pointer;
+}

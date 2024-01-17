@@ -14,14 +14,19 @@ export const NAV_BAR = {
     title: 'Projects',
     header_title: 'Jimmy | Projects',
   },
-  developer: {
-    path: '/developer',
-    title: 'Developer',
-    header_title: 'Jimmy | Developer',
+  contact: {
+    path: '/contact',
+    title: 'Contact',
+    header_title: 'Jimmy | Contact',
   },
-  chat: {
-    path: '/chat',
-    title: 'Chat',
-    header_title: 'Jimmy | Chat',
-  },
+  // developer: {
+  //   path: '/developer',
+  //   title: 'Developer',
+  //   header_title: 'Jimmy | Developer',
+  // },
+  // chat: {
+  //   path: '/chat',
+  //   title: 'Chat',
+  //   header_title: 'Jimmy | Chat',
+  // },
 };
