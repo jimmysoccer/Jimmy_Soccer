@@ -1,19 +1,25 @@
 .project {
-  width: 33.3%;
+  width: calc(33.33% - 30px);
+  margin: 0 15px 10px 15px;
 }
 .project-logo-list {
   display: flex;
+  flex-wrap: wrap;
 }
 .project-logo {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 10px;
   margin-right: 10px;
   overflow: hidden;
 }
 .project-title {
+  margin-top: 10px;
   font-size: 16px;
   font-weight: 700;
 }
 .project-description {
-  padding-top: 15px;
+  /* padding-top: 15px; */
   color: gray;
 }
 .project-link {

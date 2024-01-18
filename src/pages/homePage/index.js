@@ -15,15 +15,16 @@ export default function Home() {
             <h2 className='introduction-main-content-text-title'>
               Full-stack web application developer
             </h2>
-            <text>
-              I am a backend developer with expertise in Node.js. I have
-              experience in building scalable, secure and reliable web
-              applications using various frameworks and technologies. I enjoy
-              solving complex problems and learning new skills. I am passionate
-              about creating high-quality code that follows best practices and
-              industry standards. I am always looking for new challenges and
-              opportunities to grow as a developer.
-            </text>
+            <p className='introduction-main-content-text-description'>
+              🚀 Hi, I'm Heng Sun, a recent graduate with a Bachelor of Science
+              in Computer Science from the University of Florida.
+            </p>
+            <p className='introduction-main-content-text-description'>
+              🎓 Eager to further my academic journey, I aspire to pursue a
+              Ph.D. position that aligns with my passion for human-centered
+              interaction, machine learning models, and the exciting realm of
+              IoT.
+            </p>
           </div>
           <div className='introduction-main-content-image'>
             <img src={fullStackImage} alt='full stack'></img>
@@ -52,7 +53,10 @@ export default function Home() {
           ></LinkedInIcon>
         </div>
       </div>
-      <Projects style={{ margin: '0', width: '100%' }}></Projects>
+      <Projects
+        style={{ margin: '20px 0 0 0', width: '100%' }}
+        hideHeader={true}
+      ></Projects>
     </div>
   );
 }

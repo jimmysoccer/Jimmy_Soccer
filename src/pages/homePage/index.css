@@ -15,6 +15,11 @@
   text-align: center;
   color: black;
 }
+.introduction-main-content-text-description {
+  color: gray;
+  font-size: 20px;
+  margin: 15px;
+}
 .introduction-main-content-image {
   width: 30%;
 }

@@ -11,6 +11,8 @@
 }
 .contact-description {
   color: gray;
+  font-size: 20px;
+  margin: 15px;
 }
 .contact-icon-container {
   display: flex;

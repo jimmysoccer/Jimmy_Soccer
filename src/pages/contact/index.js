@@ -6,14 +6,17 @@ export default function Contact() {
   return (
     <div className='main-content'>
       <div className='contact'>
-        <h2 className='contact-title'>I am Heng Sun. I live in Gainesville.</h2>
-        <text className='contact-description'>
-          I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I am
-          working from home right now. I am passionate about creating
-          high-quality code that follows best practices and industry standards.
-          I am always looking for new challenges and opportunities to grow as a
-          developer.
-        </text>
+        <h2 className='contact-title'>
+          Let's Get in Touch: Ways to Connect with Me
+        </h2>
+        <p className='contact-description'>
+          Thank you for your interest in getting in touch with me. I welcome
+          your feedback, questions, and suggestions. If you have a specific
+          question or comment, please feel free to email me. I make an effort to
+          respond to all messages within 24 hours, although it may take me
+          longer during busy periods. Thanks again for your interest, and I look
+          forward to hearing from you!
+        </p>
         <div className='introduction-icon-list'></div>
       </div>
       <div className='contact'>

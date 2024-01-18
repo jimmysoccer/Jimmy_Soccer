@@ -8,6 +8,7 @@ import About from './pages/about';
 import Projects from './pages/projects';
 import { useState } from 'react';
 import Contact from './pages/contact';
+import WorkingExperience from './pages/workingExperience';
 
 function App() {
   const path = window.location.href;
@@ -55,6 +56,10 @@ function App() {
           <Route
             path={NAV_BAR.contact.path}
             element={<Contact></Contact>}
+          ></Route>
+          <Route
+            path={NAV_BAR.workingExperience.path}
+            element={<WorkingExperience></WorkingExperience>}
           ></Route>
           {/* <Route
             path={NAV_BAR.developer.path}

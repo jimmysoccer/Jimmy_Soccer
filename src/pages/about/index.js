@@ -2,7 +2,8 @@ import './index.css';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { aboutImage } from '../../imgs/images';
+import { UFImage, aboutImage, aquinasImage } from '../../imgs/images';
+import { educationExperience } from '../../const/education';
 export default function About() {
   return (
     <div className='main-content'>
@@ -15,13 +16,13 @@ export default function About() {
             >
               I am Heng Sun. I live in Gainesville.
             </h2>
-            <text>
+            <p className='introduction-main-content-text-description'>
               I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I
               am working from home right now. I am passionate about creating
               high-quality code that follows best practices and industry
               standards. I am always looking for new challenges and
               opportunities to grow as a developer.
-            </text>
+            </p>
           </div>
           <div className='introduction-main-content-image'>
             <img className='about-image' src={aboutImage} alt='about me' />
@@ -51,6 +52,46 @@ export default function About() {
           </div>
         </div>
         <div className='introduction-icon-list'></div>
+      </div>
+      <div className='project-list'>
+        {educationExperience.map((experience) => {
+          return (
+            <div className='working-experience'>
+              <div className='project-logo-list'>
+                {experience.school === 'University of Florida' ? (
+                  <img
+                    src={UFImage}
+                    alt='UF'
+                    style={{ height: '57px', width: '300px' }}
+                    className='project-logo'
+                  ></img>
+                ) : experience.school === 'Aquinas High School' ? (
+                  <img
+                    src={aquinasImage}
+                    alt='aquinas'
+                    style={{ width: '100px', height: '100px' }}
+                    className='project-logo'
+                  ></img>
+                ) : (
+                  ''
+                )}
+              </div>
+              <div className='project-title'>
+                {experience.school +
+                  ', ' +
+                  experience.location +
+                  ' --- ' +
+                  experience.degree}
+              </div>
+              <div>{experience.time}</div>
+              <ul>
+                {experience.courses.map((description) => (
+                  <li className='project-description'>{description}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
