@@ -19,7 +19,7 @@ export default function Contact() {
         </p>
         <div className='introduction-icon-list'></div>
       </div>
-      <div className='contact'>
+      <div className='contact' style={{ width: '100%' }}>
         <div
           className='contact-icon-container'
           onClick={() => window.open('https://github.com/jimmysoccer')}

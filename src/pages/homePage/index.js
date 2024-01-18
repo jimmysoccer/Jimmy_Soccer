@@ -54,7 +54,7 @@ export default function Home() {
         </div>
       </div>
       <Projects
-        style={{ margin: '20px 0 0 0', width: '100%' }}
+        style={{ margin: '20px 0 0 0', maxWidth: '1500px' }}
         hideHeader={true}
       ></Projects>
     </div>
