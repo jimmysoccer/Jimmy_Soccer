@@ -21,3 +21,8 @@
   margin: 10px;
   cursor: pointer;
 }
+@media (max-width: 600px) {
+  .contact-title {
+    width: 100%;
+  }
+}

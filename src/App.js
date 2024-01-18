@@ -1,8 +1,6 @@
 import { Routes, Route, Link, HashRouter } from 'react-router-dom';
 import './App.css';
 import Home from './pages/homePage';
-import Personal from './pages/personal';
-import Chat from './pages/chat';
 import { NAV_BAR } from './const/navBar';
 import About from './pages/about';
 import Projects from './pages/projects';
@@ -23,29 +21,25 @@ function App() {
     else return NAV_BAR.home.path;
   }
   return (
-    <>
+    <div style={{ overflow: 'hidden' }}>
       <HashRouter>
-        <ul className='nav-bar'>
+        <div className='nav-bar'>
           <div className='nav-list'>
             {Object.values(NAV_BAR).map((navItem) => (
-              <li>
-                <Link
-                  to={navItem.path}
-                  onClick={() => {
-                    setHeadTitle(navItem.header_title);
-                    setCurrentTab(navItem.path);
-                  }}
-                  className={'nav-block'}
-                  style={
-                    currentTab === navItem.path ? { color: '#14b8a6' } : {}
-                  }
-                >
-                  {navItem.title}
-                </Link>
-              </li>
+              <Link
+                to={navItem.path}
+                onClick={() => {
+                  setHeadTitle(navItem.header_title);
+                  setCurrentTab(navItem.path);
+                }}
+                className={'nav'}
+                style={currentTab === navItem.path ? { color: '#14b8a6' } : {}}
+              >
+                {navItem.title}
+              </Link>
             ))}
           </div>
-        </ul>
+        </div>
         <Routes>
           <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
           <Route path={NAV_BAR.about.path} element={<About></About>}></Route>
@@ -85,7 +79,7 @@ function App() {
           </div>
         </div>
       </HashRouter>
-    </>
+    </div>
   );
 }
 

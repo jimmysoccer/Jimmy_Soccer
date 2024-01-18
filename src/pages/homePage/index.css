@@ -4,6 +4,7 @@
 }
 .introduction-main-content {
   display: flex;
+  flex-wrap: wrap;
 }
 .introduction-main-content-text {
   width: 60%;
@@ -34,4 +35,12 @@
 .introduction-icon {
   margin: 0 10px;
   cursor: pointer;
+}
+@media (max-width: 600px) {
+  .introduction-main-content-text {
+    width: 100%;
+  }
+  .introduction-main-content-image {
+    width: 100%;
+  }
 }
