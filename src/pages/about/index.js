@@ -4,7 +4,14 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { UFImage, aboutImage, aquinasImage } from '../../imgs/images';
 import { educationExperience } from '../../const/education';
+import { useEffect } from 'react';
+import { getEducationHistory } from '../../fetch/getEducationHistory';
+
 export default function About() {
+  useEffect(() => {
+    const res = getEducationHistory();
+  }, []);
+
   return (
     <div className='main-content'>
       <div className='introduction'>
