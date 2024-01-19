@@ -25,6 +25,8 @@ body {
 }
 .nav {
   margin: 0 10px;
+  width: 150px;
+  text-align: center;
   text-decoration: none;
   line-height: 49px;
   font-size: 20px;
@@ -74,5 +76,8 @@ body {
   }
   .nav-list {
     margin: 10px 0 0 0;
+  }
+  .nav {
+    width: fit-content;
   }
 }
