@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Jimmy_Soccer/static/css/main.8e113916.css",
-    "main.js": "/Jimmy_Soccer/static/js/main.2b7f7a00.js",
+    "main.css": "/Jimmy_Soccer/static/css/main.c811a8bd.css",
+    "main.js": "/Jimmy_Soccer/static/js/main.9ccb81a9.js",
     "static/js/787.28cb0dcd.chunk.js": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js",
     "static/media/full_stack.png": "/Jimmy_Soccer/static/media/full_stack.d27613a9faaab0706715.png",
     "static/media/python.png": "/Jimmy_Soccer/static/media/python.6a5cbc319ab3ddf8ef92.png",
@@ -19,12 +19,12 @@
     "static/media/UF.png": "/Jimmy_Soccer/static/media/UF.a6d346b7f409b771ed36.png",
     "static/media/mongodb.svg": "/Jimmy_Soccer/static/media/mongodb.bfa6cdd80f4a99232cadb39ebbb976d2.svg",
     "index.html": "/Jimmy_Soccer/index.html",
-    "main.8e113916.css.map": "/Jimmy_Soccer/static/css/main.8e113916.css.map",
-    "main.2b7f7a00.js.map": "/Jimmy_Soccer/static/js/main.2b7f7a00.js.map",
+    "main.c811a8bd.css.map": "/Jimmy_Soccer/static/css/main.c811a8bd.css.map",
+    "main.9ccb81a9.js.map": "/Jimmy_Soccer/static/js/main.9ccb81a9.js.map",
     "787.28cb0dcd.chunk.js.map": "/Jimmy_Soccer/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8e113916.css",
-    "static/js/main.2b7f7a00.js"
+    "static/css/main.c811a8bd.css",
+    "static/js/main.9ccb81a9.js"
   ]
 }
