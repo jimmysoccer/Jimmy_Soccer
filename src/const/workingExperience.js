@@ -42,4 +42,21 @@ export const workingExperience = [
       techStack.python,
     ],
   },
+  {
+    employer: 'Continental Tires (China) Co., Ltd',
+    location: 'Shanghai, China',
+    position: 'Business System Intern',
+    time: 'May 2021 - July 2021',
+    description: [
+      `Modified and updated the necessary user interface of the internal-use-only software by using HTML, CSS, 
+      and JavaScript.`,
+      `Utilized SQL to manage the company's Microsoft SQL database that is related to customers' detailed 
+      information, which includes creating, modifying, and deleting information.`,
+      `Improved speed and readability for employees to find a particular record through redesigning 
+      the existed SQL script.`,
+      `Designed an algorithm to transfer the CSV data collected from retailers to the correct format 
+      required by the company's database through using C++.`,
+    ],
+    techStack: [techStack.js, techStack.sql, techStack.cPlusPlus],
+  },
 ];
