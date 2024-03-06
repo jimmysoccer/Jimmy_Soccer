@@ -4,6 +4,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { fullStackImage } from '../../imgs/images';
 import Projects from '../projects';
+import WorkingExperience from '../workingExperience';
 export default function Home() {
   return (
     <div className='main-content'>
@@ -51,6 +52,10 @@ export default function Home() {
           ></LinkedInIcon>
         </div>
       </div>
+      <WorkingExperience
+        style={{ margin: '20px 0 0 0', maxWidth: '1500px' }}
+        hideHeader={true}
+      />
       <Projects
         style={{ margin: '20px 0 0 0', maxWidth: '1500px' }}
         hideHeader={true}

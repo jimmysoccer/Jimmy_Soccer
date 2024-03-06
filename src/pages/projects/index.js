@@ -19,7 +19,8 @@ export default function Projects({ style, hideHeader = false }) {
         </div>
       )}
       <div className='project-list'>
-        {projects.map((project) => {
+        {projects.map((project, index) => {
+          if (hideHeader && index > 2) return <div></div>;
           return (
             <div className='project'>
               <div className='project-logo-list'>
@@ -28,6 +29,7 @@ export default function Projects({ style, hideHeader = false }) {
                 ))}
               </div>
               <div className='project-title'>{project.title}</div>
+              <div>{project?.time}</div>
               <ul>
                 {project.description.map((description) => (
                   <li className='project-description'>{description}</li>
