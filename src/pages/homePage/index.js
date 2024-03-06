@@ -52,10 +52,12 @@ export default function Home() {
           ></LinkedInIcon>
         </div>
       </div>
+      <h2 style={{ width: '100%', textAlign: 'center' }}>Work</h2>
       <WorkingExperience
         style={{ margin: '20px 0 0 0', maxWidth: '1500px' }}
         hideHeader={true}
       />
+      <h2 style={{ width: '100%', textAlign: 'center' }}>Projects</h2>
       <Projects
         style={{ margin: '20px 0 0 0', maxWidth: '1500px' }}
         hideHeader={true}
