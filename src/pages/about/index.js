@@ -5,11 +5,11 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { UFImage, aboutImage, aquinasImage } from '../../imgs/images';
 import { educationExperience } from '../../const/education';
 import { useEffect } from 'react';
-import { getEducationHistory } from '../../fetch/getEducationHistory';
+// import { getEducationHistory } from '../../fetch/getEducationHistory';
 
 export default function About() {
   useEffect(() => {
-    const res = getEducationHistory();
+    // const res = getEducationHistory();
   }, []);
 
   return (
