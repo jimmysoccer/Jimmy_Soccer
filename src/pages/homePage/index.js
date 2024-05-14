@@ -5,6 +5,9 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { fullStackImage } from '../../imgs/images';
 import Projects from '../projects';
 import WorkingExperience from '../workingExperience';
+import web_development_animation from '../../assets/web_development.json';
+import Lottie from 'lottie-react';
+
 export default function Home() {
   return (
     <div className='main-content'>
@@ -26,7 +29,10 @@ export default function Home() {
             </p>
           </div>
           <div className='introduction-main-content-image'>
-            <img src={fullStackImage} alt='full stack'></img>
+            <Lottie
+              className='img-fluid'
+              animationData={web_development_animation}
+            ></Lottie>
           </div>
         </div>
         <div className='introduction-icon-list'>
