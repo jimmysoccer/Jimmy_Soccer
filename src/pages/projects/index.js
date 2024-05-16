@@ -22,7 +22,7 @@ export default function Projects({ style, hideHeader = false }) {
         {projects.map((project, index) => {
           if (hideHeader && index > 2) return <div></div>;
           return (
-            <div className='project'>
+            <div className='project shadow p-3 rounded my-3'>
               <div className='project-logo-list'>
                 {project.techStack.map((tech) => (
                   <TechStackIcon stack={tech} />

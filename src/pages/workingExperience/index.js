@@ -24,7 +24,7 @@ export default function WorkingExperience({ style, hideHeader = false }) {
         {workingExperience.map((experience, index) => {
           if (hideHeader && index >= 1) return <div></div>;
           return (
-            <div className='working-experience'>
+            <div className='working-experience shadow p-3 rounded my-3'>
               <div className='project-logo-list'>
                 {experience.techStack.map((tech) => (
                   <TechStackIcon stack={tech} />
