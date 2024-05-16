@@ -5,6 +5,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { UFImage, aboutImage, aquinasImage } from '../../imgs/images';
 import { educationExperience } from '../../const/education';
 import { useEffect } from 'react';
+import { Grid } from '@mui/material';
 // import { getEducationHistory } from '../../fetch/getEducationHistory';
 
 export default function About() {
@@ -60,46 +61,30 @@ export default function About() {
         </div>
         <div className='introduction-icon-list'></div>
       </div>
-      <div className='project-list'>
-        {educationExperience.map((experience) => {
-          return (
-            <div className='m-5'>
-              <div className='project-logo-list'>
-                {experience.school === 'University of Florida' ? (
-                  <img
-                    src={UFImage}
-                    alt='UF'
-                    style={{ height: '57px', width: '300px' }}
-                    className='project-logo'
-                  ></img>
-                ) : experience.school === 'Aquinas High School' ? (
-                  <img
-                    src={aquinasImage}
-                    alt='aquinas'
-                    style={{ width: '100px', height: '100px' }}
-                    className='project-logo'
-                  ></img>
-                ) : (
-                  ''
-                )}
-              </div>
-              <div className='project-title'>
-                {experience.school +
-                  ', ' +
-                  experience.location +
-                  ' --- ' +
-                  experience.degree}
-              </div>
-              <div>{experience.time}</div>
-              <ul>
-                {experience.courses.map((description) => (
-                  <li className='project-description'>{description}</li>
-                ))}
-              </ul>
+      <Grid container>
+        {educationExperience.map((exp) => (
+          <Grid item md={12} className='text-center my-3'>
+            <div className='d-flex justify-content-center'>
+              <img
+                src={
+                  exp.school === 'University of Florida'
+                    ? UFImage
+                    : aquinasImage
+                }
+                alt='school-logo'
+                className='img-fluid'
+              ></img>
             </div>
-          );
-        })}
-      </div>
+            <h3 className='mt-2 mb-0 fs-5'>
+              {exp.school + ', ' + exp.location + ' --- ' + exp.degree}
+            </h3>
+            <div className='fs-4'>{exp.time}</div>
+            <div className='fs-5 text-secondary'>
+              Main courses:{' ' + exp.courses.map((des) => des)}
+            </div>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 }

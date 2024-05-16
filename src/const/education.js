@@ -15,6 +15,6 @@ export const educationExperience = [
     location: 'San Bernardino, CA',
     degree: 'High School Diploma',
     time: 'September 2016 - June 2019',
-    courses: [],
+    courses: ['Calculus', 'Drama'],
   },
 ];
