@@ -63,7 +63,7 @@ export default function About() {
       <div className='project-list'>
         {educationExperience.map((experience) => {
           return (
-            <div className='working-experience'>
+            <div className='m-5'>
               <div className='project-logo-list'>
                 {experience.school === 'University of Florida' ? (
                   <img

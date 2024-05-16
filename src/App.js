@@ -7,6 +7,7 @@ import Projects from './pages/projects';
 import { useState } from 'react';
 import Contact from './pages/contact';
 import WorkingExperience from './pages/workingExperience';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const path = window.location.href;
