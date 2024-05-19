@@ -8,7 +8,7 @@ export default function Project() {
   const project = location.state || {};
 
   return (
-    <div className='d-flex flex-column mb-5'>
+    <div className='d-flex flex-column'>
       <div className='px-5 my-5'>
         <Link className='text-success' to={NAV_BAR.projects.path}>
           <ArrowBackIcon></ArrowBackIcon>

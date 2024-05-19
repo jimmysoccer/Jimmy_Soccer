@@ -67,7 +67,7 @@ function App() {
           ></Route>
           <Route path={NAV_BAR.chat.path} element={<Chat></Chat>}></Route> */}
         </Routes>
-        <div className='footer'>
+        <div className='footer mt-5'>
           <div className='footer-nav-list'>
             {Object.values(NAV_BAR).map((navItem) => (
               <Link
