@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Contact from './pages/contact';
 import WorkingExperience from './pages/workingExperience';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Project from './pages/projects/project';
 
 function App() {
   const path = window.location.href;
@@ -55,6 +56,10 @@ function App() {
           <Route
             path={NAV_BAR.workingExperience.path}
             element={<WorkingExperience></WorkingExperience>}
+          ></Route>
+          <Route
+            path={NAV_BAR.projects.path + '/:name'}
+            element={<Project></Project>}
           ></Route>
           {/* <Route
             path={NAV_BAR.developer.path}

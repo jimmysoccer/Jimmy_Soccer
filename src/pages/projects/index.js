@@ -1,6 +1,9 @@
 import './index.css';
 import { projects } from '../../const/projects';
 import TechStackIcon from '../../components/techStackIcon';
+import { Link } from 'react-router-dom';
+import { NAV_BAR } from '../../const/navBar';
+
 export default function Projects({ style, hideHeader = false }) {
   return (
     <div className='main-content' style={style}>
@@ -22,14 +25,18 @@ export default function Projects({ style, hideHeader = false }) {
         {projects.map((project, index) => {
           if (hideHeader && index > 2) return <div></div>;
           return (
-            <div className='project shadow p-3 rounded my-3'>
+            <Link
+              to={`${NAV_BAR.projects.path}/${project.title}`}
+              state={project}
+              className='project shadow p-3 rounded my-3  text-decoration-none'
+            >
               <div className='project-logo-list'>
                 {project.techStack.map((tech) => (
                   <TechStackIcon stack={tech} />
                 ))}
               </div>
-              <div className='project-title'>{project.title}</div>
-              <div>{project?.time}</div>
+              <div className='project-title text-black'>{project.title}</div>
+              <div className='text-black'>{project?.time}</div>
               <ul>
                 {project.description.map((description) => (
                   <li className='project-description'>{description}</li>
@@ -41,7 +48,7 @@ export default function Projects({ style, hideHeader = false }) {
                 </div>
                 <div className='project-link-text'>View Project</div>
               </div> */}
-            </div>
+            </Link>
           );
         })}
       </div>
