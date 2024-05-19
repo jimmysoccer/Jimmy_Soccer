@@ -1,6 +1,6 @@
 export const NAV_BAR = {
   home: {
-    path: '/',
+    path: '/home',
     title: 'Home',
     header_title: 'Jimmy | Home',
   },
