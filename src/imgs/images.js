@@ -1,6 +1,6 @@
 import about from './about_me.png';
 import full_stack from './full_stack.png';
-import c_sharp from './c#.png';
+import c_sharp from './c-sharp.png';
 import c_plus_plus from './c++.png';
 import mongoDB from './mongodb.svg';
 import python from './python.png';

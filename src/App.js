@@ -33,7 +33,7 @@ function App() {
                   setHeadTitle(navItem.header_title);
                   setCurrentTab(navItem.path);
                 }}
-                className={'nav'}
+                className={'nav justify-content-center'}
                 style={currentTab === navItem.path ? { color: '#14b8a6' } : {}}
               >
                 {navItem.title}
