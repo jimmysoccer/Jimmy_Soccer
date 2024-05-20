@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/homePage';
 import { NAV_BAR } from './const/navBar';
@@ -21,6 +21,7 @@ function App() {
       <NavBar setHeadTitle={setHeadTitle} />
 
       <Routes>
+        <Route path='/' element={<Navigate to='/home' />}></Route>
         <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
         <Route path={NAV_BAR.about.path} element={<About></About>}></Route>
         <Route
