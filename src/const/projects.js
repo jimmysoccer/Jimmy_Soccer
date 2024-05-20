@@ -9,6 +9,8 @@ import {
   dialAdventure3Image,
   dialAdventure4Image,
   imageInpaintingImage1,
+  imageInpaintingImage2,
+  imageInpaintingImage3,
   sunSpotImage1,
   sunSpotImage2,
   sunSpotImage3,
@@ -26,7 +28,11 @@ export const projects = [
     ],
     time: 'March 2022 - April 2022',
     techStack: [techStack.python],
-    images: [imageInpaintingImage1],
+    images: [
+      imageInpaintingImage1,
+      imageInpaintingImage2,
+      imageInpaintingImage3,
+    ],
     papers: [ImageInpaintingPDF],
   },
   {
