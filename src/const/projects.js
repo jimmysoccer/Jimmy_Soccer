@@ -1,8 +1,17 @@
 import {
+  ImageInpaintingPDF,
+  UUCircle1Image,
+  UUCircle2Image,
+  UUCircle3Image,
+  UUCircle4Image,
   dialAdventure1Image,
   dialAdventure2Image,
   dialAdventure3Image,
   dialAdventure4Image,
+  imageInpaintingImage1,
+  sunSpotImage1,
+  sunSpotImage2,
+  sunSpotImage3,
 } from '../imgs/images';
 import { techStack } from './techStack';
 
@@ -17,6 +26,8 @@ export const projects = [
     ],
     time: 'March 2022 - April 2022',
     techStack: [techStack.python],
+    images: [imageInpaintingImage1],
+    papers: [ImageInpaintingPDF],
   },
   {
     title: 'Unity Game Development',
@@ -53,6 +64,7 @@ export const projects = [
       techStack.figma,
       techStack.cPlusPlus,
     ],
+    images: [UUCircle1Image, UUCircle2Image, UUCircle3Image, UUCircle4Image],
   },
   {
     title: 'Solar Panel Website',
@@ -68,21 +80,22 @@ export const projects = [
       techStack.sql,
       techStack.googleMap,
     ],
+    images: [sunSpotImage1, sunSpotImage2, sunSpotImage3],
   },
-  // {
-  //   title: 'Question box web app',
-  //   description: [
-  //     `Developed a question box application that allows the users to answer and post questions by utilizing HTML, CSS, JS, Apache server`,
-  //     `Embedded a 3D sphere by using Three.js to display the questions for users to rotate the sphere and find the questions`,
-  //     `Established a connection to Oracle SQL database for users to send and retrieve posts information through PHP, SQL`,
-  //   ],
-  //   techStack: [techStack.js, techStack.threeDJS, techStack.sql, techStack.php],
-  // },
-  // {
-  //   title: 'Minesweeper',
-  //   description: [
-  //     `Designed and implmented a typical minesweeper game by using C++, SFML.`,
-  //   ],
-  //   techStack: [techStack.cPlusPlus],
-  // },
+  {
+    title: 'Question box web app',
+    description: [
+      `Developed a question box application that allows the users to answer and post questions by utilizing HTML, CSS, JS, Apache server`,
+      `Embedded a 3D sphere by using Three.js to display the questions for users to rotate the sphere and find the questions`,
+      `Established a connection to Oracle SQL database for users to send and retrieve posts information through PHP, SQL`,
+    ],
+    techStack: [techStack.js, techStack.threeDJS, techStack.sql, techStack.php],
+  },
+  {
+    title: 'Minesweeper',
+    description: [
+      `Designed and implmented a typical minesweeper game by using C++, SFML.`,
+    ],
+    techStack: [techStack.cPlusPlus],
+  },
 ];
