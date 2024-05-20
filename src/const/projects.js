@@ -1,3 +1,9 @@
+import {
+  dialAdventure1Image,
+  dialAdventure2Image,
+  dialAdventure3Image,
+  dialAdventure4Image,
+} from '../imgs/images';
 import { techStack } from './techStack';
 
 export const projects = [
@@ -21,6 +27,12 @@ export const projects = [
     ],
     time: 'October 2022 - December 2022',
     techStack: [techStack.cSharp],
+    images: [
+      dialAdventure1Image,
+      dialAdventure2Image,
+      dialAdventure3Image,
+      dialAdventure4Image,
+    ],
   },
   {
     title: 'Life and daily service web application',

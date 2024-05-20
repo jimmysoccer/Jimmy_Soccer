@@ -9,29 +9,19 @@ export const NAV_BAR = {
     title: 'About',
     header_title: 'Jimmy | About',
   },
-  projects: {
-    path: '/projects',
-    title: 'Projects',
-    header_title: 'Jimmy | Projects',
-  },
   workingExperience: {
     path: '/working_experience',
     title: 'Work',
     header_title: 'Jimmy | Work',
+  },
+  projects: {
+    path: '/projects',
+    title: 'Projects',
+    header_title: 'Jimmy | Projects',
   },
   contact: {
     path: '/contact',
     title: 'Contact',
     header_title: 'Jimmy | Contact',
   },
-  // developer: {
-  //   path: '/developer',
-  //   title: 'Developer',
-  //   header_title: 'Jimmy | Developer',
-  // },
-  // chat: {
-  //   path: '/chat',
-  //   title: 'Chat',
-  //   header_title: 'Jimmy | Chat',
-  // },
 };

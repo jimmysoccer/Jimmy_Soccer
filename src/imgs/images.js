@@ -14,6 +14,10 @@ import django from './django.png';
 import nodeJS from './nodejs.png';
 import UF from './UF.png';
 import aquinas from './aquinas.jpg';
+import dial_adventure_1 from './dial_adventure_1.png';
+import dial_adventure_2 from './dial_adventure_2.gif';
+import dial_adventure_3 from './dial_adventure_3.jpg';
+import dial_adventure_4 from './dial_adventure_4.png';
 
 export const aboutImage = about;
 export const fullStackImage = full_stack;
@@ -31,3 +35,7 @@ export const djangoImage = django;
 export const nodeJSImage = nodeJS;
 export const UFImage = UF;
 export const aquinasImage = aquinas;
+export const dialAdventure1Image = dial_adventure_1;
+export const dialAdventure2Image = dial_adventure_2;
+export const dialAdventure3Image = dial_adventure_3;
+export const dialAdventure4Image = dial_adventure_4;
