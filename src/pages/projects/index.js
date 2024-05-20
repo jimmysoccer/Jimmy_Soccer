@@ -23,23 +23,30 @@ export default function Projects({ style, hideHeader = false }) {
       )}
       <div className='project-list'>
         {projects.map((project, index) => {
-          if (hideHeader && index > 2) return <div></div>;
+          if (hideHeader && index > 2)
+            return <div key={`projects-${index}`}></div>;
           return (
             <Link
+              key={`projects-${index}`}
               to={`${NAV_BAR.projects.path}/${project.title}`}
               state={project}
               className='project shadow p-3 rounded my-3  text-decoration-none'
             >
               <div className='project-logo-list'>
                 {project.techStack.map((tech) => (
-                  <TechStackIcon stack={tech} />
+                  <TechStackIcon key={`projects-tech-${tech}`} stack={tech} />
                 ))}
               </div>
               <div className='project-title text-black'>{project.title}</div>
               <div className='text-black'>{project?.time}</div>
               <ul>
                 {project.description.map((description) => (
-                  <li className='project-description'>{description}</li>
+                  <li
+                    key={`projects-project-des-${description}`}
+                    className='project-description'
+                  >
+                    {description}
+                  </li>
                 ))}
               </ul>
               {/* <div className='project-link' onClick={() => {}}>

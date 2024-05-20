@@ -10,6 +10,7 @@ export default function Footer(setHeadTitle) {
       <div className='footer-nav-list'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
+            key={`footer-${navItem.header_title}`}
             to={navItem.path}
             onClick={() => {
               setHeadTitle(navItem.header_title);

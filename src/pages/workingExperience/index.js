@@ -22,12 +22,16 @@ export default function WorkingExperience({ style, hideHeader = false }) {
 
       <div className='project-list'>
         {workingExperience.map((experience, index) => {
-          if (hideHeader && index >= 1) return <div></div>;
+          if (hideHeader && index >= 1)
+            return <div key={`work-${index}`}></div>;
           return (
-            <div className='working-experience shadow p-3 rounded my-3'>
+            <div
+              key={`work-${index}`}
+              className='working-experience shadow p-3 rounded my-3'
+            >
               <div className='project-logo-list'>
                 {experience.techStack.map((tech) => (
-                  <TechStackIcon stack={tech} />
+                  <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
                 ))}
               </div>
               <div className='project-title'>
@@ -40,7 +44,12 @@ export default function WorkingExperience({ style, hideHeader = false }) {
               <div>{experience.time}</div>
               <ul>
                 {experience.description.map((description) => (
-                  <li className='project-description'>{description}</li>
+                  <li
+                    className='project-description'
+                    key={`work-exper-des-${description}`}
+                  >
+                    {description}
+                  </li>
                 ))}
               </ul>
             </div>

@@ -25,7 +25,7 @@ export default function Contact() {
           onClick={() => window.open('https://github.com/jimmysoccer')}
         >
           <GitHubIcon className='about-icon'></GitHubIcon>
-          <text className='about-icon-text'>Follow on GitHub</text>
+          <div className='about-icon-text'>Follow on GitHub</div>
         </div>
         <div
           className='contact-icon-container'
@@ -34,14 +34,14 @@ export default function Contact() {
           }
         >
           <LinkedInIcon className='about-icon'></LinkedInIcon>
-          <text className='about-icon-text'>Follow on LinkedIn</text>
+          <div className='about-icon-text'>Follow on LinkedIn</div>
         </div>
         <div
           className='contact-icon-container'
           onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
         >
           <EmailIcon className='about-icon'></EmailIcon>
-          <text className='about-icon-text'>Email</text>
+          <div className='about-icon-text'>Email</div>
         </div>
       </div>
     </div>

@@ -35,12 +35,8 @@ export default function Project() {
               <div className='d-flex justify-content-center mt-5'>
                 <ImageList variant='masonry' className='w-75' cols={2} gap={20}>
                   {project?.images?.map((img) => (
-                    <ImageListItem>
-                      <img
-                        key={`project-images-image-${img}`}
-                        src={img}
-                        alt='project'
-                      ></img>
+                    <ImageListItem key={`project-images-image-${img}`}>
+                      <img src={img} alt='project'></img>
                     </ImageListItem>
                   ))}
                 </ImageList>

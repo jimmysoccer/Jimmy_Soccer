@@ -39,7 +39,7 @@ export default function About() {
               onClick={() => window.open('https://github.com/jimmysoccer')}
             >
               <GitHubIcon className='about-icon'></GitHubIcon>
-              <text className='about-icon-text'>Follow on GitHub</text>
+              <div className='about-icon-text'>Follow on GitHub</div>
             </div>
             <div
               className='about-icon-container'
@@ -48,14 +48,14 @@ export default function About() {
               }
             >
               <LinkedInIcon className='about-icon'></LinkedInIcon>
-              <text className='about-icon-text'>Follow on LinkedIn</text>
+              <div className='about-icon-text'>Follow on LinkedIn</div>
             </div>
             <div
               className='about-icon-container'
               onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
             >
               <EmailIcon className='about-icon'></EmailIcon>
-              <text className='about-icon-text'>Email</text>
+              <div className='about-icon-text'>Email</div>
             </div>
           </div>
         </div>
@@ -63,7 +63,12 @@ export default function About() {
       </div>
       <Grid container>
         {educationExperience.map((exp) => (
-          <Grid item md={12} className='text-center my-3'>
+          <Grid
+            item
+            md={12}
+            key={`about-education-${exp.school}`}
+            className='text-center my-5'
+          >
             <div className='d-flex justify-content-center'>
               <img
                 src={
