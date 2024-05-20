@@ -6,16 +6,18 @@ export default function Footer(setHeadTitle) {
   const path = location.pathname;
 
   return (
-    <div className='footer mt-5'>
-      <div className='footer-nav-list'>
+    <div
+      style={{ height: '100px' }}
+      className='mt-5 border-top border-2 border-dark-subtle d-flex justify-content-center'
+    >
+      <div className='d-flex'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
-            key={`footer-${navItem.header_title}`}
             to={navItem.path}
             onClick={() => {
               setHeadTitle(navItem.header_title);
             }}
-            className={'footer-nav'}
+            className={'footer-nav d-flex flex-column justify-content-center'}
             style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
           >
             {navItem.title}

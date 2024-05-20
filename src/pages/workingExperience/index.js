@@ -1,61 +1,66 @@
-import TechStackIcon from '../../components/techStackIcon';
+import { Grid } from '@mui/material';
+import TechStackIcon from '../../components/TechStackIcon';
 import { workingExperience } from '../../const/workingExperience';
-import './index.css';
-export default function WorkingExperience({ style, hideHeader = false }) {
+
+export default function WorkingExperience({ hideHeader = false }) {
   return (
-    <div className='main-content' style={style}>
+    <div className='container'>
       {!hideHeader && (
-        <div className='contact'>
-          <h2 className='contact-title'>
+        <>
+          <h1 className='text-left w-50 mt-5'>
             Professional Journey: A Chronicle of Growth
-          </h2>
-          <p className='contact-description'>
+          </h1>
+          <p className='fs-5 text-secondary'>
             Embark on a retrospective journey through my professional
             experiences, where each role and project has played a pivotal role
             in shaping my skills and perspective. From early career milestones
             to challenging projects, this timeline reflects my commitment to
             continuous learning and excellence.
           </p>
-          <div className='introduction-icon-list'></div>
-        </div>
+        </>
       )}
-
-      <div className='project-list'>
+      <Grid container className='justify-content-center'>
         {workingExperience.map((experience, index) => {
           if (hideHeader && index >= 1)
             return <div key={`work-${index}`}></div>;
           return (
-            <div
-              key={`work-${index}`}
-              className='working-experience shadow p-3 rounded my-3'
+            <Grid
+              item
+              md={hideHeader ? 10 : 5}
+              className='shadow p-3 rounded m-4'
             >
-              <div className='project-logo-list'>
-                {experience.techStack.map((tech) => (
-                  <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
-                ))}
+              <div key={`work-${index}`}>
+                <div>
+                  {experience.techStack.map((tech) => (
+                    <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
+                  ))}
+                </div>
+                <div className='fs-5 fw-bold text-black'>
+                  {experience.employer +
+                    ', ' +
+                    experience.location +
+                    ' --- ' +
+                    experience.position}
+                </div>
+                <div>{experience.time}</div>
+                <ul>
+                  {experience.description.map((description) => (
+                    <li
+                      className='text-secondary'
+                      key={`work-exper-des-${description}`}
+                    >
+                      {description}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className='project-title'>
-                {experience.employer +
-                  ', ' +
-                  experience.location +
-                  ' --- ' +
-                  experience.position}
-              </div>
-              <div>{experience.time}</div>
-              <ul>
-                {experience.description.map((description) => (
-                  <li
-                    className='project-description'
-                    key={`work-exper-des-${description}`}
-                  >
-                    {description}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </Grid>
           );
         })}
-      </div>
+        {workingExperience.length % 2 !== 0 && (
+          <Grid item md={5} className='p-3 rounded m-4' />
+        )}
+      </Grid>
     </div>
   );
 }

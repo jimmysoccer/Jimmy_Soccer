@@ -15,6 +15,7 @@ import {
   sqlImage,
   threeDJSImage,
 } from '../imgs/images';
+import './style.css';
 
 export default function TechStackIcon({ stack }) {
   switch (stack) {

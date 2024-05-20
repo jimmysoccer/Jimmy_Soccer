@@ -6,8 +6,8 @@ export default function NavBar(setHeadTitle) {
   const path = location.pathname;
 
   return (
-    <div className='nav-bar'>
-      <div className='nav-list'>
+    <div className='navbar justify-content-center'>
+      <div className='d-flex shadow rounded-pill'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
             key={`nav-bar-${navItem.header_title}`}

@@ -3,7 +3,7 @@ import './App.css';
 import Home from './pages/homePage';
 import { NAV_BAR } from './const/navBar';
 import About from './pages/about';
-import Projects from './pages/projects';
+import Projects from './pages/projects/projects';
 import Contact from './pages/contact';
 import WorkingExperience from './pages/workingExperience';
 import 'bootstrap/dist/css/bootstrap.min.css';
