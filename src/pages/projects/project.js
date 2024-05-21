@@ -3,7 +3,7 @@ import TechStackIcon from '../../components/TechStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { NAV_BAR } from '../../const/navBar';
 import NotFound from '../../components/NotFound';
-import { Grid, ImageList, ImageListItem } from '@mui/material';
+import { Grid } from '@mui/material';
 
 export default function Project() {
   const location = useLocation();
@@ -31,7 +31,26 @@ export default function Project() {
                 <li key={`project-description-${des}`}>{des}</li>
               ))}
             </ul>
-            {project?.images ? (
+
+            {project?.papers && (
+              <div className='mt-5'>
+                {project.papers.map((paper) => (
+                  <button type='button' class='btn btn-primary'>
+                    <a
+                      key={`project-papers-paper-${paper}`}
+                      href={paper}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='w-100 text-decoration-none text-white'
+                    >
+                      Click here to view the paper
+                    </a>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {project?.images && (
               <Grid
                 container
                 className='d-flex mt-5'
@@ -44,24 +63,6 @@ export default function Project() {
                   </Grid>
                 ))}
               </Grid>
-            ) : (
-              ''
-            )}
-
-            {project?.papers ? (
-              <div className='mt-5'>
-                {project.papers.map((paper) => (
-                  <iframe
-                    key={`project-papers-paper-${paper}`}
-                    src={paper}
-                    title='image_inpainting'
-                    className='w-100'
-                    height={600}
-                  ></iframe>
-                ))}
-              </div>
-            ) : (
-              ''
             )}
           </div>
         </div>
