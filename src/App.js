@@ -12,13 +12,9 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
 function App() {
-  function setHeadTitle(headTitle) {
-    document.getElementById('head-title').innerText = headTitle;
-  }
-
   return (
     <div>
-      <NavBar setHeadTitle={setHeadTitle} />
+      <NavBar />
 
       <Routes>
         <Route path='/' element={<Navigate to='/home' />}></Route>
@@ -42,7 +38,7 @@ function App() {
         ></Route>
       </Routes>
 
-      <Footer setHeadTitle={setHeadTitle} />
+      <Footer />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { NAV_BAR } from '../const/navBar';
 
-export default function Footer(setHeadTitle) {
+export default function Footer() {
   const location = useLocation();
   const path = location.pathname;
 
@@ -15,9 +15,6 @@ export default function Footer(setHeadTitle) {
           <Link
             key={`footer-${navItem.header_title}`}
             to={navItem.path}
-            onClick={() => {
-              setHeadTitle(navItem.header_title);
-            }}
             className={'footer-nav d-flex flex-column justify-content-center'}
             style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
           >

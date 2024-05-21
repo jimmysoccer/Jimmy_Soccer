@@ -3,8 +3,12 @@ import TechStackIcon from '../../components/techStackIcon';
 import { Link } from 'react-router-dom';
 import { NAV_BAR } from '../../const/navBar';
 import { Grid } from '@mui/material';
+import { useEffect } from 'react';
 
 export default function Projects({ hideHeader = false }) {
+  useEffect(() => {
+    document.title = `Jimmy | Projects`;
+  }, []);
   return (
     <div className='container'>
       {!hideHeader && (

@@ -10,7 +10,7 @@ export const NAV_BAR = {
     header_title: 'Jimmy | About',
   },
   workingExperience: {
-    path: '/working_experience',
+    path: '/work',
     title: 'Work',
     header_title: 'Jimmy | Work',
   },

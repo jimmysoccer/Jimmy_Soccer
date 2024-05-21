@@ -9,6 +9,10 @@ export default function Project() {
   const location = useLocation();
   const project = location.state || {};
 
+  if (project.title) {
+    document.title = `Jimmy | ${project.title}`;
+  }
+
   return (
     <div className='d-flex flex-column'>
       <div className='px-5 my-5'>
