@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 
 export default function Projects({ hideHeader = false }) {
   useEffect(() => {
-    document.title = `Jimmy | Projects`;
-  }, []);
+    if (!hideHeader) document.title = `Jimmy | Projects`;
+  }, [hideHeader]);
   return (
     <div className='container'>
       {!hideHeader && (
