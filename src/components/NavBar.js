@@ -18,7 +18,7 @@ export default function NavBar() {
       <div className='d-flex shadow rounded-pill'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
-            key={`nav-bar-${navItem.header_title}`}
+            key={`nav-bar-${navItem.title}`}
             to={navItem.path}
             className={'nav justify-content-center'}
             style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}

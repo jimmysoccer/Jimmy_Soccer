@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Project from './pages/projects/project';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import InnovationHub from './pages/innovationHub/InnovationHub';
 
 function App() {
   return (
@@ -21,20 +22,24 @@ function App() {
         <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
         <Route path={NAV_BAR.about.path} element={<About></About>}></Route>
         <Route
+          path={NAV_BAR.workingExperience.path}
+          element={<WorkingExperience></WorkingExperience>}
+        ></Route>
+        <Route
           path={NAV_BAR.projects.path}
           element={<Projects></Projects>}
+        ></Route>
+        <Route
+          path={NAV_BAR.projects.path + '/:name'}
+          element={<Project></Project>}
         ></Route>
         <Route
           path={NAV_BAR.contact.path}
           element={<Contact></Contact>}
         ></Route>
         <Route
-          path={NAV_BAR.workingExperience.path}
-          element={<WorkingExperience></WorkingExperience>}
-        ></Route>
-        <Route
-          path={NAV_BAR.projects.path + '/:name'}
-          element={<Project></Project>}
+          path={NAV_BAR.innovationHub.path}
+          element={<InnovationHub />}
         ></Route>
       </Routes>
 

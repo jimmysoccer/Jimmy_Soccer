@@ -13,7 +13,7 @@ export default function Footer() {
       <div className='d-flex'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
-            key={`footer-${navItem.header_title}`}
+            key={`footer-${navItem.title}`}
             to={navItem.path}
             className={'footer-nav d-flex flex-column justify-content-center'}
             style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
