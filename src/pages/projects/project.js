@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import TechStackIcon from '../../components/TechStackIcon';
+import TechStackIcon from '../../components/techStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { NAV_BAR } from '../../const/navBar';
 import NotFound from '../../components/NotFound';

@@ -1,5 +1,5 @@
 import { projects } from '../../const/projects';
-import TechStackIcon from '../../components/TechStackIcon';
+import TechStackIcon from '../../components/techStackIcon';
 import { Link } from 'react-router-dom';
 import { NAV_BAR } from '../../const/navBar';
 import { Grid } from '@mui/material';

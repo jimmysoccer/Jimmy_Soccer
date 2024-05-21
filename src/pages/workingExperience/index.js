@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import TechStackIcon from '../../components/TechStackIcon';
+import TechStackIcon from '../../components/techStackIcon';
 import { workingExperience } from '../../const/workingExperience';
 
 export default function WorkingExperience({ hideHeader = false }) {
