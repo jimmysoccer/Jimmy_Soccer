@@ -3,7 +3,7 @@ import TechStackIcon from '../../components/TechStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { NAV_BAR } from '../../const/navBar';
 import NotFound from '../../components/NotFound';
-import { ImageList, ImageListItem } from '@mui/material';
+import { Grid, ImageList, ImageListItem } from '@mui/material';
 
 export default function Project() {
   const location = useLocation();
@@ -32,15 +32,18 @@ export default function Project() {
               ))}
             </ul>
             {project?.images ? (
-              <div className='d-flex justify-content-center mt-5'>
-                <ImageList variant='masonry' className='w-75' cols={2} gap={20}>
-                  {project?.images?.map((img) => (
-                    <ImageListItem key={`project-images-image-${img}`}>
-                      <img src={img} alt='project'></img>
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </div>
+              <Grid
+                container
+                className='d-flex mt-5'
+                justifyContent={'center'}
+                alignItems={'baseline'}
+              >
+                {project?.images?.map((img) => (
+                  <Grid item md={5} className='m-2'>
+                    <img src={img} alt='project' className='img-fluid'></img>
+                  </Grid>
+                ))}
+              </Grid>
             ) : (
               ''
             )}
