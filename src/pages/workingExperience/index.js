@@ -28,8 +28,9 @@ export default function WorkingExperience({ hideHeader = false }) {
               item
               md={hideHeader ? 10 : 5}
               className='shadow p-3 rounded m-4'
+              key={`work-${index}`}
             >
-              <div key={`work-${index}`}>
+              <div>
                 <div>
                   {experience.techStack.map((tech) => (
                     <TechStackIcon key={`work-tech-${tech}`} stack={tech} />

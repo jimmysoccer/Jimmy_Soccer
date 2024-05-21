@@ -35,7 +35,11 @@ export default function Project() {
             {project?.papers && (
               <div className='mt-5'>
                 {project.papers.map((paper) => (
-                  <button type='button' class='btn btn-primary'>
+                  <button
+                    key={`project-paper-${paper}`}
+                    type='button'
+                    className='btn btn-primary'
+                  >
                     <a
                       key={`project-papers-paper-${paper}`}
                       href={paper}
@@ -58,7 +62,12 @@ export default function Project() {
                 alignItems={'baseline'}
               >
                 {project?.images?.map((img) => (
-                  <Grid item md={5} className='m-2'>
+                  <Grid
+                    item
+                    md={5}
+                    className='m-2'
+                    key={`project-images-${img}`}
+                  >
                     <img src={img} alt='project' className='img-fluid'></img>
                   </Grid>
                 ))}

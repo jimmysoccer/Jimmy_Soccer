@@ -24,9 +24,13 @@ export default function Projects({ hideHeader = false }) {
         {projects.map((project, index) => {
           if (hideHeader && index > 1) return <div key={`work-${index}`}></div>;
           return (
-            <Grid item md={5} className='shadow p-3 rounded m-4'>
+            <Grid
+              item
+              md={5}
+              key={`projects-${index}`}
+              className='shadow p-3 rounded m-4'
+            >
               <Link
-                key={`projects-${index}`}
                 to={`${NAV_BAR.projects.path}/${project.title}`}
                 className='text-decoration-none'
                 state={project}

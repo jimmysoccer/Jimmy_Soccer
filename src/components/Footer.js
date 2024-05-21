@@ -13,6 +13,7 @@ export default function Footer(setHeadTitle) {
       <div className='d-flex'>
         {Object.values(NAV_BAR).map((navItem) => (
           <Link
+            key={`footer-${navItem.header_title}`}
             to={navItem.path}
             onClick={() => {
               setHeadTitle(navItem.header_title);
