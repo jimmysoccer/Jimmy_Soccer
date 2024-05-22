@@ -25,7 +25,6 @@ import uu_circle_4 from './UU_Circle_4.png';
 import image_inpainting_1 from './image_inpainting_1.png';
 import image_inpainting_2 from './image_inpainting_2.png';
 import image_inpainting_3 from './image_inpainting_3.png';
-import image_inpainting_pdf from './Image_Inpainting.pdf';
 import sun_spot_1 from './SunSpot_1.png';
 import sun_spot_2 from './SunSpot_2.png';
 import sun_spot_3 from './SunSpot_3.png';
@@ -60,5 +59,3 @@ export const imageInpaintingImage3 = image_inpainting_3;
 export const sunSpotImage1 = sun_spot_1;
 export const sunSpotImage2 = sun_spot_2;
 export const sunSpotImage3 = sun_spot_3;
-
-export const ImageInpaintingPDF = image_inpainting_pdf;

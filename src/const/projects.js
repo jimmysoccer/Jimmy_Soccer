@@ -1,5 +1,4 @@
 import {
-  ImageInpaintingPDF,
   UUCircle1Image,
   UUCircle2Image,
   UUCircle3Image,
@@ -33,7 +32,7 @@ export const projects = [
       imageInpaintingImage2,
       imageInpaintingImage3,
     ],
-    papers: [ImageInpaintingPDF],
+    papers: ['/Image_Inpainting.pdf'],
   },
   {
     title: 'Unity Game Development',
