@@ -11,6 +11,7 @@ import Project from './pages/projects/project';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import InnovationHub from './pages/innovationHub/InnovationHub';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           path={NAV_BAR.innovationHub.path}
           element={<InnovationHub />}
         ></Route>
+        <Route path='*' element={<NotFound />}></Route>
       </Routes>
 
       <Footer />
