@@ -3,17 +3,17 @@ import axios from 'axios';
 export default function InnovationHub() {
   const [records, setRecords] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://111.229.172.53/dev/get_all_records')
-      .then((res) => {
-        const data = res?.data;
-        setRecords(data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://111.229.172.53/dev/get_all_records')
+  //     .then((res) => {
+  //       const data = res?.data;
+  //       setRecords(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log('error', error);
+  //     });
+  // }, []);
 
   return (
     <div className='container my-5 text-center'>
