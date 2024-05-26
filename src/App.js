@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/homePage';
-import { NAV_BAR } from './const/navBar';
+import { NAV_BAR } from './const/navBar_const';
 import About from './pages/about';
 import Projects from './pages/projects/projects';
 import Contact from './pages/contact';

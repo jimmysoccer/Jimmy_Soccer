@@ -1,13 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import TechStackIcon from '../../components/techStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { NAV_BAR } from '../../const/navBar';
+import { LANGUAGE, NAV_BAR } from '../../const/navBar_const';
 import NotFound from '../../components/NotFound';
 import { Grid } from '@mui/material';
+import { useAtomValue } from 'jotai';
+import { languageAtom } from '../../atoms/primitive.atom';
+import { language_correct } from '../../utils/switch_language';
 
 export default function Project() {
   const location = useLocation();
   const project = location.state || {};
+  const language = useAtomValue(languageAtom);
 
   if (project.title) {
     document.title = `Jimmy | ${project.title}`;
@@ -28,10 +32,17 @@ export default function Project() {
             {project.techStack.map((tech) => (
               <TechStackIcon key={`project-tech-stack-${tech}`} stack={tech} />
             ))}
-            <h1>{project.title}</h1>
-            <h2>{project.time}</h2>
+            <h1>
+              {language_correct(language, project.title, project.title_chinese)}
+            </h1>
+            <h2>
+              {language_correct(language, project.time, project.time_chinese)}
+            </h2>
             <ul className='text-start'>
-              {project?.description?.map((des) => (
+              {(language === LANGUAGE.chinese.value
+                ? project?.description_chinese
+                : project?.description
+              )?.map((des) => (
                 <li key={`project-description-${des}`}>{des}</li>
               ))}
             </ul>
@@ -51,7 +62,11 @@ export default function Project() {
                       rel='noopener noreferrer'
                       className='w-100 text-decoration-none text-white'
                     >
-                      Click here to view the paper
+                      {language_correct(
+                        language,
+                        'Click here to view the paper',
+                        '点此处阅读文献'
+                      )}
                     </a>
                   </button>
                 ))}

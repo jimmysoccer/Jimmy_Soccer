@@ -5,3 +5,9 @@
   margin-right: 10px;
   overflow: hidden;
 }
+.language {
+  color: rgb(108, 117, 125);
+}
+.language:hover {
+  color: #14b8a6;
+}

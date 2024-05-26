@@ -9,6 +9,11 @@ export const educationExperience = [
       'Operating System',
       'Deep Learning for Graphics',
     ],
+    school_chinese: '佛罗里达大学(University of Florida)',
+    location_chinese: '盖恩斯维尔, 佛罗里达',
+    degree_chinese: '计算机科学专业本科',
+    time_chinese: '2019年九月 - 2023年5月',
+    courses_chinese: ['数据结构与算法', '操作系统', '图形深度学习'],
   },
   {
     school: 'Aquinas High School',
@@ -16,5 +21,10 @@ export const educationExperience = [
     degree: 'High School Diploma',
     time: 'September 2016 - June 2019',
     courses: ['Pre-Calculus', 'Physics', 'Chemistry'],
+    school_chinese: '阿奎那高中(Aquinas High School)',
+    location_chinese: '圣贝纳迪诺, 加州',
+    degree_chinese: '高中',
+    time_chinese: '2016年九月 - 2019年六月',
+    courses_chinese: ['初级微积分', '物理', '化学'],
   },
 ];

@@ -14,6 +14,7 @@ import {
   reactImage,
   sqlImage,
   threeDJSImage,
+  wechatImage,
 } from '../imgs/images';
 import './style.css';
 
@@ -68,6 +69,10 @@ export default function TechStackIcon({ stack }) {
     case techStack.nodeJS:
       return (
         <img src={nodeJSImage} alt='node js' className='project-logo'></img>
+      );
+    case techStack.wechat:
+      return (
+        <img src={wechatImage} alt='wechat' className='project-logo'></img>
       );
     default:
       return (

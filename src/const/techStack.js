@@ -13,4 +13,5 @@ export const techStack = {
   php: 'php',
   threeDJS: '3d.js',
   nodeJS: 'nodeJS',
+  wechat: 'wechat',
 };

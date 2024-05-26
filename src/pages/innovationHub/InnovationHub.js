@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 export default function InnovationHub() {
-  const [records, setRecords] = useState([]);
+  const [records] = useState([]);
 
   // useEffect(() => {
   //   axios
