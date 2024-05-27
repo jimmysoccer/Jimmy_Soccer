@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './Chat.css';
+import '../../assets/styles/chat.css';
 import io from 'socket.io-client';
 
 const ENDPOINT = 'https://chat.uucircle.com';
@@ -179,7 +179,7 @@ export default function Chat() {
 
   return (
     <div
-      className='main-content'
+      className='main-content d-flex'
       style={{
         margin: 0,
         flexDirection: 'row',
