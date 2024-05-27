@@ -3,15 +3,17 @@ import TechStackIcon from '../common/TechStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
 import NotFound from './NotFound';
-import { Grid } from '@mui/material';
+import { Grid, useMediaQuery } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import ImageCarousel from '../common/ImageCarousel';
 
 export default function Project() {
   const location = useLocation();
   const project = location.state || {};
   const language = useAtomValue(languageAtom);
+  const isMobileMatch = useMediaQuery('(max-width:600px)');
 
   if (project.title) {
     document.title = `Jimmy | ${getCurrentLanguageText(
@@ -84,25 +86,34 @@ export default function Project() {
                 ))}
               </div>
             )}
-
-            {project?.images && (
-              <Grid
-                container
-                className='d-flex mt-5'
-                justifyContent={'center'}
-                alignItems={'baseline'}
-              >
-                {project?.images?.map((img) => (
+            {isMobileMatch ? (
+              project?.images && (
+                <Grid
+                  container
+                  className='d-flex mt-5'
+                  justifyContent={'center'}
+                  alignItems={'baseline'}
+                >
+                  {project.images.map((img) => (
+                    <Grid
+                      item
+                      md={5}
+                      className='m-2'
+                      key={`project-images-${img}`}
+                    >
+                      <img src={img} alt='project' className='img-fluid'></img>
+                    </Grid>
+                  ))}
                   <Grid
                     item
                     md={5}
                     className='m-2'
-                    key={`project-images-${img}`}
-                  >
-                    <img src={img} alt='project' className='img-fluid'></img>
-                  </Grid>
-                ))}
-              </Grid>
+                    key={`project-images-placeholder`}
+                  ></Grid>
+                </Grid>
+              )
+            ) : (
+              <ImageCarousel images={project?.images}></ImageCarousel>
             )}
           </div>
         </div>

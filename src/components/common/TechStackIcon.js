@@ -1,5 +1,4 @@
 import { techStack } from '../../constants/tech-stack';
-import JavascriptIcon from '@mui/icons-material/Javascript';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import {
   cPlusPlusImage,
@@ -7,6 +6,7 @@ import {
   djangoImage,
   figmaImage,
   googleMapImage,
+  jsImage,
   mongoDBImage,
   nodeJSImage,
   phpImage,
@@ -21,13 +21,7 @@ import '../../assets/styles/style.css';
 export default function TechStackIcon({ stack }) {
   switch (stack) {
     case techStack.js:
-      return (
-        <JavascriptIcon
-          className='project-logo'
-          color='action'
-          sx={{ fontSize: 50, backgroundColor: 'yellow' }}
-        ></JavascriptIcon>
-      );
+      return <img src={jsImage} alt='js' className='project-logo'></img>;
     case techStack.react:
       return <img src={reactImage} alt='react' className='project-logo'></img>;
     case techStack.python:
