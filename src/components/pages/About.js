@@ -18,8 +18,8 @@ export default function About() {
 
   return (
     <div className='container'>
-      <Grid container className='mt-5 justify-content-center'>
-        <Grid item md={7}>
+      <Grid container className='mt-5 justify-content-center' gap={5}>
+        <Grid item md={4}>
           <h2 className='text-center fw-bold'>
             {getCurrentLanguageText(
               language,
@@ -41,7 +41,7 @@ export default function About() {
             )}
           </p>
         </Grid>
-        <Grid item md={5}>
+        <Grid item md={4}>
           <img className='img-fluid' src={aboutImage} alt='about me' />
           <div className='d-flex justify-content-center'>
             <div

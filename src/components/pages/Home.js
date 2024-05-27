@@ -15,8 +15,8 @@ export default function Home() {
   const language = useAtomValue(languageAtom);
   return (
     <div className='container'>
-      <Grid container className='mt-5'>
-        <Grid item md={8}>
+      <Grid container className='my-5' justifyContent={'center'} gap={5}>
+        <Grid item md={4}>
           <h2 className='text-center fw-bold'>
             {getCurrentLanguageText(
               language,
