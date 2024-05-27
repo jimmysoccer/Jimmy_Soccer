@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './components/pages/Home';
 import { NAV_BAR } from './constants/navbar-items';
@@ -19,7 +19,6 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route path='/' element={<Navigate to='/home' />}></Route>
         <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
         <Route path={NAV_BAR.about.path} element={<About></About>}></Route>
         <Route

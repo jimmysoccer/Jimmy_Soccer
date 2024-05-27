@@ -30,7 +30,11 @@ export default function NavBar() {
               key={`nav-bar-${navItem.title}`}
               to={navItem.path}
               className={'nav justify-content-center'}
-              style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
+              style={
+                path === navItem.path || path.startsWith(navItem.path + '/')
+                  ? { color: '#14b8a6' }
+                  : {}
+              }
             >
               {getCurrentLanguageText(
                 language,

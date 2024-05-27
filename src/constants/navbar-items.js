@@ -1,6 +1,6 @@
 export const NAV_BAR = {
   home: {
-    path: '/home',
+    path: '/',
     title: 'Home',
     titleChinese: '首页',
   },
