@@ -39,7 +39,7 @@ export default function Contact() {
             onClick={() => window.open('https://github.com/jimmysoccer')}
           >
             <GitHubIcon className='mx-2'></GitHubIcon>
-            <div>
+            <div className='language'>
               {getCurrentLanguageText(
                 language,
                 'Follow on Github',
@@ -57,7 +57,7 @@ export default function Contact() {
             }
           >
             <LinkedInIcon className='mx-2'></LinkedInIcon>
-            <div>
+            <div className='language'>
               {getCurrentLanguageText(
                 language,
                 'Follow on LinkedIn',
@@ -73,7 +73,9 @@ export default function Contact() {
             onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
           >
             <EmailIcon className='mx-2'></EmailIcon>
-            <div>{getCurrentLanguageText(language, 'Email', '电子邮箱')}</div>
+            <div className='language'>
+              {getCurrentLanguageText(language, 'Email', '电子邮箱')}
+            </div>
           </div>
         </div>
       </div>

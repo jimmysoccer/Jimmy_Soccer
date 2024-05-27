@@ -43,40 +43,51 @@ export default function About() {
         </Grid>
         <Grid item md={5}>
           <img className='img-fluid' src={aboutImage} alt='about me' />
-          <div
-            className='d-flex justify-content-center my-2'
-            onClick={() => window.open('https://github.com/jimmysoccer')}
-          >
-            <GitHubIcon className='me-3'></GitHubIcon>
-            <div>
-              {getCurrentLanguageText(
-                language,
-                'Follow on Github',
-                '关注我的Github'
-              )}
+          <div className='d-flex justify-content-center'>
+            <div
+              style={{ cursor: 'pointer' }}
+              className='d-flex justify-content-center my-2'
+              onClick={() => window.open('https://github.com/jimmysoccer')}
+            >
+              <GitHubIcon className='me-3'></GitHubIcon>
+              <div className='language'>
+                {getCurrentLanguageText(
+                  language,
+                  'Follow on Github',
+                  '关注我的Github'
+                )}
+              </div>
             </div>
           </div>
-          <div
-            className='d-flex justify-content-center my-2'
-            onClick={() =>
-              window.open('https://www.linkedin.com/in/jimmysoccer/')
-            }
-          >
-            <LinkedInIcon className='me-3'></LinkedInIcon>
-            <div>
-              {getCurrentLanguageText(
-                language,
-                'Follow on LinkedIn',
-                '关注我的领英'
-              )}
+          <div className='d-flex justify-content-center'>
+            <div
+              style={{ cursor: 'pointer' }}
+              className='d-flex justify-content-center my-2'
+              onClick={() =>
+                window.open('https://www.linkedin.com/in/jimmysoccer/')
+              }
+            >
+              <LinkedInIcon className='me-3'></LinkedInIcon>
+              <div className='language'>
+                {getCurrentLanguageText(
+                  language,
+                  'Follow on LinkedIn',
+                  '关注我的领英'
+                )}
+              </div>
             </div>
           </div>
-          <div
-            className='d-flex justify-content-center my-2'
-            onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
-          >
-            <EmailIcon className='me-3'></EmailIcon>
-            <div>{getCurrentLanguageText(language, 'Email', '电子邮箱')}</div>
+          <div className='d-flex justify-content-center'>
+            <div
+              style={{ cursor: 'pointer' }}
+              className='d-flex justify-content-center my-2'
+              onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
+            >
+              <EmailIcon className='me-3'></EmailIcon>
+              <div className='language'>
+                {getCurrentLanguageText(language, 'Email', '电子邮箱')}
+              </div>
+            </div>
           </div>
         </Grid>
       </Grid>
