@@ -1,10 +1,10 @@
 import { Grid } from '@mui/material';
-import TechStackIcon from '../../components/techStackIcon';
-import { workingExperience } from '../../const/workingExperience';
-import { language_correct } from '../../utils/switch_language';
+import TechStackIcon from '../common/TechStackIcon';
+import { workingExperience } from '../../constants/work-items';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
-import { LANGUAGE } from '../../const/navBar_const';
+import { LANGUAGE } from '../../constants/navbar-items';
 
 export default function WorkingExperience({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
@@ -13,14 +13,14 @@ export default function WorkingExperience({ hideHeader = false }) {
       {!hideHeader && (
         <>
           <h1 className='text-left w-50 mt-5'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               'Professional Journey: A Chronicle of Growth',
               '职业旅程：成长的历程'
             )}
           </h1>
           <p className='fs-5 text-secondary'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               `Embark on a retrospective journey through my professional
             experiences, where each role and project has played a pivotal role
@@ -52,7 +52,7 @@ export default function WorkingExperience({ hideHeader = false }) {
                   ))}
                 </div>
                 <div className='fs-5 fw-bold text-black'>
-                  {language_correct(
+                  {getCurrentLanguageText(
                     language,
                     experience.employer +
                       ', ' +
@@ -67,7 +67,7 @@ export default function WorkingExperience({ hideHeader = false }) {
                   )}
                 </div>
                 <div>
-                  {language_correct(
+                  {getCurrentLanguageText(
                     language,
                     experience.time,
                     experience.time_chinese

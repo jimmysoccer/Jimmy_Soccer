@@ -1,11 +1,11 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { UFImage, aboutImage, aquinasImage } from '../../imgs/images';
-import { educationExperience } from '../../const/education';
+import { UFImage, aboutImage, aquinasImage } from '../../assets/images/images';
+import { educationExperience } from '../../constants/education-items';
 import { useEffect } from 'react';
 import { Grid } from '@mui/material';
-import { language_correct } from '../../utils/switch_language';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 // import { getEducationHistory } from '../../fetch/getEducationHistory';
@@ -21,14 +21,14 @@ export default function About() {
       <Grid container className='mt-5 justify-content-center'>
         <Grid item md={7}>
           <h2 className='text-center fw-bold'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               `I am Heng Sun. I live in Gainesville.`,
               `我是孙恒，现居于盖恩斯维尔，佛罗里达州`
             )}
           </h2>
           <p className='fs-5 text-secondary'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               `I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I
             am working from home right now. I am passionate about creating
@@ -49,7 +49,11 @@ export default function About() {
           >
             <GitHubIcon className='me-3'></GitHubIcon>
             <div>
-              {language_correct(language, 'Follow on Github', '关注我的Github')}
+              {getCurrentLanguageText(
+                language,
+                'Follow on Github',
+                '关注我的Github'
+              )}
             </div>
           </div>
           <div
@@ -60,7 +64,11 @@ export default function About() {
           >
             <LinkedInIcon className='me-3'></LinkedInIcon>
             <div>
-              {language_correct(language, 'Follow on LinkedIn', '关注我的领英')}
+              {getCurrentLanguageText(
+                language,
+                'Follow on LinkedIn',
+                '关注我的领英'
+              )}
             </div>
           </div>
           <div
@@ -68,7 +76,7 @@ export default function About() {
             onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
           >
             <EmailIcon className='me-3'></EmailIcon>
-            <div>{language_correct(language, 'Email', '电子邮箱')}</div>
+            <div>{getCurrentLanguageText(language, 'Email', '电子邮箱')}</div>
           </div>
         </Grid>
       </Grid>
@@ -93,7 +101,7 @@ export default function About() {
               ></img>
             </div>
             <h3 className='mt-2 mb-0 fs-5'>
-              {language_correct(
+              {getCurrentLanguageText(
                 language,
                 exp.school + ', ' + exp.location + ' --- ' + exp.degree,
                 exp.school_chinese +
@@ -104,10 +112,10 @@ export default function About() {
               )}
             </h3>
             <div className='fs-4'>
-              {language_correct(language, exp.time, exp.time_chinese)}
+              {getCurrentLanguageText(language, exp.time, exp.time_chinese)}
             </div>
             <div className='fs-5 text-secondary'>
-              {language_correct(
+              {getCurrentLanguageText(
                 language,
                 'Main courses: ' + exp.courses.map((des) => des),
                 '主要课程: ' + exp.courses_chinese.map((des) => des)

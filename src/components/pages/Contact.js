@@ -3,20 +3,20 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
-import { language_correct } from '../../utils/switch_language';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 export default function Contact() {
   const language = useAtomValue(languageAtom);
   return (
     <div className='container'>
       <h1 className='text-left w-50 mt-5'>
-        {language_correct(
+        {getCurrentLanguageText(
           language,
           `Let's Get in Touch: Ways to Connect with Me`,
           '让我们保持联系'
         )}
       </h1>
       <p className='fs-5 text-secondary'>
-        {language_correct(
+        {getCurrentLanguageText(
           language,
           `Thank you for your interest in getting in touch with me. I welcome your
         feedback, questions, and suggestions. If you have a specific question or
@@ -40,7 +40,11 @@ export default function Contact() {
           >
             <GitHubIcon className='mx-2'></GitHubIcon>
             <div>
-              {language_correct(language, 'Follow on Github', '关注我的Github')}
+              {getCurrentLanguageText(
+                language,
+                'Follow on Github',
+                '关注我的Github'
+              )}
             </div>
           </div>
         </div>
@@ -54,7 +58,11 @@ export default function Contact() {
           >
             <LinkedInIcon className='mx-2'></LinkedInIcon>
             <div>
-              {language_correct(language, 'Follow on LinkedIn', '关注我的领英')}
+              {getCurrentLanguageText(
+                language,
+                'Follow on LinkedIn',
+                '关注我的领英'
+              )}
             </div>
           </div>
         </div>
@@ -65,7 +73,7 @@ export default function Contact() {
             onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
           >
             <EmailIcon className='mx-2'></EmailIcon>
-            <div>{language_correct(language, 'Email', '电子邮箱')}</div>
+            <div>{getCurrentLanguageText(language, 'Email', '电子邮箱')}</div>
           </div>
         </div>
       </div>

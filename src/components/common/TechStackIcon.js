@@ -1,4 +1,4 @@
-import { techStack } from '../const/techStack';
+import { techStack } from '../../constants/tech-stack';
 import JavascriptIcon from '@mui/icons-material/Javascript';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import {
@@ -15,8 +15,8 @@ import {
   sqlImage,
   threeDJSImage,
   wechatImage,
-} from '../imgs/images';
-import './style.css';
+} from '../../assets/images/images';
+import '../../assets/styles/style.css';
 
 export default function TechStackIcon({ stack }) {
   switch (stack) {

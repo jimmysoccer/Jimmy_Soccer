@@ -1,4 +1,4 @@
-import { techStack } from './techStack';
+import { techStack } from './tech-stack';
 
 export const workingExperience = [
   {

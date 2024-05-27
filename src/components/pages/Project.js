@@ -1,12 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import TechStackIcon from '../../components/techStackIcon';
+import TechStackIcon from '../common/TechStackIcon';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { LANGUAGE, NAV_BAR } from '../../const/navBar_const';
-import NotFound from '../../components/NotFound';
+import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
+import NotFound from './NotFound';
 import { Grid } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
-import { language_correct } from '../../utils/switch_language';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 
 export default function Project() {
   const location = useLocation();
@@ -14,7 +14,11 @@ export default function Project() {
   const language = useAtomValue(languageAtom);
 
   if (project.title) {
-    document.title = `Jimmy | ${project.title}`;
+    document.title = `Jimmy | ${getCurrentLanguageText(
+      language,
+      project.title,
+      project.title_chinese
+    )}`;
   }
 
   return (
@@ -33,10 +37,18 @@ export default function Project() {
               <TechStackIcon key={`project-tech-stack-${tech}`} stack={tech} />
             ))}
             <h1>
-              {language_correct(language, project.title, project.title_chinese)}
+              {getCurrentLanguageText(
+                language,
+                project.title,
+                project.title_chinese
+              )}
             </h1>
             <h2>
-              {language_correct(language, project.time, project.time_chinese)}
+              {getCurrentLanguageText(
+                language,
+                project.time,
+                project.time_chinese
+              )}
             </h2>
             <ul className='text-start'>
               {(language === LANGUAGE.chinese.value
@@ -62,7 +74,7 @@ export default function Project() {
                       rel='noopener noreferrer'
                       className='w-100 text-decoration-none text-white'
                     >
-                      {language_correct(
+                      {getCurrentLanguageText(
                         language,
                         'Click here to view the paper',
                         '点此处阅读文献'

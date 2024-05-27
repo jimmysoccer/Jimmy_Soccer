@@ -13,8 +13,8 @@ import {
   sunSpotImage1,
   sunSpotImage2,
   sunSpotImage3,
-} from '../imgs/images';
-import { techStack } from './techStack';
+} from '../assets/images/images';
+import { techStack } from './tech-stack';
 
 export const projects = [
   {

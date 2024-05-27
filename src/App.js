@@ -1,17 +1,17 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-import Home from './pages/homePage';
-import { NAV_BAR } from './const/navBar_const';
-import About from './pages/about';
-import Projects from './pages/projects/projects';
-import Contact from './pages/contact';
-import WorkingExperience from './pages/workingExperience';
+import Home from './components/pages/Home';
+import { NAV_BAR } from './constants/navbar-items';
+import About from './components/pages/About';
+import Projects from './components/pages/Projects';
+import Contact from './components/pages/Contact';
+import WorkingExperience from './components/pages/Work';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Project from './pages/projects/project';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-import InnovationHub from './pages/innovationHub/InnovationHub';
-import NotFound from './components/NotFound';
+import Project from './components/pages/Project';
+import NavBar from './components/layout/NavBar';
+import Footer from './components/layout/Footer';
+import InnovationHub from './components/pages/InnovationHub';
+import NotFound from './components/pages/NotFound';
 
 function App() {
   return (

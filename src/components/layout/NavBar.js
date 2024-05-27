@@ -1,23 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LANGUAGE, NAV_BAR } from '../const/navBar_const';
+import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
 import { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { useAtom } from 'jotai';
-import { languageAtom } from '../atoms/primitive.atom';
-import { language_correct } from '../utils/switch_language';
-import { chinaImage, usImage } from '../imgs/images';
+import { languageAtom } from '../../atoms/primitive.atom';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { chinaImage, usImage } from '../../assets/images/images';
+import getHeaderTitleByPath from '../../utils/get-header-title-by-path';
 
 export default function NavBar() {
   const location = useLocation();
   const path = location.pathname;
-  const pathName = path.split('/')[1];
   const [language, setLanguage] = useAtom(languageAtom);
 
   useEffect(() => {
-    document.title = `Jimmy | ${
-      pathName.charAt(0).toUpperCase() + pathName.slice(1)
-    }`;
-  }, [pathName]);
+    document.title = `Jimmy | ${getHeaderTitleByPath(path, language)}`;
+  }, [language, path]);
 
   const handleLanguageButton = (lan) => {
     setLanguage(lan);
@@ -34,7 +32,11 @@ export default function NavBar() {
               className={'nav justify-content-center'}
               style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
             >
-              {language_correct(language, navItem.title, navItem.titleChinese)}
+              {getCurrentLanguageText(
+                language,
+                navItem.title,
+                navItem.titleChinese
+              )}
             </Link>
           ))}
         </Grid>

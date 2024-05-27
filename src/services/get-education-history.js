@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { educationHistoryUrl } from '../utils/url.store';
+import { educationHistoryUrl } from './api-url';
 
 export const getEducationHistory = async () => {
   const res = await axios.get(educationHistoryUrl);

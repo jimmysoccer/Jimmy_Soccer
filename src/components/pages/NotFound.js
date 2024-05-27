@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { NAV_BAR } from '../const/navBar_const';
-import not_found_animation from '../assets/404.json';
+import { NAV_BAR } from '../../constants/navbar-items';
+import not_found_animation from '../../assets/animations/404.json';
 import Lottie from 'lottie-react';
 import { useMediaQuery } from '@mui/material';
 

@@ -1,9 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import { NAV_BAR } from '../const/navBar_const';
+import { NAV_BAR } from '../../constants/navbar-items';
 import { Grid } from '@mui/material';
-import { language_correct } from '../utils/switch_language';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtomValue } from 'jotai';
-import { languageAtom } from '../atoms/primitive.atom';
+import { languageAtom } from '../../atoms/primitive.atom';
 
 export default function Footer() {
   const location = useLocation();
@@ -24,7 +24,11 @@ export default function Footer() {
               className={'footer-nav d-flex flex-column justify-content-center'}
               style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
             >
-              {language_correct(language, navItem.title, navItem.titleChinese)}
+              {getCurrentLanguageText(
+                language,
+                navItem.title,
+                navItem.titleChinese
+              )}
             </Link>
           ))}
         </Grid>

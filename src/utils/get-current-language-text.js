@@ -1,6 +1,6 @@
-import { LANGUAGE } from '../const/navBar_const';
+import { LANGUAGE } from '../constants/navbar-items';
 
-export function language_correct(language, englishValue, chineseValue) {
+export function getCurrentLanguageText(language, englishValue, chineseValue) {
   switch (language) {
     case LANGUAGE.english.value:
       return englishValue;

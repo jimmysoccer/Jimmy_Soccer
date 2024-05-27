@@ -1,15 +1,15 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import Projects from '../projects/projects';
-import WorkingExperience from '../workingExperience';
-import web_development_animation from '../../assets/web_development.json';
+import Projects from './Projects';
+import WorkingExperience from './Work';
+import web_development_animation from '../../assets/animations/web_development.json';
 import Lottie from 'lottie-react';
 import { Grid } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
-import { language_correct } from '../../utils/switch_language';
-import { NAV_BAR } from '../../const/navBar_const';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { NAV_BAR } from '../../constants/navbar-items';
 
 export default function Home() {
   const language = useAtomValue(languageAtom);
@@ -18,14 +18,14 @@ export default function Home() {
       <Grid container className='mt-5'>
         <Grid item md={8}>
           <h2 className='text-center fw-bold'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               'Full-stack web application developer',
               '全栈网络应用程序开发者'
             )}
           </h2>
           <p className='fs-5 text-secondary'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               `
             🚀 Hi, I'm Heng Sun, a recent graduate with a Bachelor of Science in
@@ -35,7 +35,7 @@ export default function Home() {
             )}
           </p>
           <p className='fs-5 text-secondary'>
-            {language_correct(
+            {getCurrentLanguageText(
               language,
               `🎓 Eager to further my academic journey, I aspire to pursue a Ph.D.
             position that aligns with my passion for human-centered interaction,
@@ -79,7 +79,7 @@ export default function Home() {
         ></LinkedInIcon>
       </div>
       <h2 className='text-center'>
-        {language_correct(
+        {getCurrentLanguageText(
           language,
           NAV_BAR.workingExperience.title,
           NAV_BAR.workingExperience.titleChinese
@@ -87,7 +87,7 @@ export default function Home() {
       </h2>
       <WorkingExperience hideHeader={true} />
       <h2 className='text-center'>
-        {language_correct(
+        {getCurrentLanguageText(
           language,
           NAV_BAR.projects.title,
           NAV_BAR.projects.titleChinese
