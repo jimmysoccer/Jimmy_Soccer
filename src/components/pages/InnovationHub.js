@@ -1,22 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 export default function InnovationHub() {
   const language = useAtomValue(languageAtom);
-  const [records] = useState([]);
+  const [records, setRecords] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get('http://111.229.172.53/dev/get_all_records')
-  //     .then((res) => {
-  //       const data = res?.data;
-  //       setRecords(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('error', error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get('http://111.229.172.53/api/dev/get_all_records')
+      .then((res) => {
+        const data = res?.data;
+        setRecords(data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  }, []);
 
   return (
     <div className='container my-5 text-center'>
@@ -34,9 +35,9 @@ export default function InnovationHub() {
           展示创新的无限可能性。`
         )}
       </h3>
-      {records.map((record) => (
-        <div>{record?.first_name}</div>
-      ))}
+      {records.length !== 0
+        ? records.map((record) => <div>{record?.first_name}</div>)
+        : 'No Users'}
     </div>
   );
 }
