@@ -22,7 +22,11 @@ export default function Footer() {
               key={`footer-${navItem.title}`}
               to={navItem.path}
               className={'footer-nav d-flex flex-column justify-content-center'}
-              style={path.includes(navItem.path) ? { color: '#14b8a6' } : {}}
+              style={
+                path === navItem.path || path.startsWith(navItem.path + '/')
+                  ? { color: '#14b8a6' }
+                  : {}
+              }
             >
               {getCurrentLanguageText(
                 language,
