@@ -11,3 +11,9 @@
 .language:hover {
   color: #14b8a6;
 }
+.css-levciy-MuiTablePagination-displayedRows {
+  margin: 0;
+}
+.css-rtrcn9-MuiTablePagination-root .MuiTablePagination-selectLabel {
+  margin: 0;
+}
