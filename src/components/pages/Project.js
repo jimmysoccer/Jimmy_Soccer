@@ -25,10 +25,12 @@ export default function Project() {
 
   return (
     <div className='d-flex flex-column'>
-      <div className='px-5 my-5'>
-        <Link className='text-success' to={NAV_BAR.projects.path}>
-          <ArrowBackIcon></ArrowBackIcon>
-        </Link>
+      <div className='px-5 my-5 d-flex justify-content-center'>
+        <div className='w-75'>
+          <Link className='text-success' to={NAV_BAR.projects.path}>
+            <ArrowBackIcon></ArrowBackIcon>
+          </Link>
+        </div>
       </div>
       {Object.keys(project).length === 0 ? (
         <NotFound />
