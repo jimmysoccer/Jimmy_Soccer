@@ -54,7 +54,7 @@ export default function Projects({ hideHeader = false }) {
               item
               md={5}
               key={`projects-${index}`}
-              className='shadow p-3 rounded m-4'
+              className='box shadow p-3 rounded m-4'
             >
               <Link
                 to={`${NAV_BAR.projects.path}/${project.title}`}

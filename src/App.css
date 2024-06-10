@@ -34,3 +34,11 @@
   width: 0px;
   background: transparent; /* make scrollbar transparent */
 }
+
+.box {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+.box:hover {
+  transform: scale(1.1);
+}

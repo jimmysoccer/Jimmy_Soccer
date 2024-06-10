@@ -1,3 +1,4 @@
+import { projects } from './projects';
 import { techStack } from './tech-stack';
 
 export const workingExperience = [
@@ -32,6 +33,7 @@ export const workingExperience = [
       techStack.mongoDB,
       techStack.figma,
     ],
+    projects: [projects[0], projects[1]],
   },
   {
     employer: 'PathPoint Energy LLC',

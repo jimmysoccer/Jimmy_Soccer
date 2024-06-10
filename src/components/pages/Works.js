@@ -43,7 +43,7 @@ export default function WorkingExperience({ hideHeader = false }) {
             <Grid
               item
               md={hideHeader ? 10 : 5}
-              className='shadow p-3 rounded m-4'
+              className='box shadow p-3 rounded m-4'
               key={`work-${index}`}
             >
               <Link
@@ -56,21 +56,27 @@ export default function WorkingExperience({ hideHeader = false }) {
                     <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
                   ))}
                 </div>
-                <div className='fs-5 fw-bold text-black'>
+                <h1 className='fs-3 fw-bold'>
                   {getCurrentLanguageText(
                     language,
-                    experience.employer +
-                      ', ' +
-                      experience.location +
-                      ' --- ' +
-                      experience.position,
-                    experience.employer_chinese +
-                      ', ' +
-                      experience.location_chinese +
-                      ' --- ' +
-                      experience.position_chinese
+                    experience.employer,
+                    experience.employer_chinese
                   )}
-                </div>
+                </h1>
+                <h2 className='fs-4'>
+                  {getCurrentLanguageText(
+                    language,
+                    experience.position,
+                    experience.position_chinese
+                  )}
+                </h2>
+                <h3 className='fs-5'>
+                  {getCurrentLanguageText(
+                    language,
+                    experience.location,
+                    experience.location_chinese
+                  )}
+                </h3>
                 <div>
                   {getCurrentLanguageText(
                     language,
