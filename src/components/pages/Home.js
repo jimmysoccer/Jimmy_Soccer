@@ -2,7 +2,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Projects from './Projects';
-import WorkingExperience from './Work';
+import WorkingExperience from './Works';
 import web_development_animation from '../../assets/animations/web_development.json';
 import Lottie from 'lottie-react';
 import { Grid } from '@mui/material';
