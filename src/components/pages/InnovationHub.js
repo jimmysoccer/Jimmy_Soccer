@@ -5,6 +5,8 @@ import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
 import { Button, TextField } from '@mui/material';
 import { fetchDevRecords } from '../../services/fetch-dev-records';
+import { motion } from 'framer-motion';
+
 export default function InnovationHub() {
   const language = useAtomValue(languageAtom);
   const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
@@ -31,7 +33,12 @@ export default function InnovationHub() {
   };
 
   return (
-    <div className='container my-5 text-center'>
+    <motion.div
+      className='container my-5 text-center'
+      initial={{ opacity: 0, y: '100%' }}
+      animate={{ opacity: 1, y: '0' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
       <h1 className='text-success'>
         {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
       </h1>
@@ -93,6 +100,6 @@ export default function InnovationHub() {
           </form>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

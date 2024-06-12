@@ -6,11 +6,17 @@ import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function WorkingExperience({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
   return (
-    <div className='container'>
+    <motion.div
+      className='container'
+      initial={{ opacity: 0, y: '100%' }}
+      animate={{ opacity: 1, y: '0' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
       {!hideHeader && (
         <>
           <h1 className='text-left w-50 mt-5'>
@@ -105,6 +111,6 @@ export default function WorkingExperience({ hideHeader = false }) {
           <Grid item md={5} className='p-3 rounded m-4' />
         )}
       </Grid>
-    </div>
+    </motion.div>
   );
 }

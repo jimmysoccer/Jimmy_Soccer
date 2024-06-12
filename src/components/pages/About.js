@@ -3,21 +3,34 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { UFImage, aboutImage, aquinasImage } from '../../assets/images/images';
 import { educationExperience } from '../../constants/education-items';
-import { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
-// import { getEducationHistory } from '../../fetch/getEducationHistory';
+import { motion } from 'framer-motion';
 
 export default function About() {
   const language = useAtomValue(languageAtom);
-  useEffect(() => {
-    // const res = getEducationHistory();
-  }, []);
+
+  const TEXT_1 = getCurrentLanguageText(
+    language,
+    `I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I
+  am working from home right now. I am passionate about creating
+  high-quality code that follows best practices and industry
+  standards. I am always looking for new challenges and opportunities
+  to grow as a developer.`,
+    `我是孙恒, 你可以叫我Jimmy。我住在佛罗里达州的盖恩斯维尔。
+    目前在家工作。我热衷于编写遵循最佳实践和行业标准的高质量代码，
+    并且始终在寻找新的挑战和机会，以便在开发者的道路上不断成长。`
+  ).split(' ');
 
   return (
-    <div className='container'>
+    <motion.div
+      className='container'
+      initial={{ opacity: 0, y: '100%' }}
+      animate={{ opacity: 1, y: '0' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
       <Grid container className='mt-5 justify-content-center' gap={5}>
         <Grid item md={4}>
           <h2 className='text-center fw-bold'>
@@ -28,17 +41,15 @@ export default function About() {
             )}
           </h2>
           <p className='fs-5 text-secondary'>
-            {getCurrentLanguageText(
-              language,
-              `I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I
-            am working from home right now. I am passionate about creating
-            high-quality code that follows best practices and industry
-            standards. I am always looking for new challenges and opportunities
-            to grow as a developer.`,
-              `我是孙恒, 你可以叫我Jimmy。我住在佛罗里达州的盖恩斯维尔。
-              目前在家工作。我热衷于编写遵循最佳实践和行业标准的高质量代码，
-              并且始终在寻找新的挑战和机会，以便在开发者的道路上不断成长。`
-            )}
+            {TEXT_1.map((el, i) => (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.25, delay: i / 20 }}
+              >
+                {el}{' '}
+              </motion.span>
+            ))}
           </p>
         </Grid>
         <Grid item md={4}>
@@ -135,6 +146,6 @@ export default function About() {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </motion.div>
   );
 }

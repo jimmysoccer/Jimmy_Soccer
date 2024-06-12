@@ -4,10 +4,17 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { motion } from 'framer-motion';
+
 export default function Contact() {
   const language = useAtomValue(languageAtom);
   return (
-    <div className='container'>
+    <motion.div
+      className='container'
+      initial={{ opacity: 0, y: '100%' }}
+      animate={{ opacity: 1, y: '0' }}
+      transition={{ duration: 0.75, ease: 'easeOut' }}
+    >
       <h1 className='text-left w-50 mt-5'>
         {getCurrentLanguageText(
           language,
@@ -79,6 +86,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
