@@ -3,7 +3,7 @@ import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtom, useAtomValue } from 'jotai';
 import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
-import { Button, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import { fetchDevRecords } from '../../services/fetch-dev-records';
 import { motion } from 'framer-motion';
 
@@ -51,7 +51,17 @@ export default function InnovationHub() {
           `发现开创性的设计和前沿技术解决方案，
           重新定义数字体验，
           展示创新的无限可能性。`
-        )}
+        )
+          .split(' ')
+          .map((el, i) => (
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.25, delay: i / 10 }}
+            >
+              {el}{' '}
+            </motion.span>
+          ))}
       </h3>
 
       {loggedIn ? (
@@ -70,15 +80,26 @@ export default function InnovationHub() {
               <div>No Users</div>
             </div>
           )}
-          <div className='container'>
-            <DataTable></DataTable>
+          <div className='container'>{/* <DataTable></DataTable> */}</div>
+          <div className='container d-flex gap-3 flex-wrap'>
+            {[1, 2, 3].map((a) => (
+              <div
+                className='bg-primary-subtle w-100 my-2'
+                style={{ height: '200px' }}
+              ></div>
+            ))}
           </div>
           <Button className='mt-3' variant='contained' onClick={handleLogOut}>
             Log Out
           </Button>
         </>
       ) : (
-        <div className='container mt-5 w-25'>
+        <Grid
+          container
+          md={12}
+          justifyContent={'center'}
+          className='container mt-5'
+        >
           <form
             className='d-flex flex-column gap-4'
             onSubmit={(e) => handleLogin(e)}
@@ -98,7 +119,7 @@ export default function InnovationHub() {
               Login
             </Button>
           </form>
-        </div>
+        </Grid>
       )}
     </motion.div>
   );
