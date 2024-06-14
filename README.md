@@ -15,6 +15,12 @@ This is Jimmy's personal website. It may include blogs, gallaries, or any other 
    npm start
    ```
 
+## Library Used
+* React
+* Lottie
+* framer-motion
+* bootstrap
+
 ## Deploy Guide
 
 1. modify code on text editor
