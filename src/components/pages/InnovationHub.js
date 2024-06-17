@@ -1,11 +1,12 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from 'react';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtom, useAtomValue } from 'jotai';
 import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
 import { Button, Grid, TextField } from '@mui/material';
 import { fetchDevRecords } from '../../services/fetch-dev-records';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { AnimatePresence, motion, useAnimate } from 'framer-motion';
 import '../../assets/styles/innovationHub.css';
 
 function Gallery({ items, setIndex }) {
@@ -44,6 +45,8 @@ export default function InnovationHub() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [index, setIndex] = useState(false);
+  const [scope, animate] = useAnimate();
+  const first = useRef(true);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -63,6 +66,21 @@ export default function InnovationHub() {
     if (records) setRecords(records);
   };
 
+  const controlText = async () => {
+    await animate(scope.current, { opacity: 0, y: 0 }, { duration: 0 });
+    await animate(scope.current, { opacity: 1, y: 0 }, { duration: 0.5 });
+  };
+
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    if (!first.current) {
+      controlText();
+    }
+  }, [language]);
+
   const numColors = 4 * 4;
   const makeColor = (hue) => `hsl(${hue}, 100%, 50%)`;
   const colors = Array.from(Array(numColors)).map((_, i) =>
@@ -77,31 +95,30 @@ export default function InnovationHub() {
       exit={{ y: -10, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <AnimateSharedLayout>
+      <div ref={scope}>Hello</div>
+      <AnimatePresence>
         <Gallery items={colors} setIndex={setIndex}></Gallery>
-        <AnimatePresence>
-          {index !== false && (
-            <div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              exit={{ opacity: 0 }}
-              key='overlay'
-              className='overlay'
-              onClick={() => setIndex(false)}
-            />
-          )}
+        {index !== false && (
+          <div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            exit={{ opacity: 0 }}
+            key='overlay'
+            className='overlay'
+            onClick={() => setIndex(false)}
+          />
+        )}
 
-          {index !== false && (
-            <SingleImage
-              key='image'
-              index={index}
-              color={colors[index]}
-              setIndex={setIndex}
-              onClick={() => setIndex(false)}
-            />
-          )}
-        </AnimatePresence>
-      </AnimateSharedLayout>
+        {index !== false && (
+          <SingleImage
+            key='image'
+            index={index}
+            color={colors[index]}
+            setIndex={setIndex}
+            onClick={() => setIndex(false)}
+          />
+        )}
+      </AnimatePresence>
       <div className='px-3'>
         <h1 className='text-success'>
           {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
