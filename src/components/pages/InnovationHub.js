@@ -39,30 +39,32 @@ export default function InnovationHub() {
       animate={{ opacity: 1, y: '0' }}
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <h1 className='text-success'>
-        {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
-      </h1>
-      <h3 className='text-success opacity-50'>
-        {getCurrentLanguageText(
-          language,
-          `Discover groundbreaking designs and state-of-the-art tech solutions that
+      <div className='px-3'>
+        <h1 className='text-success'>
+          {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
+        </h1>
+        <h3 className='text-success opacity-50'>
+          {getCurrentLanguageText(
+            language,
+            `Discover groundbreaking designs and state-of-the-art tech solutions that
           redefine the digital experience, showcasing the limitless possibilities
           of innovation.`,
-          `发现开创性的设计和前沿技术解决方案，
+            `发现开创性的设计和前沿技术解决方案，
           重新定义数字体验，
           展示创新的无限可能性。`
-        )
-          .split(' ')
-          .map((el, i) => (
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.25, delay: i / 10 }}
-            >
-              {el}{' '}
-            </motion.span>
-          ))}
-      </h3>
+          )
+            .split(' ')
+            .map((el, i) => (
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.25, delay: i / 10 }}
+              >
+                {el}{' '}
+              </motion.span>
+            ))}
+        </h3>
+      </div>
 
       {loggedIn ? (
         <>
@@ -80,7 +82,9 @@ export default function InnovationHub() {
               <div>No Users</div>
             </div>
           )}
-          <div className='container'>{/* <DataTable></DataTable> */}</div>
+          <div className='container'>
+            <DataTable></DataTable>
+          </div>
           <div className='container d-flex gap-3 flex-wrap'>
             {[1, 2, 3].map((a) => (
               <div

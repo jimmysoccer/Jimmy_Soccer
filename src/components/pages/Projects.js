@@ -29,7 +29,7 @@ export default function Projects({ hideHeader = false }) {
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
       {!hideHeader && (
-        <>
+        <div className='px-3'>
           <h1 className='text-left w-50 mt-5'>
             {getCurrentLanguageText(
               language,
@@ -50,7 +50,7 @@ export default function Projects({ hideHeader = false }) {
               希望在世界上留下有意义的印记。`
             )}
           </p>
-        </>
+        </div>
       )}
       <Grid container className='justify-content-center'>
         {projects.map((project, index) => {
@@ -79,7 +79,7 @@ export default function Projects({ hideHeader = false }) {
                     project.title_chinese
                   )}
                 </div>
-                <div className='text-black'>
+                <div className='text-black fst-italic'>
                   {getCurrentLanguageText(
                     language,
                     project.time,
@@ -99,6 +99,13 @@ export default function Projects({ hideHeader = false }) {
                     </li>
                   ))}
                 </ul>
+                {project.images && (
+                  <img
+                    className='img-fluid'
+                    src={project.images[0]}
+                    alt='projects'
+                  ></img>
+                )}
               </Link>
             </Grid>
           );

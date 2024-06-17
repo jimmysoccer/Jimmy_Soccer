@@ -15,28 +15,30 @@ export default function Contact() {
       animate={{ opacity: 1, y: '0' }}
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <h1 className='text-left w-50 mt-5'>
-        {getCurrentLanguageText(
-          language,
-          `Let's Get in Touch: Ways to Connect with Me`,
-          '让我们保持联系'
-        )}
-      </h1>
-      <p className='fs-5 text-secondary'>
-        {getCurrentLanguageText(
-          language,
-          `Thank you for your interest in getting in touch with me. I welcome your
+      <div className='px-3'>
+        <h1 className='text-left w-50 mt-5'>
+          {getCurrentLanguageText(
+            language,
+            `Let's Get in Touch: Ways to Connect with Me`,
+            '让我们保持联系'
+          )}
+        </h1>
+        <p className='fs-5 text-secondary'>
+          {getCurrentLanguageText(
+            language,
+            `Thank you for your interest in getting in touch with me. I welcome your
         feedback, questions, and suggestions. If you have a specific question or
         comment, please feel free to email me. I make an effort to respond to
         all messages within 24 hours, although it may take me longer during busy
         periods. Thanks again for your interest, and I look forward to hearing
         from you!`,
-          `感谢您对与我取得联系感兴趣。我欢迎您的反馈、问题和建议。
+            `感谢您对与我取得联系感兴趣。我欢迎您的反馈、问题和建议。
           如果您有具体的问题或评论，请随时通过电子邮件与我联系。
           我会尽力在24小时内回复所有消息, 尽管在繁忙时期可能需要更长的时间。
           再次感谢您的关注，期待收到您的来信！`
-        )}
-      </p>
+          )}
+        </p>
+      </div>
 
       <div className='text-secondary flex-column justify-content-center'>
         <div className='d-flex justify-content-center my-2'>

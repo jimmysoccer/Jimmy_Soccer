@@ -31,7 +31,7 @@ export default function About() {
       animate={{ opacity: 1, y: '0' }}
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <Grid container className='mt-5 justify-content-center' gap={5}>
+      <Grid container className='mt-5 justify-content-center px-3' gap={5}>
         <Grid item md={4}>
           <h2 className='text-center fw-bold'>
             {getCurrentLanguageText(

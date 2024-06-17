@@ -40,7 +40,7 @@ Computer Science from the University of Florida.`,
       animate={{ opacity: 1, y: '0' }}
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
-      <Grid container className='my-5' justifyContent={'center'} gap={5}>
+      <Grid container className='my-5 px-3' justifyContent={'center'} gap={5}>
         <Grid item md={4}>
           <h2 className='text-center fw-bold'>
             {getCurrentLanguageText(

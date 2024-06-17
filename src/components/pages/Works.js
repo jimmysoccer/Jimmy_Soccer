@@ -18,7 +18,7 @@ export default function WorkingExperience({ hideHeader = false }) {
       transition={{ duration: 0.75, ease: 'easeOut' }}
     >
       {!hideHeader && (
-        <>
+        <div className='px-3'>
           <h1 className='text-left w-50 mt-5'>
             {getCurrentLanguageText(
               language,
@@ -39,7 +39,7 @@ export default function WorkingExperience({ hideHeader = false }) {
               这条时间线反映了我对持续学习和卓越的承诺。`
             )}
           </p>
-        </>
+        </div>
       )}
       <Grid container className='justify-content-center'>
         {workingExperience.map((experience, index) => {
@@ -62,28 +62,28 @@ export default function WorkingExperience({ hideHeader = false }) {
                     <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
                   ))}
                 </div>
-                <h1 className='fs-3 fw-bold'>
+                <h1 className='fs-5 fw-bold'>
                   {getCurrentLanguageText(
                     language,
                     experience.employer,
                     experience.employer_chinese
                   )}
                 </h1>
-                <h2 className='fs-4'>
+                <div className='fs-5'>
                   {getCurrentLanguageText(
                     language,
                     experience.position,
                     experience.position_chinese
                   )}
-                </h2>
-                <h3 className='fs-5'>
+                </div>
+                <div>
                   {getCurrentLanguageText(
                     language,
                     experience.location,
                     experience.location_chinese
                   )}
-                </h3>
-                <div>
+                </div>
+                <div className='fst-italic'>
                   {getCurrentLanguageText(
                     language,
                     experience.time,
