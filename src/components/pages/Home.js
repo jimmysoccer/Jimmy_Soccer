@@ -36,9 +36,10 @@ Computer Science from the University of Florida.`,
   return (
     <motion.div
       className='container'
-      initial={{ opacity: 0, y: '100%' }}
-      animate={{ opacity: 1, y: '0' }}
-      transition={{ duration: 0.75, ease: 'easeOut' }}
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Grid container className='my-5 px-3' justifyContent={'center'} gap={5}>
         <Grid item md={4}>

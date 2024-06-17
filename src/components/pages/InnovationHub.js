@@ -5,14 +5,45 @@ import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
 import { Button, Grid, TextField } from '@mui/material';
 import { fetchDevRecords } from '../../services/fetch-dev-records';
-import { motion } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import '../../assets/styles/innovationHub.css';
 
+function Gallery({ items, setIndex }) {
+  return (
+    <div className='d-flex justify-content-center my-4'>
+      <ul className='gallery-container'>
+        {items.map((color, i) => (
+          <motion.li
+            className='gallery-item'
+            key={color}
+            onClick={() => setIndex(i)}
+            style={{ backgroundColor: color }}
+            layoutId={color}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SingleImage({ color, onClick }) {
+  return (
+    <div className='single-image-container' onClick={onClick}>
+      <motion.div
+        layoutId={color}
+        className='single-image'
+        style={{ backgroundColor: color }}
+      />
+    </div>
+  );
+}
 export default function InnovationHub() {
   const language = useAtomValue(languageAtom);
   const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
   const [records, setRecords] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [index, setIndex] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -32,13 +63,45 @@ export default function InnovationHub() {
     if (records) setRecords(records);
   };
 
+  const numColors = 4 * 4;
+  const makeColor = (hue) => `hsl(${hue}, 100%, 50%)`;
+  const colors = Array.from(Array(numColors)).map((_, i) =>
+    makeColor(Math.round((360 / numColors) * i))
+  );
+
   return (
     <motion.div
       className='container my-5 text-center'
-      initial={{ opacity: 0, y: '100%' }}
-      animate={{ opacity: 1, y: '0' }}
-      transition={{ duration: 0.75, ease: 'easeOut' }}
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
+      <AnimateSharedLayout>
+        <Gallery items={colors} setIndex={setIndex}></Gallery>
+        <AnimatePresence>
+          {index !== false && (
+            <div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              key='overlay'
+              className='overlay'
+              onClick={() => setIndex(false)}
+            />
+          )}
+
+          {index !== false && (
+            <SingleImage
+              key='image'
+              index={index}
+              color={colors[index]}
+              setIndex={setIndex}
+              onClick={() => setIndex(false)}
+            />
+          )}
+        </AnimatePresence>
+      </AnimateSharedLayout>
       <div className='px-3'>
         <h1 className='text-success'>
           {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
@@ -84,14 +147,6 @@ export default function InnovationHub() {
           )}
           <div className='container'>
             <DataTable></DataTable>
-          </div>
-          <div className='container d-flex gap-3 flex-wrap'>
-            {[1, 2, 3].map((a) => (
-              <div
-                className='bg-primary-subtle w-100 my-2'
-                style={{ height: '200px' }}
-              ></div>
-            ))}
           </div>
           <Button className='mt-3' variant='contained' onClick={handleLogOut}>
             Log Out

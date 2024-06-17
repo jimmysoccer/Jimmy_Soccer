@@ -8,6 +8,7 @@ import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import ImageCarousel from '../common/ImageCarousel';
+import { motion } from 'framer-motion';
 
 export default function Project() {
   const location = useLocation();
@@ -24,7 +25,13 @@ export default function Project() {
   }
 
   return (
-    <div className='d-flex flex-column'>
+    <motion.div
+      className='d-flex flex-column'
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className='px-5 my-5 d-flex justify-content-center'>
         <div className='w-75'>
           <Link className='text-success' to={NAV_BAR.projects.path}>
@@ -120,6 +127,6 @@ export default function Project() {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

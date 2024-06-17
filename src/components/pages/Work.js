@@ -8,6 +8,7 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { workingExperience } from '../../constants/work-items';
 import { Grid } from '@mui/material';
+import { motion } from 'framer-motion';
 
 export default function Work() {
   const location = useLocation();
@@ -24,7 +25,13 @@ export default function Work() {
   workingExperience.map((a) => a.description);
 
   return (
-    <div className='d-flex flex-column'>
+    <motion.div
+      className='d-flex flex-column'
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className='px-5 my-5 d-flex justify-content-center'>
         <div className='w-75'>
           <Link className='text-success' to={NAV_BAR.workingExperience.path}>
@@ -137,6 +144,6 @@ export default function Work() {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }

@@ -24,9 +24,10 @@ export default function Projects({ hideHeader = false }) {
   return (
     <motion.div
       className='container'
-      initial={{ opacity: 0, y: '100%' }}
-      animate={{ opacity: 1, y: '0' }}
-      transition={{ duration: 0.75, ease: 'easeOut' }}
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -10, opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
       {!hideHeader && (
         <div className='px-3'>
