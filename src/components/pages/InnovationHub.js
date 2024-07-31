@@ -69,7 +69,7 @@ export default function InnovationHub() {
 
   const controlText = async () => {
     await animate(scope.current, { opacity: 0, y: 0 }, { duration: 0 });
-    await animate(scope.current, { opacity: 1, y: 0 }, { duration: 0.5 });
+    await animate(scope.current, { opacity: 1, y: 0 }, { duration: 2 });
   };
 
   useEffect(() => {
