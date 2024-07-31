@@ -11,4 +11,4 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 export const fastAPiUrl = `${fastApiHost}:${fastApiPort}`;
 export const educationHistoryUrl = `${fastAPiUrl}/jimmy_website/get_education_history`;
-export const devRecordsUrl = 'http://111.229.172.53/api/dev/get_all_records';
+export const devRecordsUrl = 'https://www.sh-haimin.cn/api/dev/get_all_records';

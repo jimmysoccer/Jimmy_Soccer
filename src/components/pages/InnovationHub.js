@@ -63,6 +63,7 @@ export default function InnovationHub() {
 
   const getDevRecords = async () => {
     const records = await fetchDevRecords();
+    console.log('records', records);
     if (records) setRecords(records);
   };
 
@@ -149,7 +150,7 @@ export default function InnovationHub() {
       {loggedIn ? (
         <>
           {records?.length !== 0 ? (
-            records.map((record) => <div>{record?.first_name}</div>)
+            records.map((record) => <div>{record?.firstname}</div>)
           ) : (
             <div>
               <Button
@@ -163,7 +164,7 @@ export default function InnovationHub() {
             </div>
           )}
           <div className='container'>
-            <DataTable></DataTable>
+            <DataTable rows={records}></DataTable>
           </div>
           <Button className='mt-3' variant='contained' onClick={handleLogOut}>
             Log Out
