@@ -8,6 +8,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import { fetchDevRecords } from '../../services/fetch-dev-records';
 import { AnimatePresence, motion, useAnimate } from 'framer-motion';
 import '../../assets/styles/innovationHub.css';
+import { getUserAuth } from '../../services/get-user-auth';
 
 function Gallery({ items, setIndex }) {
   return (
@@ -45,26 +46,36 @@ export default function InnovationHub() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [index, setIndex] = useState(false);
+  const [loadingTable, setLoadingTable] = useState(false);
   const [scope, animate] = useAnimate();
   const first = useRef(true);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username === 'jimmy' && password === 'jimmy') {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
+    try {
+      const res = await getUserAuth(username, password);
+      if (res.status === 200) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    } catch (error) {}
   };
 
   const handleLogOut = () => {
     setLoggedIn(false);
+    setRecords([]);
   };
 
   const getDevRecords = async () => {
-    const records = await fetchDevRecords();
-    console.log('records', records);
-    if (records) setRecords(records);
+    try {
+      setLoadingTable(true);
+      const records = await fetchDevRecords();
+      if (records) setRecords(records);
+    } catch (e) {
+    } finally {
+      setLoadingTable(false);
+    }
   };
 
   const controlText = async () => {
@@ -96,30 +107,34 @@ export default function InnovationHub() {
       exit={{ y: -10, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div ref={scope}>Hello</div>
-      <AnimatePresence>
-        <Gallery items={colors} setIndex={setIndex}></Gallery>
-        {index !== false && (
-          <div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            exit={{ opacity: 0 }}
-            key='overlay'
-            className='overlay'
-            onClick={() => setIndex(false)}
-          />
-        )}
+      {loggedIn && (
+        <>
+          <div ref={scope}>Hello</div>
+          <AnimatePresence>
+            <Gallery items={colors} setIndex={setIndex}></Gallery>
+            {index !== false && (
+              <div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.6 }}
+                exit={{ opacity: 0 }}
+                key='overlay'
+                className='overlay'
+                onClick={() => setIndex(false)}
+              />
+            )}
 
-        {index !== false && (
-          <SingleImage
-            key='image'
-            index={index}
-            color={colors[index]}
-            setIndex={setIndex}
-            onClick={() => setIndex(false)}
-          />
-        )}
-      </AnimatePresence>
+            {index !== false && (
+              <SingleImage
+                key='image'
+                index={index}
+                color={colors[index]}
+                setIndex={setIndex}
+                onClick={() => setIndex(false)}
+              />
+            )}
+          </AnimatePresence>
+        </>
+      )}
       <div className='px-3'>
         <h1 className='text-success'>
           {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
@@ -149,22 +164,17 @@ export default function InnovationHub() {
 
       {loggedIn ? (
         <>
-          {records?.length !== 0 ? (
-            records.map((record) => <div>{record?.firstname}</div>)
-          ) : (
-            <div>
-              <Button
-                className='my-3'
-                variant='contained'
-                onClick={() => getDevRecords()}
-              >
-                Click to get data
-              </Button>
-              <div>No Users</div>
-            </div>
-          )}
+          <div>
+            <Button
+              className='my-3'
+              variant='contained'
+              onClick={() => getDevRecords()}
+            >
+              Refresh to get data
+            </Button>
+          </div>
           <div className='container'>
-            <DataTable rows={records}></DataTable>
+            <DataTable rows={records} loading={loadingTable}></DataTable>
           </div>
           <Button className='mt-3' variant='contained' onClick={handleLogOut}>
             Log Out

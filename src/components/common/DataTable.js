@@ -30,12 +30,13 @@ const columns = [
   },
 ];
 
-export default function DataTable({ rows }) {
+export default function DataTable({ rows, loading }) {
   return (
     <Box sx={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
+        loading={loading}
         // initialState={{
         //   pagination: {
         //     paginationModel: {
