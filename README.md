@@ -20,6 +20,7 @@ This is Jimmy's personal website. It may include blogs, gallaries, or any other 
 * Lottie
 * framer-motion
 * bootstrap
+* react-hot-toast
 
 ## Deploy Guide
 
