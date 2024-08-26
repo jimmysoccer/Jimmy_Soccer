@@ -19,6 +19,11 @@ export const NAV_BAR = {
     title: 'Projects',
     titleChinese: '项目经历',
   },
+  // publications: {
+  //   path: '/publications',
+  //   title: 'Publications',
+  //   titleChinese: '研究经历',
+  // },
   contact: {
     path: '/contact',
     title: 'Contact',

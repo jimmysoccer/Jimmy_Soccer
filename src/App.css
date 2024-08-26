@@ -38,7 +38,9 @@
 .box {
   transition: transform 0.3s ease;
   cursor: pointer;
+  background-color: white;
 }
 .box:hover {
   transform: scale(1.1);
+  background-color: #fefae0;
 }

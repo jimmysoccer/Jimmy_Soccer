@@ -104,7 +104,8 @@ export default function About() {
         </Grid>
       </Grid>
 
-      <Grid container>
+      <Grid container justifyContent={'center'}>
+        <h2 className='text-center fw-bold'>Education Experience</h2>
         {educationExperience.map((exp) => (
           <Grid
             item

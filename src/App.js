@@ -38,6 +38,10 @@ function App() {
           path={NAV_BAR.projects.path + '/:name'}
           element={<Project></Project>}
         ></Route>
+        {/* <Route
+          path={NAV_BAR.publications.path}
+          element={<Publications></Publications>}
+        ></Route> */}
         <Route
           path={NAV_BAR.contact.path}
           element={<Contact></Contact>}
