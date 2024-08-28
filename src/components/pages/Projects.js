@@ -2,12 +2,12 @@ import { projects } from '../../constants/projects';
 import TechStackIcon from '../common/TechStackIcon';
 import { Link } from 'react-router-dom';
 import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
-import { Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { motion } from 'framer-motion';
+import Masonry from '@mui/lab/Masonry';
 
 export default function Projects({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
@@ -53,15 +53,17 @@ export default function Projects({ hideHeader = false }) {
           </p>
         </div>
       )}
-      <Grid container className='justify-content-center'>
+      <Masonry
+        columns={2}
+        spacing={2}
+        className='container justify-content-center'
+      >
         {projects.map((project, index) => {
           if (hideHeader && index > 1) return <div key={`work-${index}`}></div>;
           return (
-            <Grid
-              item
-              md={5}
+            <div
               key={`projects-${index}`}
-              className='box shadow p-3 rounded m-4'
+              className='box shadow p-3 rounded m-2'
             >
               <Link
                 to={`${NAV_BAR.projects.path}/${project.title}`}
@@ -108,13 +110,10 @@ export default function Projects({ hideHeader = false }) {
                   ></img>
                 )}
               </Link>
-            </Grid>
+            </div>
           );
         })}
-        {projects.length % 2 !== 0 && (
-          <Grid item md={5} className='p-3 rounded m-4' />
-        )}
-      </Grid>
+      </Masonry>
     </motion.div>
   );
 }
