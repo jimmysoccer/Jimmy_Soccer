@@ -53,66 +53,66 @@ export default function Projects({ hideHeader = false }) {
           </p>
         </div>
       )}
-      <Masonry
-        columns={2}
-        spacing={2}
-        className='container justify-content-center'
-      >
-        {projects.map((project, index) => {
-          if (hideHeader && index > 1) return <div key={`work-${index}`}></div>;
-          return (
-            <div
-              key={`projects-${index}`}
-              className='box shadow p-3 rounded m-2'
-            >
-              <Link
-                to={`${NAV_BAR.projects.path}/${project.title}`}
-                className='text-decoration-none'
-                state={project}
+      <Masonry columns={2} spacing={2} className='container '>
+        {(hideHeader ? projects.slice(0, 2) : projects).map(
+          (project, index) => {
+            return (
+              <div
+                key={`projects-${index}`}
+                className='box shadow p-3 rounded m-2'
               >
-                <div>
-                  {project.techStack.map((tech) => (
-                    <TechStackIcon key={`projects-tech-${tech}`} stack={tech} />
-                  ))}
-                </div>
-                <div className='fs-5 fw-bold text-black'>
-                  {getCurrentLanguageText(
-                    language,
-                    project.title,
-                    project.title_chinese
+                <Link
+                  to={`${NAV_BAR.projects.path}/${project.title}`}
+                  className='text-decoration-none'
+                  state={project}
+                >
+                  <div>
+                    {project.techStack.map((tech) => (
+                      <TechStackIcon
+                        key={`projects-tech-${tech}`}
+                        stack={tech}
+                      />
+                    ))}
+                  </div>
+                  <div className='fs-5 fw-bold text-black'>
+                    {getCurrentLanguageText(
+                      language,
+                      project.title,
+                      project.title_chinese
+                    )}
+                  </div>
+                  <div className='text-black fst-italic'>
+                    {getCurrentLanguageText(
+                      language,
+                      project.time,
+                      project.time_chinese
+                    )}
+                  </div>
+                  <ul>
+                    {(language === LANGUAGE.chinese.value
+                      ? project.description_chinese
+                      : project.description
+                    ).map((description) => (
+                      <li
+                        key={`projects-project-des-${description}`}
+                        className='text-secondary'
+                      >
+                        {description}
+                      </li>
+                    ))}
+                  </ul>
+                  {project.images && (
+                    <img
+                      className='img-fluid'
+                      src={project.images[0]}
+                      alt='projects'
+                    ></img>
                   )}
-                </div>
-                <div className='text-black fst-italic'>
-                  {getCurrentLanguageText(
-                    language,
-                    project.time,
-                    project.time_chinese
-                  )}
-                </div>
-                <ul>
-                  {(language === LANGUAGE.chinese.value
-                    ? project.description_chinese
-                    : project.description
-                  ).map((description) => (
-                    <li
-                      key={`projects-project-des-${description}`}
-                      className='text-secondary'
-                    >
-                      {description}
-                    </li>
-                  ))}
-                </ul>
-                {project.images && (
-                  <img
-                    className='img-fluid'
-                    src={project.images[0]}
-                    alt='projects'
-                  ></img>
-                )}
-              </Link>
-            </div>
-          );
-        })}
+                </Link>
+              </div>
+            );
+          }
+        )}
       </Masonry>
     </motion.div>
   );
