@@ -26,16 +26,8 @@ This is Jimmy's personal website. It may include blogs, gallaries, or any other 
 
 1. modify code on text editor
 2. git commit and git push modified codes to main branch
-3. deploy react codes to website, run following code
-
-```
-npm run deploy
-```
-
-4. After this is deployed successfully, you'll be able to visit https://jimmysoccer.github.io/Jimmy_Soccer/ and see its updates
-
-- Note: default home page is "/Jimmy_Soccer"
-- Note: the home page has to be the same with repository name
+3. the auto deployment will be made via AWS Amplify
+4. Visit https://jimmysoccer.com/. 
 
 ## Server
 
