@@ -60,6 +60,10 @@ export default function Projects({ hideHeader = false }) {
               <div
                 key={`projects-${index}`}
                 className='box shadow p-3 rounded m-2'
+                style={{
+                  height: `${hideHeader ? '500px' : 'auto'}`,
+                  overflow: 'hidden',
+                }}
               >
                 <Link
                   to={`${NAV_BAR.projects.path}/${project.title}`}

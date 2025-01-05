@@ -5,6 +5,7 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { motion } from 'framer-motion';
 import { publicationItems } from '../../constants/publication-items';
+import Masonry from '@mui/lab/Masonry';
 
 export default function Publications({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
@@ -13,8 +14,8 @@ export default function Publications({ hideHeader = false }) {
     if (!hideHeader)
       document.title = `Jimmy | ${getCurrentLanguageText(
         language,
-        NAV_BAR.projects.title,
-        NAV_BAR.projects.titleChinese
+        NAV_BAR.publications.title,
+        NAV_BAR.publications.titleChinese
       )}`;
   }, [hideHeader, language]);
 
@@ -45,15 +46,52 @@ export default function Publications({ hideHeader = false }) {
           </p>
         </div>
       )}
-      <div className='px-3'>
-        <h2>Conference Papers</h2>
-        {publicationItems.map((p) => (
-          <div></div>
-        ))}
+      <div className={`${hideHeader ? '' : 'px-3'}`}>
+        {!hideHeader && <h2>Conference Papers</h2>}
+        <Masonry columns={1} spacing={2} className='container'>
+          {publicationItems.map((p, index) => {
+            return (
+              <div
+                key={`publications-${index}`}
+                className='box shadow p-3 rounded m-2'
+                onClick={() => window.open(p.link)}
+                title='click to see paper'
+              >
+                <div className='fs-5 fw-bold text-black'>{p.title}</div>
+                <ul>
+                  <li>
+                    <div>
+                      {p.authors.map((name, index) => {
+                        let prefix = ', ';
+                        if (index === 0) prefix = '';
+                        return (
+                          <>
+                            <span>{prefix}</span>
+                            <span
+                              className={`${
+                                name.includes('Heng Sun') ? 'fw-bold' : ''
+                              }`}
+                            >
+                              {name}
+                            </span>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </li>
+                  <li>
+                    <div className='fst-italic'>{p.conference + p.journal}</div>
+                  </li>
+                  <li>
+                    <div>{`${p.date}, ${p.place}`}</div>
+                  </li>
+                </ul>
+              </div>
+            );
+          })}
+        </Masonry>
       </div>
-      <div className='px-3'>
-        <h2>Journal Papers</h2>
-      </div>
+      <div className='px-3'>{!hideHeader && <h2>Journal Papers</h2>}</div>
     </motion.div>
   );
 }

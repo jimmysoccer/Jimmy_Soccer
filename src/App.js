@@ -13,6 +13,7 @@ import Footer from './components/layout/Footer';
 import InnovationHub from './components/pages/InnovationHub';
 import NotFound from './components/pages/NotFound';
 import Work from './components/pages/Work';
+import Publications from './components/pages/Publications';
 
 function App() {
   return (
@@ -38,10 +39,10 @@ function App() {
           path={NAV_BAR.projects.path + '/:name'}
           element={<Project></Project>}
         ></Route>
-        {/* <Route
+        <Route
           path={NAV_BAR.publications.path}
           element={<Publications></Publications>}
-        ></Route> */}
+        ></Route>
         <Route
           path={NAV_BAR.contact.path}
           element={<Contact></Contact>}

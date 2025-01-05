@@ -1,4 +1,3 @@
-import { Grid } from '@mui/material';
 import TechStackIcon from '../common/TechStackIcon';
 import { workingExperience } from '../../constants/work-items';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
@@ -7,6 +6,7 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Masonry from '@mui/lab/Masonry';
 
 export default function WorkingExperience({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
@@ -42,76 +42,73 @@ export default function WorkingExperience({ hideHeader = false }) {
           </p>
         </div>
       )}
-      <Grid container className='justify-content-center'>
-        {workingExperience.map((experience, index) => {
-          if (hideHeader && index >= 1)
-            return <div key={`work-${index}`}></div>;
-          return (
-            <Grid
-              item
-              md={hideHeader ? 10 : 5}
-              className='box shadow p-3 rounded m-4'
-              key={`work-${index}`}
-            >
-              <Link
-                to={`${NAV_BAR.workingExperience.path}/${experience.employer}`}
-                className='text-decoration-none text-black'
-                state={experience}
+
+      <Masonry columns={2} spacing={2} className='container '>
+        {(hideHeader ? workingExperience.slice(0, 2) : workingExperience).map(
+          (experience, index) => {
+            return (
+              <div
+                key={`experience-${index}`}
+                className='box shadow p-3 rounded m-2'
+                style={{ minHeight: '400px' }}
               >
-                <div>
-                  {experience.techStack.map((tech) => (
-                    <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
-                  ))}
-                </div>
-                <h1 className='fs-5 fw-bold'>
-                  {getCurrentLanguageText(
-                    language,
-                    experience.employer,
-                    experience.employer_chinese
-                  )}
-                </h1>
-                <div className='fs-5'>
-                  {getCurrentLanguageText(
-                    language,
-                    experience.position,
-                    experience.position_chinese
-                  )}
-                </div>
-                <div>
-                  {getCurrentLanguageText(
-                    language,
-                    experience.location,
-                    experience.location_chinese
-                  )}
-                </div>
-                <div className='fst-italic'>
-                  {getCurrentLanguageText(
-                    language,
-                    experience.time,
-                    experience.time_chinese
-                  )}
-                </div>
-                <ul>
-                  {(language === LANGUAGE.chinese.value
-                    ? experience.description_chinese
-                    : experience.description
-                  ).map((description) => (
-                    <li
-                      className='text-secondary'
-                      key={`work-exper-des-${description}`}
-                    >
-                      {description}
-                    </li>
-                  ))}
-                </ul>
-              </Link>
-            </Grid>
-          );
-        })}
-        {workingExperience.length % 2 !== 0 && (
-          <Grid item md={5} className='p-3 rounded m-4' />
+                <Link
+                  to={`${NAV_BAR.workingExperience.path}/${experience.employer}`}
+                  className='text-decoration-none text-black'
+                  state={experience}
+                >
+                  <div>
+                    {experience.techStack.map((tech) => (
+                      <TechStackIcon key={`work-tech-${tech}`} stack={tech} />
+                    ))}
+                  </div>
+                  <h1 className='fs-5 fw-bold'>
+                    {getCurrentLanguageText(
+                      language,
+                      experience.employer,
+                      experience.employer_chinese
+                    )}
+                  </h1>
+                  <div className='fs-5'>
+                    {getCurrentLanguageText(
+                      language,
+                      experience.position,
+                      experience.position_chinese
+                    )}
+                  </div>
+                  <div>
+                    {getCurrentLanguageText(
+                      language,
+                      experience.location,
+                      experience.location_chinese
+                    )}
+                  </div>
+                  <div className='fst-italic'>
+                    {getCurrentLanguageText(
+                      language,
+                      experience.time,
+                      experience.time_chinese
+                    )}
+                  </div>
+                  <ul>
+                    {(language === LANGUAGE.chinese.value
+                      ? experience.description_chinese
+                      : experience.description
+                    ).map((description) => (
+                      <li
+                        className='text-secondary'
+                        key={`work-exper-des-${description}`}
+                      >
+                        {description}
+                      </li>
+                    ))}
+                  </ul>
+                </Link>
+              </div>
+            );
+          }
         )}
-      </Grid>
+      </Masonry>
     </motion.div>
   );
 }

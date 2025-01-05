@@ -11,6 +11,7 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { NAV_BAR } from '../../constants/navbar-items';
 import { motion } from 'framer-motion';
+import Publications from './Publications';
 
 export default function Home() {
   const language = useAtomValue(languageAtom);
@@ -108,7 +109,7 @@ Computer Science from the University of Florida.`,
           }
         ></LinkedInIcon>
       </div>
-      <h2 className='text-center'>
+      <h2 className='text-center my-5'>
         {getCurrentLanguageText(
           language,
           NAV_BAR.workingExperience.title,
@@ -116,7 +117,7 @@ Computer Science from the University of Florida.`,
         )}
       </h2>
       <WorkingExperience hideHeader={true} />
-      <h2 className='text-center'>
+      <h2 className='text-center my-5'>
         {getCurrentLanguageText(
           language,
           NAV_BAR.projects.title,
@@ -124,6 +125,14 @@ Computer Science from the University of Florida.`,
         )}
       </h2>
       <Projects hideHeader={true}></Projects>
+      <h2 className='text-center my-5'>
+        {getCurrentLanguageText(
+          language,
+          NAV_BAR.publications.title,
+          NAV_BAR.publications.titleChinese
+        )}
+      </h2>
+      <Publications hideHeader={true}></Publications>
     </motion.div>
   );
 }
