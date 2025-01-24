@@ -91,7 +91,7 @@ export default function Publications({ hideHeader = false }) {
           })}
         </Masonry>
       </div>
-      <div className='px-3'>{!hideHeader && <h2>Journal Papers</h2>}</div>
+      {/* <div className='px-3'>{!hideHeader && <h2>Journal Papers</h2>}</div> */}
     </motion.div>
   );
 }
