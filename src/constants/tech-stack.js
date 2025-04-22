@@ -14,4 +14,5 @@ export const techStack = {
   threeDJS: '3d.js',
   nodeJS: 'nodeJS',
   wechat: 'wechat',
+  openAI: 'openAI',
 };

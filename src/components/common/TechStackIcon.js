@@ -9,6 +9,7 @@ import {
   jsImage,
   mongoDBImage,
   nodeJSImage,
+  openAIImage,
   phpImage,
   pythonImage,
   reactImage,
@@ -67,6 +68,10 @@ export default function TechStackIcon({ stack }) {
     case techStack.wechat:
       return (
         <img src={wechatImage} alt='wechat' className='project-logo'></img>
+      );
+    case techStack.openAI:
+      return (
+        <img src={openAIImage} alt='openAI' className='project-logo'></img>
       );
     default:
       return (

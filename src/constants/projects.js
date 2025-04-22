@@ -32,6 +32,35 @@ import { techStack } from './tech-stack';
 
 export const projects = [
   {
+    title: 'AI-Powered Content Summarization and Comment Extraction Tool',
+    description: [
+      `Built a web-based tool leveraging OpenAI's GPT API to extract the core content from 
+      user-submitted text, enabling intelligent summarization and semantic filtering.`,
+      `Developed an automated pipeline to scrape web pages and extract titles, comments, 
+      and nested replies from a provided link, enabling real-time content analysis.`,
+      `Implemented a hierarchical comment structure (comments, subcomments, nested replies) 
+      to represent complex discussion threads.`,
+      `Combined advanced NLP techniques and GPT-based reasoning to surface key 
+      questions, opinions, and insights from long-form discussions.`,
+    ],
+    time: 'February 2025 - April 2025',
+    title_chinese: '基于AI的内容摘要与评论提取工具',
+    description_chinese: [
+      `构建了一个基于网页的工具，利用 OpenAI 的 GPT API 从用户提交的文本中提取核心内容，实现智能摘要与语义过滤。`,
+      `开发了自动化管道，用于抓取网页并从提供的链接中提取标题、评论和嵌套回复，实现实时内容分析。`,
+      `实现了分层评论结构（评论、子评论、嵌套回复），以表示复杂的讨论线程。`,
+      `结合先进的自然语言处理技术与基于 GPT 的推理能力，从长篇讨论中提取关键问题、观点与洞察。`,
+    ],
+    time_chinese: '2025年2月 - 2025年4月',
+    techStack: [
+      techStack.openAI,
+      techStack.react,
+      techStack.python,
+      techStack.mongoDB,
+    ],
+    // images: [],
+  },
+  {
     title: 'Object Annotation Tool',
     description: [
       `Developed and maintained a face annotation tool using ReactJS,
