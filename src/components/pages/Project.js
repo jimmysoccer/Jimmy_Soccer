@@ -9,6 +9,7 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import ImageCarousel from '../common/ImageCarousel';
 import { motion } from 'framer-motion';
+import Publication from '../common/Publication';
 
 export default function Project() {
   const location = useLocation();
@@ -72,26 +73,16 @@ export default function Project() {
 
             {project?.papers && (
               <div className='mt-5'>
+                <h2>
+                  {getCurrentLanguageText(
+                    language,
+                    'Related Publications',
+                    '相关刊物'
+                  )}
+                </h2>
+
                 {project.papers.map((paper) => (
-                  <button
-                    key={`project-paper-${paper}`}
-                    type='button'
-                    className='btn btn-primary'
-                  >
-                    <a
-                      key={`project-papers-paper-${paper}`}
-                      href={paper}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='w-100 text-decoration-none text-white'
-                    >
-                      {getCurrentLanguageText(
-                        language,
-                        'Click here to view the paper',
-                        '点此处阅读文献'
-                      )}
-                    </a>
-                  </button>
+                  <Publication publication={paper}></Publication>
                 ))}
               </div>
             )}

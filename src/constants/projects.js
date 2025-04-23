@@ -6,6 +6,9 @@ import {
   UUCircle5Image,
   UUCircle6Image,
   UUCircle7Image,
+  aiExtractionToolImage1,
+  aiExtractionToolImage2,
+  aiExtractionToolImage3,
   annotationToolActivity,
   annotationToolBboxTrack,
   annotationToolBboxTrackList,
@@ -28,6 +31,7 @@ import {
   sunSpotImage2,
   sunSpotImage3,
 } from '../assets/images/images';
+import { publicationItems } from './publication-items';
 import { techStack } from './tech-stack';
 
 export const projects = [
@@ -58,14 +62,24 @@ export const projects = [
       techStack.python,
       techStack.mongoDB,
     ],
-    // images: [],
+    images: [
+      aiExtractionToolImage1,
+      aiExtractionToolImage2,
+      aiExtractionToolImage3,
+    ],
   },
   {
     title: 'Object Annotation Tool',
     description: [
-      `Developed and maintained a face annotation tool using ReactJS,
-       Atom, Python, MongoDB, and FastAPI`,
-      `Collaborated with physicians, and professors to build an easy to use application`,
+      `Led the development of a web-based full stack annotation platform to support 
+        large-scale labeling of medical videos for machine learning research.`,
+      `Designed an intuitive ReactJS frontend integrated with a FastAPI backend, 
+        supporting multi-user collaboration.`,
+      `Utilized Python, OpenCV, and PyTorch for preprocessing and auto-suggestion 
+          modules that assist annotators using tracking and ML-based predictions.`,
+      `Generated side-by-side visualizations comparing original medical videos 
+          with annotated outputs, enabling efficient quality control and demonstrating 
+          annotation accuracy for ML training and validation.`,
     ],
     time: 'October 2023 - Present',
     title_chinese: '多目标注释工具',
@@ -83,13 +97,18 @@ export const projects = [
       annotationToolBboxTrack,
       annotationToolBboxTrackList,
     ],
+    papers: [publicationItems[0]],
   },
   {
     title: 'Healthcare Data Monitor Web',
     description: [
-      `Designed and developed a healthcare data monitor web application using 
-      Figma, ReactJS, Redux, and NodeJS`,
-      `Collaborated with physicians, and professors to build an easy to use application`,
+      `Designed and developed a real-time clinical data monitoring system for healthcare 
+      providers to track patient data from wearable devices using ReactJS and 
+      AWS Lambda Function.`,
+      `Developed a role-based access control system for clinicians, researchers, and 
+      administrators with custom data permissions.`,
+      `Engineered an automated emergency alert system that triggers emails to physicians 
+      when abnormal or high-risk data patterns are detected.`,
     ],
     time: 'October 2023 - Present',
     title_chinese: '医疗数据监控的网络应用程序',

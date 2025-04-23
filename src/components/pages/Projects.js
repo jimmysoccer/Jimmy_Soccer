@@ -8,9 +8,11 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { motion } from 'framer-motion';
 import Masonry from '@mui/lab/Masonry';
+import { useMediaQuery } from '@mui/material';
 
 export default function Projects({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
+  const isMobileMatch = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
     if (!hideHeader)
@@ -53,7 +55,11 @@ export default function Projects({ hideHeader = false }) {
           </p>
         </div>
       )}
-      <Masonry columns={2} spacing={2} className='container '>
+      <Masonry
+        columns={isMobileMatch ? 1 : 2}
+        spacing={2}
+        className='container '
+      >
         {(hideHeader ? projects.slice(0, 2) : projects).map(
           (project, index) => {
             return (

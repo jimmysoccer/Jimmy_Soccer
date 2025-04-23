@@ -48,6 +48,9 @@ import roamm_ehr_clinical from './roamm-ehr-clinical.jpg';
 import roamm_ehr_notification from './roamm-ehr-notification.jpg';
 import language from './languages.png';
 import openAI from './openAI.png';
+import ai_extraction_tool_1 from './AI_Extraction_Tool_1.png';
+import ai_extraction_tool_2 from './AI_Extraction_Tool_2.png';
+import ai_extraction_tool_3 from './AI_Extraction_Tool_3.png';
 
 export const aboutImage = about;
 export const fullStackImage = full_stack;
@@ -99,3 +102,6 @@ export const roammEhrClinical = roamm_ehr_clinical;
 export const roammEhrNotification = roamm_ehr_notification;
 export const languageSwitchIcon = language;
 export const openAIImage = openAI;
+export const aiExtractionToolImage1 = ai_extraction_tool_1;
+export const aiExtractionToolImage2 = ai_extraction_tool_2;
+export const aiExtractionToolImage3 = ai_extraction_tool_3;

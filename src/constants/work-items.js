@@ -33,7 +33,7 @@ export const workingExperience = [
       techStack.mongoDB,
       techStack.figma,
     ],
-    projects: [projects[0], projects[1]],
+    projects: [projects[0], projects[1], projects[2]],
   },
   {
     employer: 'PathPoint Energy LLC',

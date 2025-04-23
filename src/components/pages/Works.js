@@ -7,9 +7,12 @@ import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Masonry from '@mui/lab/Masonry';
+import { useMediaQuery } from '@mui/material';
 
 export default function WorkingExperience({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
+  const isMobileMatch = useMediaQuery('(max-width:600px)');
+
   return (
     <motion.div
       className='container'
@@ -43,7 +46,11 @@ export default function WorkingExperience({ hideHeader = false }) {
         </div>
       )}
 
-      <Masonry columns={2} spacing={2} className='container '>
+      <Masonry
+        columns={isMobileMatch ? 1 : 2}
+        spacing={2}
+        className='container '
+      >
         {(hideHeader ? workingExperience.slice(0, 2) : workingExperience).map(
           (experience, index) => {
             return (
