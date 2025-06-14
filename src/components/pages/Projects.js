@@ -2,17 +2,29 @@ import { projects } from '../../constants/projects';
 import TechStackIcon from '../common/TechStackIcon';
 import { Link } from 'react-router-dom';
 import { LANGUAGE, NAV_BAR } from '../../constants/navbar-items';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from '../../atoms/primitive.atom';
 import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { motion } from 'framer-motion';
 import Masonry from '@mui/lab/Masonry';
 import { useMediaQuery } from '@mui/material';
+import { getCategoriesFromTechStack } from '../../utils/get-projects-categories';
 
 export default function Projects({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
   const isMobileMatch = useMediaQuery('(max-width:600px)');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const allCategories = [
+    'frontend',
+    'backend',
+    'database',
+    'mobile',
+    'ai',
+    'languages',
+    'map',
+  ];
 
   useEffect(() => {
     if (!hideHeader)
@@ -22,6 +34,15 @@ export default function Projects({ hideHeader = false }) {
         NAV_BAR.projects.titleChinese
       )}`;
   }, [hideHeader, language]);
+
+  const filteredProjects =
+    selectedCategory === 'all'
+      ? projects
+      : projects.filter((project) =>
+          getCategoriesFromTechStack(project.techStack).includes(
+            selectedCategory
+          )
+        );
 
   return (
     <motion.div
@@ -55,12 +76,41 @@ export default function Projects({ hideHeader = false }) {
           </p>
         </div>
       )}
+      {/* CATEGORY FILTER UI */}
+      {!hideHeader && (
+        <div className='d-flex flex-wrap justify-content-center gap-2 mt-4 mb-4'>
+          <button
+            className={`btn btn-sm rounded-pill shadow-sm ${
+              selectedCategory === 'all'
+                ? 'btn-primary text-white'
+                : 'btn-outline-dark'
+            }`}
+            onClick={() => setSelectedCategory('all')}
+          >
+            All
+          </button>
+          {allCategories.map((cat) => (
+            <button
+              key={cat}
+              className={`btn btn-sm rounded-pill shadow-sm text-capitalize ${
+                selectedCategory === cat
+                  ? 'btn-primary text-white'
+                  : 'btn-outline-dark'
+              }`}
+              onClick={() => setSelectedCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      )}
+
       <Masonry
         columns={isMobileMatch ? 1 : 2}
         spacing={2}
         className='container '
       >
-        {(hideHeader ? projects.slice(0, 2) : projects).map(
+        {(hideHeader ? filteredProjects.slice(0, 2) : filteredProjects).map(
           (project, index) => {
             return (
               <div
