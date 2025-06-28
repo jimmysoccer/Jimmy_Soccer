@@ -22,9 +22,45 @@ export default function Projects({ hideHeader = false }) {
     'database',
     'mobile',
     'ai',
-    'languages',
     'map',
+    'game',
   ];
+
+  // Category translations for getCurrentLanguageText
+  const CATEGORY_TEXTS = {
+    all: {
+      en: 'All',
+      zh: '全部'
+    },
+    frontend: {
+      en: 'frontend',
+      zh: '前端'
+    },
+    backend: {
+      en: 'backend',
+      zh: '后端'
+    },
+    database: {
+      en: 'database',
+      zh: '数据库'
+    },
+    mobile: {
+      en: 'mobile',
+      zh: '移动端'
+    },
+    ai: {
+      en: 'ai',
+      zh: '人工智能'
+    },
+    map: {
+      en: 'map',
+      zh: '地图'
+    },
+    game: {
+      en: 'game',
+      zh: '游戏'
+    }
+  };
 
   useEffect(() => {
     if (!hideHeader)
@@ -78,28 +114,68 @@ export default function Projects({ hideHeader = false }) {
       )}
       {/* CATEGORY FILTER UI */}
       {!hideHeader && (
-        <div className='d-flex flex-wrap justify-content-center gap-2 mt-4 mb-4'>
+        <div className='d-flex flex-wrap justify-content-center gap-3 mt-4 mb-4'>
           <button
-            className={`btn btn-sm rounded-pill shadow-sm ${
+            className={`btn btn-sm rounded-pill shadow-sm px-3 py-2 transition-all ${
               selectedCategory === 'all'
-                ? 'btn-primary text-white'
-                : 'btn-outline-dark'
+                ? 'text-white'
+                : 'btn-outline-secondary'
             }`}
+            style={{
+              backgroundColor: selectedCategory === 'all' ? '#14b8a6' : 'transparent',
+              borderColor: selectedCategory === 'all' ? '#14b8a6' : '#6c757d',
+              color: selectedCategory === 'all' ? 'white' : '#6c757d',
+              transition: 'all 0.3s ease',
+            }}
             onClick={() => setSelectedCategory('all')}
+            onMouseEnter={(e) => {
+              if (selectedCategory !== 'all') {
+                e.target.style.backgroundColor = '#14b8a6';
+                e.target.style.borderColor = '#14b8a6';
+                e.target.style.color = 'white';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (selectedCategory !== 'all') {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.borderColor = '#6c757d';
+                e.target.style.color = '#6c757d';
+              }
+            }}
           >
-            All
+            {`${getCurrentLanguageText(language, CATEGORY_TEXTS.all.en, CATEGORY_TEXTS.all.zh)} (${projects.length})`}
           </button>
           {allCategories.map((cat) => (
             <button
               key={cat}
-              className={`btn btn-sm rounded-pill shadow-sm text-capitalize ${
+              className={`btn btn-sm rounded-pill shadow-sm text-capitalize px-3 py-2 transition-all ${
                 selectedCategory === cat
-                  ? 'btn-primary text-white'
-                  : 'btn-outline-dark'
+                  ? 'text-white'
+                  : 'btn-outline-secondary'
               }`}
+              style={{
+                backgroundColor: selectedCategory === cat ? '#14b8a6' : 'transparent',
+                borderColor: selectedCategory === cat ? '#14b8a6' : '#6c757d',
+                color: selectedCategory === cat ? 'white' : '#6c757d',
+                transition: 'all 0.3s ease',
+              }}
               onClick={() => setSelectedCategory(cat)}
+              onMouseEnter={(e) => {
+                if (selectedCategory !== cat) {
+                  e.target.style.backgroundColor = '#14b8a6';
+                  e.target.style.borderColor = '#14b8a6';
+                  e.target.style.color = 'white';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedCategory !== cat) {
+                  e.target.style.backgroundColor = 'transparent';
+                  e.target.style.borderColor = '#6c757d';
+                  e.target.style.color = '#6c757d';
+                }
+              }}
             >
-              {cat}
+              {`${getCurrentLanguageText(language, CATEGORY_TEXTS[cat].en, CATEGORY_TEXTS[cat].zh)} (${projects.filter((project) => getCategoriesFromTechStack(project.techStack).includes(cat)).length})`}
             </button>
           ))}
         </div>
@@ -115,7 +191,7 @@ export default function Projects({ hideHeader = false }) {
             return (
               <div
                 key={`projects-${index}`}
-                className='box shadow p-3 rounded m-2'
+                className='box shadow p-3 rounded m-2 fs-5'
                 style={{
                   height: `${hideHeader ? '500px' : 'auto'}`,
                   overflow: 'hidden',

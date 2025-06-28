@@ -97,7 +97,6 @@ export const projects = [
       annotationToolBboxTrack,
       annotationToolBboxTrackList,
     ],
-    papers: [publicationItems[0]],
   },
   {
     title: 'Healthcare Data Monitor Web',
@@ -124,6 +123,7 @@ export const projects = [
       roammEhrClinical,
       roammEhrNotification,
     ],
+    papers: [publicationItems[0]],
   },
   {
     title: 'Life and daily service web application',

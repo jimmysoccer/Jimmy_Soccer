@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './components/pages/Home';
-import { NAV_BAR } from './constants/navbar-items';
+import { LANGUAGE, NAV_BAR } from './constants/navbar-items';
 import About from './components/pages/About';
 import Projects from './components/pages/Projects';
 import Contact from './components/pages/Contact';
@@ -14,12 +14,15 @@ import InnovationHub from './components/pages/InnovationHub';
 import NotFound from './components/pages/NotFound';
 import Work from './components/pages/Work';
 import Publications from './components/pages/Publications';
+import { useAtomValue } from 'jotai';
+import { languageAtom } from './atoms/primitive.atom';
 
 function App() {
-  return (
-    <div>
-      <NavBar />
+  const language = useAtomValue(languageAtom);
 
+  return (
+    <div style={{ fontFamily: language === LANGUAGE.chinese.value ? 'ChineseFont' : '' }}>
+      <NavBar />
       <Routes>
         <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
         <Route path={NAV_BAR.about.path} element={<About></About>}></Route>
