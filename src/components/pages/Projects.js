@@ -30,36 +30,36 @@ export default function Projects({ hideHeader = false }) {
   const CATEGORY_TEXTS = {
     all: {
       en: 'All',
-      zh: '全部'
+      zh: '全部',
     },
     frontend: {
       en: 'frontend',
-      zh: '前端'
+      zh: '前端',
     },
     backend: {
       en: 'backend',
-      zh: '后端'
+      zh: '后端',
     },
     database: {
       en: 'database',
-      zh: '数据库'
+      zh: '数据库',
     },
     mobile: {
       en: 'mobile',
-      zh: '移动端'
+      zh: '移动端',
     },
     ai: {
       en: 'ai',
-      zh: '人工智能'
+      zh: '人工智能',
     },
     map: {
       en: 'map',
-      zh: '地图'
+      zh: '地图',
     },
     game: {
       en: 'game',
-      zh: '游戏'
-    }
+      zh: '游戏',
+    },
   };
 
   useEffect(() => {
@@ -122,7 +122,8 @@ export default function Projects({ hideHeader = false }) {
                 : 'btn-outline-secondary'
             }`}
             style={{
-              backgroundColor: selectedCategory === 'all' ? '#14b8a6' : 'transparent',
+              backgroundColor:
+                selectedCategory === 'all' ? '#14b8a6' : 'transparent',
               borderColor: selectedCategory === 'all' ? '#14b8a6' : '#6c757d',
               color: selectedCategory === 'all' ? 'white' : '#6c757d',
               transition: 'all 0.3s ease',
@@ -143,7 +144,11 @@ export default function Projects({ hideHeader = false }) {
               }
             }}
           >
-            {`${getCurrentLanguageText(language, CATEGORY_TEXTS.all.en, CATEGORY_TEXTS.all.zh)} (${projects.length})`}
+            {`${getCurrentLanguageText(
+              language,
+              CATEGORY_TEXTS.all.en,
+              CATEGORY_TEXTS.all.zh
+            )} (${projects.length})`}
           </button>
           {allCategories.map((cat) => (
             <button
@@ -154,7 +159,8 @@ export default function Projects({ hideHeader = false }) {
                   : 'btn-outline-secondary'
               }`}
               style={{
-                backgroundColor: selectedCategory === cat ? '#14b8a6' : 'transparent',
+                backgroundColor:
+                  selectedCategory === cat ? '#14b8a6' : 'transparent',
                 borderColor: selectedCategory === cat ? '#14b8a6' : '#6c757d',
                 color: selectedCategory === cat ? 'white' : '#6c757d',
                 transition: 'all 0.3s ease',
@@ -175,7 +181,15 @@ export default function Projects({ hideHeader = false }) {
                 }
               }}
             >
-              {`${getCurrentLanguageText(language, CATEGORY_TEXTS[cat].en, CATEGORY_TEXTS[cat].zh)} (${projects.filter((project) => getCategoriesFromTechStack(project.techStack).includes(cat)).length})`}
+              {`${getCurrentLanguageText(
+                language,
+                CATEGORY_TEXTS[cat].en,
+                CATEGORY_TEXTS[cat].zh
+              )} (${
+                projects.filter((project) =>
+                  getCategoriesFromTechStack(project.techStack).includes(cat)
+                ).length
+              })`}
             </button>
           ))}
         </div>

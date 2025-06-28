@@ -21,7 +21,11 @@ function App() {
   const language = useAtomValue(languageAtom);
 
   return (
-    <div style={{ fontFamily: language === LANGUAGE.chinese.value ? 'ChineseFont' : '' }}>
+    <div
+      style={{
+        fontFamily: language === LANGUAGE.chinese.value ? 'ChineseFont' : '',
+      }}
+    >
       <NavBar />
       <Routes>
         <Route path={NAV_BAR.home.path} element={<Home></Home>}></Route>
