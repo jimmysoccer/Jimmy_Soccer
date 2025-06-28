@@ -3,12 +3,12 @@ import { techStack } from '../constants/tech-stack';
 export function getCategoriesFromTechStack(stack) {
   const techCategoryMap = {
     frontend: ['javascript', 'react', 'figma', '3d.js'],
-    backend: ['nodejs', 'fastapi', 'django', 'php'],
+    backend: ['nodejs', 'fastapi', 'django', 'php','mongodb', 'sql'],
     database: ['mongodb', 'sql'],
     mobile: ['wechat'],
     ai: ['openai'],
-    languages: ['python', 'c#', 'c++'],
     map: ['googlemap'],
+    game: ['c#'],
   };
 
   // Normalize input: map techStack keys to values, or fall back to lowercased input
