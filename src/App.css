@@ -44,3 +44,10 @@
   transform: scale(1.1);
   background-color: #fefae0;
 }
+
+@font-face {
+  font-family: 'ChineseFont';
+  src: url('./assets/fonts/chinese.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -26,6 +26,42 @@ export default function Projects({ hideHeader = false }) {
     'game',
   ];
 
+  // Category translations for getCurrentLanguageText
+  const CATEGORY_TEXTS = {
+    all: {
+      en: 'All',
+      zh: '全部'
+    },
+    frontend: {
+      en: 'frontend',
+      zh: '前端'
+    },
+    backend: {
+      en: 'backend',
+      zh: '后端'
+    },
+    database: {
+      en: 'database',
+      zh: '数据库'
+    },
+    mobile: {
+      en: 'mobile',
+      zh: '移动端'
+    },
+    ai: {
+      en: 'ai',
+      zh: '人工智能'
+    },
+    map: {
+      en: 'map',
+      zh: '地图'
+    },
+    game: {
+      en: 'game',
+      zh: '游戏'
+    }
+  };
+
   useEffect(() => {
     if (!hideHeader)
       document.title = `Jimmy | ${getCurrentLanguageText(
@@ -107,7 +143,7 @@ export default function Projects({ hideHeader = false }) {
               }
             }}
           >
-            {`All (${projects.length})`}
+            {`${getCurrentLanguageText(language, CATEGORY_TEXTS.all.en, CATEGORY_TEXTS.all.zh)} (${projects.length})`}
           </button>
           {allCategories.map((cat) => (
             <button
@@ -139,7 +175,7 @@ export default function Projects({ hideHeader = false }) {
                 }
               }}
             >
-              {`${cat} (${projects.filter((project) => getCategoriesFromTechStack(project.techStack).includes(cat)).length})`}
+              {`${getCurrentLanguageText(language, CATEGORY_TEXTS[cat].en, CATEGORY_TEXTS[cat].zh)} (${projects.filter((project) => getCategoriesFromTechStack(project.techStack).includes(cat)).length})`}
             </button>
           ))}
         </div>
@@ -155,7 +191,7 @@ export default function Projects({ hideHeader = false }) {
             return (
               <div
                 key={`projects-${index}`}
-                className='box shadow p-3 rounded m-2'
+                className='box shadow p-3 rounded m-2 fs-5'
                 style={{
                   height: `${hideHeader ? '500px' : 'auto'}`,
                   overflow: 'hidden',
