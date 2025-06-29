@@ -1,16 +1,14 @@
 let fastApiHost;
 let fastApiPort;
+let fastAPiUrl;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   // dev code
   fastApiHost = 'http://127.0.0.1';
   fastApiPort = 8000;
+  fastAPiUrl = `${fastApiHost}:${fastApiPort}`;
 } else {
   // production code
-  fastApiHost = 'http://124.221.98.15';
-  fastApiPort = 443;
+  fastApiHost = 'https://backend-dot-jimmysoccer.uc.r.appspot.com';
+  fastAPiUrl = fastApiHost;
 }
-export const fastAPiUrl = `${fastApiHost}:${fastApiPort}`;
-export const educationHistoryUrl = `${fastAPiUrl}/jimmy_website/get_education_history`;
-export const devRecordsUrl = 'https://www.sh-haimin.cn/api/dev/get_all_records';
-export const getUserAuthenUrl =
-  'https://www.sh-haimin.cn/api/login/get_user_auth';
+export const getUserAuthenUrl = `${fastAPiUrl}/jimmy_website/login`;

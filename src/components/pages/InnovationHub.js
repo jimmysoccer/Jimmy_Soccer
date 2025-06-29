@@ -5,7 +5,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
 import { Button, Grid, TextField } from '@mui/material';
-import { fetchDevRecords } from '../../services/fetch-dev-records';
 import { AnimatePresence, motion, useAnimate } from 'framer-motion';
 import '../../assets/styles/innovationHub.css';
 import { getUserAuth } from '../../services/get-user-auth';
@@ -65,17 +64,6 @@ export default function InnovationHub() {
   const handleLogOut = () => {
     setLoggedIn(false);
     setRecords([]);
-  };
-
-  const getDevRecords = async () => {
-    try {
-      setLoadingTable(true);
-      const records = await fetchDevRecords();
-      if (records) setRecords(records);
-    } catch (e) {
-    } finally {
-      setLoadingTable(false);
-    }
   };
 
   const controlText = async () => {
@@ -165,11 +153,7 @@ export default function InnovationHub() {
       {loggedIn ? (
         <>
           <div>
-            <Button
-              className='my-3'
-              variant='contained'
-              onClick={() => getDevRecords()}
-            >
+            <Button className='my-3' variant='contained'>
               Refresh to get data
             </Button>
           </div>
