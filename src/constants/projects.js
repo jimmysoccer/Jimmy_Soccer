@@ -35,6 +35,71 @@ import { publicationItems } from './publication-items';
 import { techStack } from './tech-stack';
 
 export const projects = [
+  //   {
+  //     "title": "Tibby: RFID-Enabled Voice Assistant for Patient-Physician Interaction",
+  //     "description": [
+  //       "Developed Tibby, a hybrid hardware-software system featuring a small wearable voice AI assistant in the form of a name tag.",
+  //       "Integrated an RFID scanner that detects when a physician approaches a patient’s bed, triggering secure authentication and data retrieval.",
+  //       "Built a synchronized workflow where the physician’s mobile app displays both doctor and patient information, while the web interface shows the same information in real time.",
+  //       "Designed and prototyped the hardware using Raspberry Pi, Bluetooth, NFC, and 3D printing for the assistant device.",
+  //       "Implemented Tibby’s voice interaction capabilities for quick access to patient data and contextual guidance."
+  //     ],
+  //     "time": "January 2025 - March 2025",
+  //     "title_chinese": "Tibby: 面向医患交互的 RFID 语音助手",
+  //     "description_chinese": [
+  //       "开发了 Tibby，一种混合硬件与软件系统，配备可穿戴的语音 AI 助手，形态为姓名牌。",
+  //       "集成 RFID 扫描器，当医生接近病床并刷卡时，可触发安全认证和数据检索。",
+  //       "实现移动端应用与网页端界面同步，医生的移动端应用会显示医患信息，同时网页端界面实时展示相同信息。",
+  //       "基于 Raspberry Pi、蓝牙、NFC 和 3D 打印完成硬件设计与原型构建。",
+  //       "实现 Tibby 的语音交互功能，便于医生快速获取病人数据和上下文信息。"
+  //     ],
+  //     "time_chinese": "2025年1月 - 2025年3月",
+  //     "techStack": [
+  //       "python",
+  //       "react",
+  //       "raspberrypi",
+  //       "hardware design",
+  //       "3d printing",
+  //       "android studio",
+  //       "java",
+  //       "bluetooth",
+  //       "nfc"
+  //     ],
+  //     "images": [
+  //       "tibbyImage1",
+  //       "tibbyImage2",
+  //       "tibbyImage3"
+  //     ]
+  //   }
+  // ,
+  {
+    title: 'ICU-REACT Dataset Annotation Tool',
+    description: [
+      'Designed and implemented a web-based platform to streamline annotation of clinical contexts and questions for ICU-related datasets.',
+      'Built the backend in Go and the frontend in React (Vite), enabling efficient validation workflows for annotators.',
+      'Developed features for validating clinical contexts, answering supplemental questions, and managing annotator access.',
+      'Implemented an admin page to monitor annotator progress and question assignment history, with functionality to assign questions directly to annotators.',
+      'Used by more than 20 annotators, improving dataset quality and consistency to support downstream medical AI research and clinical decision-making tools.',
+      'Deployed the application to Google Cloud Platform (GCP) for scalable and reliable access.',
+    ],
+    time: 'May 2025 - August 2025',
+    title_chinese: 'ICU-REACT 数据集标注工具',
+    description_chinese: [
+      '设计并实现了一个基于网页的平台，用于简化 ICU 相关数据集的临床语境与问题标注流程。',
+      '使用 Go 构建后端,React (Vite) 构建前端，为标注人员提供高效的验证工作流。',
+      '开发了临床语境验证、补充问题回答和标注人员管理等功能。',
+      '实现了管理员页面，可监控标注人员进度与问题分配历史，并支持直接向标注人员分配问题。',
+      '被超过 20 名标注人员使用，有效提升了数据集质量与一致性，支持后续医学人工智能研究与临床决策工具。',
+      '部署在 Google Cloud Platform (GCP)，实现可扩展和高可靠的访问。',
+    ],
+    time_chinese: '2025年5月 - 2025年8月',
+    techStack: [techStack.go, techStack.react, techStack.gcp],
+    images: [
+      'https://res.cloudinary.com/ds4h9nepa/image/upload/v1756407342/Screenshot_2025-08-28_145137_ta3ezj.png',
+      'https://res.cloudinary.com/ds4h9nepa/image/upload/v1756407342/Screenshot_2025-08-28_145419_dbq2ai.png',
+      'https://res.cloudinary.com/ds4h9nepa/image/upload/v1756407342/Screenshot_2025-08-28_145512_d5pg9a.png',
+    ],
+  },
   {
     title: 'AI-Powered Content Summarization and Comment Extraction Tool',
     description: [
@@ -61,6 +126,7 @@ export const projects = [
       techStack.react,
       techStack.python,
       techStack.mongoDB,
+      techStack.gcp,
     ],
     images: [
       aiExtractionToolImage1,
@@ -116,7 +182,13 @@ export const projects = [
       '与医生和教授合作，构建一个易于使用的应用程序',
     ],
     time_chinese: '2023年10月 - 至今',
-    techStack: [techStack.react, techStack.python, techStack.mongoDB],
+    techStack: [
+      techStack.react,
+      techStack.python,
+      techStack.mongoDB,
+      techStack.aws,
+      techStack.lambda,
+    ],
     images: [
       roammEhrDashboard,
       roammEhrPatientList,
@@ -181,7 +253,7 @@ export const projects = [
       '成功修复了受损图像并去除了障碍物，同时保持了图像的连贯性。',
     ],
     time_chinese: '2022年3月 - 2022年4月',
-    techStack: [techStack.python],
+    techStack: [techStack.python, techStack.ai],
     images: [
       imageInpaintingImage1,
       imageInpaintingImage2,
@@ -204,7 +276,7 @@ export const projects = [
       '利用转盘来操控游戏中的角色。',
     ],
     time_chinese: '2022年10月 - 2022年12月',
-    techStack: [techStack.cSharp],
+    techStack: [techStack.cSharp, techStack.unity, techStack.hardware],
     images: [
       dialAdventure1Image,
       dialAdventure2Image,

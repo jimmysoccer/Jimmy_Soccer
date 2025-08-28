@@ -42,7 +42,7 @@
 }
 .box:hover {
   transform: scale(1.1);
-  background-color: #fefae0;
+  background-color: #f0fdfa;
 }
 
 @font-face {

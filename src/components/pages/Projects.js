@@ -9,58 +9,17 @@ import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { motion } from 'framer-motion';
 import Masonry from '@mui/lab/Masonry';
 import { useMediaQuery } from '@mui/material';
-import { getCategoriesFromTechStack } from '../../utils/get-projects-categories';
+import {
+  getAllCategories,
+  getCategoriesFromTechStack,
+  getCategoriesText,
+} from '../../utils/get-projects-categories';
 
 export default function Projects({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
   const isMobileMatch = useMediaQuery('(max-width:600px)');
   const [selectedCategory, setSelectedCategory] = useState('all');
-
-  const allCategories = [
-    'frontend',
-    'backend',
-    'database',
-    'mobile',
-    'ai',
-    'map',
-    'game',
-  ];
-
-  // Category translations for getCurrentLanguageText
-  const CATEGORY_TEXTS = {
-    all: {
-      en: 'All',
-      zh: '全部',
-    },
-    frontend: {
-      en: 'frontend',
-      zh: '前端',
-    },
-    backend: {
-      en: 'backend',
-      zh: '后端',
-    },
-    database: {
-      en: 'database',
-      zh: '数据库',
-    },
-    mobile: {
-      en: 'mobile',
-      zh: '移动端',
-    },
-    ai: {
-      en: 'ai',
-      zh: '人工智能',
-    },
-    map: {
-      en: 'map',
-      zh: '地图',
-    },
-    game: {
-      en: 'game',
-      zh: '游戏',
-    },
-  };
+  const allCategories = getAllCategories();
 
   useEffect(() => {
     if (!hideHeader)
@@ -144,11 +103,7 @@ export default function Projects({ hideHeader = false }) {
               }
             }}
           >
-            {`${getCurrentLanguageText(
-              language,
-              CATEGORY_TEXTS.all.en,
-              CATEGORY_TEXTS.all.zh
-            )} (${projects.length})`}
+            {`${getCategoriesText('all', language)} (${projects.length})`}
           </button>
           {allCategories.map((cat) => (
             <button
@@ -181,11 +136,7 @@ export default function Projects({ hideHeader = false }) {
                 }
               }}
             >
-              {`${getCurrentLanguageText(
-                language,
-                CATEGORY_TEXTS[cat].en,
-                CATEGORY_TEXTS[cat].zh
-              )} (${
+              {`${getCategoriesText(cat, language)} (${
                 projects.filter((project) =>
                   getCategoriesFromTechStack(project.techStack).includes(cat)
                 ).length

@@ -6,6 +6,7 @@ export const techStack = {
   fastAPI: 'fastAPI',
   dJango: 'dJango',
   cSharp: 'c#',
+  unity: 'unity',
   cPlusPlus: 'c++',
   figma: 'figma',
   googleMap: 'googleMap',
@@ -15,4 +16,10 @@ export const techStack = {
   nodeJS: 'nodeJS',
   wechat: 'wechat',
   openAI: 'openAI',
+  go: 'go',
+  gcp: 'gcp',
+  lambda: 'lambda',
+  aws: 'aws',
+  hardware: 'hardware',
+  ai: 'ai',
 };

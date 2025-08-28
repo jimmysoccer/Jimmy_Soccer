@@ -16,6 +16,13 @@ import {
   sqlImage,
   threeDJSImage,
   wechatImage,
+  goImage,
+  gcpImage,
+  lambdaImage,
+  awsImage,
+  unityImage,
+  hardwareImage,
+  aiImage,
 } from '../../assets/images/images';
 import '../../assets/styles/style.css';
 
@@ -73,6 +80,24 @@ export default function TechStackIcon({ stack }) {
       return (
         <img src={openAIImage} alt='openAI' className='project-logo'></img>
       );
+    case techStack.go:
+      return <img src={goImage} alt='go' className='project-logo'></img>;
+    case techStack.gcp:
+      return <img src={gcpImage} alt='gcp' className='project-logo'></img>;
+    case techStack.lambda:
+      return (
+        <img src={lambdaImage} alt='lambda' className='project-logo'></img>
+      );
+    case techStack.aws:
+      return <img src={awsImage} alt='aws' className='project-logo'></img>;
+    case techStack.unity:
+      return <img src={unityImage} alt='unity' className='project-logo'></img>;
+    case techStack.hardware:
+      return (
+        <img src={hardwareImage} alt='hardware' className='project-logo'></img>
+      );
+    case techStack.ai:
+      return <img src={aiImage} alt='ai' className='project-logo'></img>;
     default:
       return (
         <QuestionMarkIcon
