@@ -86,13 +86,12 @@ const JSIHSummary = () => {
     const daysWithData = records.length; // All records count as days with data
     const average = total > 0 ? daysWithData / total : 0;
 
-    // Calculate sum/occ: sum of all numbers / number of days with data > 0
-    const daysWithPositiveData = numbers.filter((num) => num > 0).length;
+    // Calculate sum/occ: total days / number of occurrences (same as yearly calendar view)
+    const occurrences = numbers.filter((num) => num > 0).length;
     const averageWithData =
-      daysWithPositiveData > 0 ? total / daysWithPositiveData : 0;
+      totalDays && occurrences > 0 ? totalDays / occurrences : 0;
 
     // Calculate average based on occurrences (count each date with number > 0 as 1)
-    const occurrences = numbers.filter((num) => num > 0).length;
     const averageOccurrences =
       total > 0 && totalDays ? totalDays / occurrences : 0;
 
@@ -120,7 +119,9 @@ const JSIHSummary = () => {
         return recordDate.getMonth() + 1 === month;
       });
 
-      monthlyData[month] = calculateStats(monthRecords);
+      // Calculate total days in the month (accounting for leap years)
+      const daysInMonth = new Date(selectedYear, month, 0).getDate();
+      monthlyData[month] = calculateStats(monthRecords, daysInMonth);
     }
 
     return monthlyData;
@@ -163,8 +164,8 @@ const JSIHSummary = () => {
   };
 
   const totalDaysOverall = calculateTotalDaysForOverall(allRecords);
-  const overallStats = calculateStats(allRecords);
-  const yearlyStats = calculateStats(yearlyData);
+  const overallStats = calculateStats(allRecords, totalDaysOverall);
+  const yearlyStats = calculateStats(yearlyData, daysInYear);
   const monthlyStats = getMonthlyStats(yearlyData);
 
   const monthNames = [
