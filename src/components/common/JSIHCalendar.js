@@ -1,0 +1,512 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Paper,
+  Grid,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  IconButton,
+  Tooltip,
+  Chip,
+  Card,
+  CardContent,
+} from '@mui/material';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Add,
+  Edit,
+  CalendarMonth,
+  ViewModule,
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+import {
+  getJSIHByYear,
+  getJSIHByMonth,
+  addJSIHRecord,
+} from '../../services/js-ih-api';
+
+const JSIHCalendar = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [viewMode, setViewMode] = useState('month'); // 'year', 'month'
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedNumber, setSelectedNumber] = useState('');
+  const [editingRecord, setEditingRecord] = useState(null);
+
+  // Load data based on view mode
+  useEffect(() => {
+    loadData();
+  }, [currentDate, viewMode]);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      let data;
+      const year = currentDate.getFullYear();
+
+      switch (viewMode) {
+        case 'year':
+          data = await getJSIHByYear(year);
+          break;
+        case 'month':
+          const month = currentDate.getMonth() + 1;
+          data = await getJSIHByMonth(year, month);
+          break;
+        default:
+          data = await getJSIHByMonth(year, currentDate.getMonth() + 1);
+      }
+
+      setRecords(data.records || []);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDateClick = (date) => {
+    setSelectedDate(date);
+    setSelectedNumber('');
+    setEditingRecord(null);
+
+    // Check if there's already a record for this date
+    const existingRecord = records.find((record) => {
+      const recordDate = new Date(record.date);
+      return (
+        recordDate.getFullYear() === date.getFullYear() &&
+        recordDate.getMonth() === date.getMonth() &&
+        recordDate.getDate() === date.getDate()
+      );
+    });
+
+    if (existingRecord) {
+      setEditingRecord(existingRecord);
+      setSelectedNumber(existingRecord.number.toString());
+    }
+
+    setDialogOpen(true);
+  };
+
+  const handleSaveRecord = async () => {
+    if (!selectedNumber || isNaN(selectedNumber)) {
+      alert('Please enter a valid number');
+      return;
+    }
+
+    try {
+      // Create a date string in YYYY-MM-DD format to avoid timezone issues
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const dateString = `${year}-${month}-${day}T00:00:00.000Z`;
+
+      await addJSIHRecord(dateString, parseFloat(selectedNumber));
+      setDialogOpen(false);
+      loadData(); // Reload data to show the new/updated record
+    } catch (error) {
+      console.error('Error saving record:', error);
+      alert('Error saving record');
+    }
+  };
+
+  const getRecordForDate = (date) => {
+    return records.find((record) => {
+      const recordDate = new Date(record.date);
+      return (
+        recordDate.getFullYear() === date.getFullYear() &&
+        recordDate.getMonth() === date.getMonth() &&
+        recordDate.getDate() === date.getDate()
+      );
+    });
+  };
+
+  const getColorForNumber = (number) => {
+    // Color scale based on number value
+    if (number === 0) return '#388e3c'; // Green for 0
+    if (number === 1) return '#fbc02d'; // Yellow for 1
+    if (number > 1) return '#d32f2f'; // Red for above 1
+    return '#1976d2'; // Blue for negative values (fallback)
+  };
+
+  const renderYearView = () => {
+    const months = [];
+    for (let month = 0; month < 12; month++) {
+      const monthDate = new Date(currentDate.getFullYear(), month, 1);
+      const monthRecords = records.filter((record) => {
+        const recordDate = new Date(record.date);
+        return recordDate.getMonth() === month;
+      });
+
+      // Calculate total days in the month
+      const daysInMonth = new Date(
+        currentDate.getFullYear(),
+        month + 1,
+        0
+      ).getDate();
+
+      // Calculate total sum of all numbers
+      const totalSum = monthRecords.reduce(
+        (sum, record) => sum + record.number,
+        0
+      );
+
+      // Calculate average: total days / sum of all numbers
+      const avgNumber = totalSum > 0 ? daysInMonth / totalSum : 0;
+
+      // Calculate average based on occurrences (count each date with number > 0 as 1)
+      const occurrences = monthRecords.filter(
+        (record) => record.number > 0
+      ).length;
+      const avgOccurrences = totalSum > 0 ? daysInMonth / occurrences : 0;
+
+      months.push(
+        <Grid item xs={12} sm={6} md={4} lg={3} key={month}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Card
+              sx={{
+                cursor: 'pointer',
+                backgroundColor:
+                  monthRecords.length > 0
+                    ? getColorForNumber(avgNumber) + '15'
+                    : 'rgba(255, 255, 255, 0.8)',
+                border:
+                  monthRecords.length > 0
+                    ? `2px solid ${getColorForNumber(avgNumber)}`
+                    : '1px solid #e0e0e0',
+                borderRadius: 3,
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                },
+              }}
+              onClick={() => {
+                setCurrentDate(monthDate);
+                setViewMode('month');
+              }}
+            >
+              <CardContent>
+                <Typography variant='h6' gutterBottom>
+                  {monthDate.toLocaleDateString('en-US', { month: 'long' })}
+                </Typography>
+                <Typography variant='body2' color='textSecondary'>
+                  {monthRecords.length} records
+                </Typography>
+                {avgNumber > 0 && (
+                  <Typography
+                    variant='h6'
+                    color='primary'
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Avg (Days/Sum): {avgNumber.toFixed(1)}
+                  </Typography>
+                )}
+                {avgOccurrences > 0 && (
+                  <Typography
+                    variant='body2'
+                    color='secondary'
+                    sx={{ fontWeight: 500 }}
+                  >
+                    Avg (Days/Occ): {avgOccurrences.toFixed(1)}
+                  </Typography>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </Grid>
+      );
+    }
+
+    return (
+      <Grid container spacing={2}>
+        {months}
+      </Grid>
+    );
+  };
+
+  const renderMonthView = () => {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+    const days = [];
+
+    for (let i = 0; i < 42; i++) {
+      const currentDay = new Date(startDate);
+      currentDay.setDate(startDate.getDate() + i);
+
+      const record = getRecordForDate(currentDay);
+      const isCurrentMonth = currentDay.getMonth() === month;
+      const isToday = currentDay.toDateString() === new Date().toDateString();
+
+      days.push(
+        <Grid item xs={1.7} key={i}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Paper
+              sx={{
+                p: 1,
+                height: 80,
+                cursor: 'pointer',
+                backgroundColor: isCurrentMonth
+                  ? 'rgba(255, 255, 255, 0.9)'
+                  : 'rgba(245, 245, 245, 0.8)',
+                border: isToday ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                borderRadius: 2,
+                position: 'relative',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: isCurrentMonth
+                    ? 'rgba(227, 242, 253, 0.8)'
+                    : 'rgba(240, 240, 240, 0.9)',
+                  transform: 'scale(1.02)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
+                },
+              }}
+              onClick={() => handleDateClick(currentDay)}
+            >
+              <Typography
+                variant='body2'
+                sx={{
+                  color: isCurrentMonth ? 'text.primary' : 'text.disabled',
+                  fontWeight: isToday ? 'bold' : 'normal',
+                }}
+              >
+                {currentDay.getDate()}
+              </Typography>
+              {record && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 28,
+                    height: 28,
+                    borderRadius: '50%',
+                    backgroundColor: getColorForNumber(record.number),
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                  }}
+                >
+                  {record.number}
+                </Box>
+              )}
+            </Paper>
+          </motion.div>
+        </Grid>
+      );
+    }
+
+    return (
+      <Box>
+        <Grid container spacing={1}>
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+            <Grid item xs={1.7} key={day}>
+              <Typography
+                variant='subtitle2'
+                align='center'
+                sx={{ fontWeight: 'bold' }}
+              >
+                {day}
+              </Typography>
+            </Grid>
+          ))}
+          {days}
+        </Grid>
+      </Box>
+    );
+  };
+
+  const navigateDate = (direction) => {
+    const newDate = new Date(currentDate);
+
+    switch (viewMode) {
+      case 'year':
+        newDate.setFullYear(newDate.getFullYear() + direction);
+        break;
+      case 'month':
+        newDate.setMonth(newDate.getMonth() + direction);
+        break;
+    }
+
+    setCurrentDate(newDate);
+  };
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <Paper
+        sx={{
+          p: 3,
+          borderRadius: 4,
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        {/* Header */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 3,
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <IconButton onClick={() => navigateDate(-1)}>
+              <ChevronLeft />
+            </IconButton>
+            <Typography variant='h4'>
+              {viewMode === 'year' && currentDate.getFullYear()}
+              {viewMode === 'month' &&
+                currentDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                })}
+            </Typography>
+            <IconButton onClick={() => navigateDate(1)}>
+              <ChevronRight />
+            </IconButton>
+          </Box>
+
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Tooltip title='Year View'>
+              <IconButton
+                onClick={() => setViewMode('year')}
+                color={viewMode === 'year' ? 'primary' : 'default'}
+              >
+                <CalendarMonth />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Month View'>
+              <IconButton
+                onClick={() => setViewMode('month')}
+                color={viewMode === 'month' ? 'primary' : 'default'}
+              >
+                <ViewModule />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Box>
+
+        {/* Calendar Content */}
+        <Box sx={{ minHeight: 400 }}>
+          {loading ? (
+            <Typography>Loading...</Typography>
+          ) : (
+            <>
+              {viewMode === 'year' && renderYearView()}
+              {viewMode === 'month' && renderMonthView()}
+            </>
+          )}
+        </Box>
+
+        {/* Legend */}
+        <Box
+          sx={{
+            mt: 3,
+            display: 'flex',
+            gap: 2,
+            flexWrap: 'wrap',
+            alignItems: 'center',
+          }}
+        >
+          <Typography
+            variant='subtitle2'
+            sx={{ fontWeight: 600, color: '#666' }}
+          >
+            Legend:
+          </Typography>
+          <Chip
+            label='0'
+            sx={{
+              backgroundColor: '#388e3c',
+              color: 'white',
+              borderRadius: 2,
+              fontWeight: 600,
+              boxShadow: '0 2px 4px rgba(56, 142, 60, 0.3)',
+            }}
+          />
+          <Chip
+            label='1'
+            sx={{
+              backgroundColor: '#fbc02d',
+              color: 'black',
+              borderRadius: 2,
+              fontWeight: 600,
+              boxShadow: '0 2px 4px rgba(251, 192, 45, 0.3)',
+            }}
+          />
+          <Chip
+            label='>1'
+            sx={{
+              backgroundColor: '#d32f2f',
+              color: 'white',
+              borderRadius: 2,
+              fontWeight: 600,
+              boxShadow: '0 2px 4px rgba(211, 47, 47, 0.3)',
+            }}
+          />
+        </Box>
+      </Paper>
+
+      {/* Add/Edit Record Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        maxWidth='sm'
+        fullWidth
+      >
+        <DialogTitle>
+          {editingRecord ? 'Edit Record' : 'Add Record'}
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant='body1' gutterBottom sx={{ fontWeight: 600 }}>
+              Date: {selectedDate?.toLocaleDateString()}
+            </Typography>
+            <TextField
+              fullWidth
+              label='Number'
+              type='number'
+              value={selectedNumber}
+              onChange={(e) => setSelectedNumber(e.target.value)}
+              sx={{ mt: 2 }}
+              placeholder={editingRecord ? 'Enter new value' : 'Enter a number'}
+            />
+            {editingRecord && (
+              <Typography variant='body2' color='textSecondary' sx={{ mt: 1 }}>
+                Current value: {editingRecord.number}
+              </Typography>
+            )}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleSaveRecord} variant='contained'>
+            {editingRecord ? 'Update' : 'Add'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+export default JSIHCalendar;

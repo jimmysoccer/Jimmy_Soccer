@@ -4,10 +4,22 @@ import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 import { useAtom, useAtomValue } from 'jotai';
 import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
 import DataTable from '../common/DataTable';
-import { Button, Grid, TextField } from '@mui/material';
+import {
+  Button,
+  Grid,
+  TextField,
+  Tabs,
+  Tab,
+  Box,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 import { AnimatePresence, motion, useAnimate } from 'framer-motion';
 import '../../assets/styles/innovationHub.css';
+import '../../assets/styles/js-ih-styles.css';
 import { getUserAuth } from '../../services/get-user-auth';
+import JSIHCalendar from '../common/JSIHCalendar';
+import JSIHSummary from '../common/JSIHSummary';
 
 function Gallery({ items, setIndex }) {
   return (
@@ -47,6 +59,9 @@ export default function InnovationHub() {
   const [index, setIndex] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [scope, animate] = useAnimate();
+  const [activeTab, setActiveTab] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showError, setShowError] = useState(false);
   const first = useRef(true);
 
   const handleLogin = async (e) => {
@@ -55,15 +70,27 @@ export default function InnovationHub() {
       const res = await getUserAuth(username, password);
       if (res.status === 200) {
         setLoggedIn(true);
+        setErrorMessage('');
+        setShowError(false);
       } else {
         setLoggedIn(false);
+        setErrorMessage(
+          'Login failed. Please check your username and password.'
+        );
+        setShowError(true);
       }
-    } catch (error) {}
+    } catch (error) {
+      setLoggedIn(false);
+      setErrorMessage('Login failed. Please check your username and password.');
+      setShowError(true);
+    }
   };
 
   const handleLogOut = () => {
     setLoggedIn(false);
     setRecords([]);
+    setErrorMessage('');
+    setShowError(false);
   };
 
   const controlText = async () => {
@@ -95,34 +122,6 @@ export default function InnovationHub() {
       exit={{ y: -10, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {loggedIn && (
-        <>
-          <div ref={scope}>Hello</div>
-          <AnimatePresence>
-            <Gallery items={colors} setIndex={setIndex}></Gallery>
-            {index !== false && (
-              <div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
-                exit={{ opacity: 0 }}
-                key='overlay'
-                className='overlay'
-                onClick={() => setIndex(false)}
-              />
-            )}
-
-            {index !== false && (
-              <SingleImage
-                key='image'
-                index={index}
-                color={colors[index]}
-                setIndex={setIndex}
-                onClick={() => setIndex(false)}
-              />
-            )}
-          </AnimatePresence>
-        </>
-      )}
       <div className='px-3'>
         <h1 className='text-success'>
           {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
@@ -152,17 +151,29 @@ export default function InnovationHub() {
 
       {loggedIn ? (
         <>
-          <div>
-            <Button className='my-3' variant='contained'>
-              Refresh to get data
-            </Button>
-          </div>
-          <div className='container'>
-            <DataTable rows={records} loading={loadingTable}></DataTable>
-          </div>
-          <Button className='mt-3' variant='contained' onClick={handleLogOut}>
+          <Button
+            className='mt-3 mb-4'
+            variant='contained'
+            onClick={handleLogOut}
+          >
             Log Out
           </Button>
+
+          {/* JS-IH-1 Data Visualization */}
+          <Box sx={{ width: '100%', mt: 4 }}>
+            <Tabs
+              value={activeTab}
+              onChange={(e, newValue) => setActiveTab(newValue)}
+              centered
+              sx={{ mb: 3 }}
+            >
+              <Tab label='Calendar View' />
+              <Tab label='Summary Report' />
+            </Tabs>
+
+            {activeTab === 0 && <JSIHCalendar />}
+            {activeTab === 1 && <JSIHSummary />}
+          </Box>
         </>
       ) : (
         <Grid
@@ -192,6 +203,22 @@ export default function InnovationHub() {
           </form>
         </Grid>
       )}
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={showError}
+        autoHideDuration={6000}
+        onClose={() => setShowError(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setShowError(false)}
+          severity='error'
+          sx={{ width: '100%' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </motion.div>
   );
 }
