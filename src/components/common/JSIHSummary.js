@@ -19,6 +19,9 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  IconButton,
+  Button,
+  Tooltip,
 } from '@mui/material';
 import {
   TrendingUp,
@@ -26,6 +29,9 @@ import {
   Analytics,
   Assessment,
   BarChart,
+  NavigateBefore,
+  NavigateNext,
+  CalendarToday,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { getAllJSIHRecords, getJSIHByYear } from '../../services/js-ih-api';
@@ -35,6 +41,7 @@ const JSIHSummary = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
   const [yearlyData, setYearlyData] = useState([]);
+  const [availableYears, setAvailableYears] = useState([]);
 
   useEffect(() => {
     loadAllData();
@@ -48,7 +55,22 @@ const JSIHSummary = () => {
     setLoading(true);
     try {
       const data = await getAllJSIHRecords();
-      setAllRecords(data.records || []);
+      const records = data.records || [];
+      setAllRecords(records);
+
+      // Extract available years from data
+      const years = [
+        ...new Set(
+          records.map((record) => new Date(record.date).getFullYear())
+        ),
+      ];
+      years.sort((a, b) => b - a); // Sort descending (newest first)
+      setAvailableYears(years);
+
+      // Set selected year to most recent year with data, or current year
+      if (years.length > 0) {
+        setSelectedYear(years[0]);
+      }
     } catch (error) {
       console.error('Error loading all data:', error);
     } finally {
@@ -63,6 +85,33 @@ const JSIHSummary = () => {
     } catch (error) {
       console.error('Error loading yearly data:', error);
     }
+  };
+
+  const navigateYear = (direction) => {
+    const currentIndex = availableYears.indexOf(selectedYear);
+    if (currentIndex !== -1) {
+      const newIndex = currentIndex + direction;
+      if (newIndex >= 0 && newIndex < availableYears.length) {
+        setSelectedYear(availableYears[newIndex]);
+      }
+    }
+  };
+
+  const goToCurrentYear = () => {
+    const currentYear = new Date().getFullYear();
+    if (availableYears.includes(currentYear)) {
+      setSelectedYear(currentYear);
+    }
+  };
+
+  const canNavigatePrevious = () => {
+    const currentIndex = availableYears.indexOf(selectedYear);
+    return currentIndex < availableYears.length - 1;
+  };
+
+  const canNavigateNext = () => {
+    const currentIndex = availableYears.indexOf(selectedYear);
+    return currentIndex > 0;
   };
 
   const calculateStats = (records, totalDays = null) => {
@@ -190,45 +239,161 @@ const JSIHSummary = () => {
           p: 3,
           borderRadius: 4,
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
         }}
       >
         <Typography
           variant='h4'
           gutterBottom
-          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            color: 'white',
+            fontWeight: 600,
+          }}
         >
           <Analytics />
           JS-IH-1 Summary Report
         </Typography>
 
-        {/* Year Selector */}
+        {/* Enhanced Year Selector */}
         <Box sx={{ mb: 3 }}>
-          <FormControl
+          <Paper
             sx={{
-              minWidth: 120,
-              '& .MuiOutlinedInput-root': { borderRadius: 2 },
+              p: 2,
+              borderRadius: 3,
+              background: 'rgba(255, 255, 255, 0.1)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
             }}
           >
-            <InputLabel>Year</InputLabel>
-            <Select
-              value={selectedYear}
-              label='Year'
-              onChange={(e) => setSelectedYear(e.target.value)}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                flexWrap: 'wrap',
+              }}
             >
-              {Array.from(
-                { length: 5 },
-                (_, i) => new Date().getFullYear() - i
-              ).map((year) => (
-                <MenuItem key={year} value={year}>
-                  {year}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              <Typography
+                variant='subtitle1'
+                sx={{ fontWeight: 600, color: 'white' }}
+              >
+                Select Year:
+              </Typography>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Tooltip title='Previous Year'>
+                  <IconButton
+                    onClick={() => navigateYear(1)}
+                    disabled={!canNavigatePrevious()}
+                    sx={{
+                      color: canNavigatePrevious()
+                        ? 'white'
+                        : 'rgba(255, 255, 255, 0.3)',
+                      '&:hover': {
+                        backgroundColor: canNavigatePrevious()
+                          ? 'rgba(255, 255, 255, 0.1)'
+                          : 'transparent',
+                      },
+                    }}
+                  >
+                    <NavigateBefore />
+                  </IconButton>
+                </Tooltip>
+
+                <FormControl
+                  sx={{
+                    minWidth: 120,
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      '& fieldset': {
+                        borderColor: 'rgba(255, 255, 255, 0.3)',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: 'rgba(255, 255, 255, 0.8)',
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'rgba(255, 255, 255, 0.9)',
+                    },
+                  }}
+                >
+                  <Select
+                    value={selectedYear}
+                    label='Year'
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                  >
+                    {availableYears.map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <Tooltip title='Next Year'>
+                  <IconButton
+                    onClick={() => navigateYear(-1)}
+                    disabled={!canNavigateNext()}
+                    sx={{
+                      color: canNavigateNext()
+                        ? 'white'
+                        : 'rgba(255, 255, 255, 0.3)',
+                      '&:hover': {
+                        backgroundColor: canNavigateNext()
+                          ? 'rgba(255, 255, 255, 0.1)'
+                          : 'transparent',
+                      },
+                    }}
+                  >
+                    <NavigateNext />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title='Go to Current Year'>
+                  <IconButton
+                    onClick={goToCurrentYear}
+                    sx={{
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    <CalendarToday />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+
+              <Chip
+                label={`${availableYears.length} year${
+                  availableYears.length !== 1 ? 's' : ''
+                } available`}
+                sx={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  color: 'white',
+                  borderRadius: 2,
+                  fontWeight: 600,
+                }}
+              />
+            </Box>
+          </Paper>
         </Box>
 
         {loading ? (
-          <LinearProgress />
+          <LinearProgress
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.3)',
+              '& .MuiLinearProgress-bar': { backgroundColor: 'white' },
+            }}
+          />
         ) : (
           <>
             {/* Overall Statistics */}
@@ -243,11 +408,12 @@ const JSIHSummary = () => {
                     sx={{
                       height: 160,
                       borderRadius: 3,
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                      background: 'rgba(255, 255, 255, 0.95)',
                       transition: 'all 0.3s ease',
                       '&:hover': {
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                       },
                     }}
                   >
@@ -255,11 +421,24 @@ const JSIHSummary = () => {
                       <Typography color='textSecondary' gutterBottom>
                         Total Records
                       </Typography>
-                      <Typography variant='h4'>{overallStats.count}</Typography>
+                      <Typography
+                        variant='h4'
+                        sx={{ color: '#667eea', fontWeight: 600 }}
+                      >
+                        {overallStats.count}
+                      </Typography>
                       <LinearProgress
                         variant='determinate'
                         value={Math.min((overallStats.count / 100) * 100, 100)}
-                        sx={{ mt: 1, borderRadius: 2 }}
+                        sx={{
+                          mt: 1,
+                          borderRadius: 2,
+                          backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: '#667eea',
+                            borderRadius: 2,
+                          },
+                        }}
                       />
                     </CardContent>
                   </Card>
@@ -276,11 +455,12 @@ const JSIHSummary = () => {
                     sx={{
                       height: 160,
                       borderRadius: 3,
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                      background: 'rgba(255, 255, 255, 0.95)',
                       transition: 'all 0.3s ease',
                       '&:hover': {
                         transform: 'translateY(-2px)',
-                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                       },
                     }}
                   >
@@ -288,7 +468,10 @@ const JSIHSummary = () => {
                       <Typography color='textSecondary' gutterBottom>
                         Overall Average
                       </Typography>
-                      <Typography variant='h4'>
+                      <Typography
+                        variant='h4'
+                        sx={{ color: '#667eea', fontWeight: 600 }}
+                      >
                         {overallStats.average.toFixed(1)}
                       </Typography>
                       <Typography variant='body2' color='textSecondary'>
@@ -311,13 +494,19 @@ const JSIHSummary = () => {
               </Grid>
             </Grid>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
 
             {/* Yearly Statistics */}
             <Typography
               variant='h5'
               gutterBottom
-              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: 'white',
+                fontWeight: 600,
+              }}
             >
               <Assessment />
               {selectedYear} Statistics
@@ -329,11 +518,12 @@ const JSIHSummary = () => {
                   sx={{
                     height: 160,
                     borderRadius: 3,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                     },
                   }}
                 >
@@ -341,7 +531,12 @@ const JSIHSummary = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Records in {selectedYear}
                     </Typography>
-                    <Typography variant='h3'>{yearlyStats.count}</Typography>
+                    <Typography
+                      variant='h3'
+                      sx={{ color: '#667eea', fontWeight: 600 }}
+                    >
+                      {yearlyStats.count}
+                    </Typography>
                     <Typography variant='body2' color='textSecondary'>
                       {((yearlyStats.count / overallStats.count) * 100).toFixed(
                         1
@@ -357,11 +552,12 @@ const JSIHSummary = () => {
                   sx={{
                     height: 160,
                     borderRadius: 3,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                     },
                   }}
                 >
@@ -369,7 +565,10 @@ const JSIHSummary = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Average in {selectedYear}
                     </Typography>
-                    <Typography variant='h3'>
+                    <Typography
+                      variant='h3'
+                      sx={{ color: '#667eea', fontWeight: 600 }}
+                    >
                       {yearlyStats.average.toFixed(1)}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -390,11 +589,12 @@ const JSIHSummary = () => {
                   sx={{
                     height: 160,
                     borderRadius: 3,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
                     transition: 'all 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                     },
                   }}
                 >
@@ -402,7 +602,10 @@ const JSIHSummary = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Total Value in {selectedYear}
                     </Typography>
-                    <Typography variant='h3'>
+                    <Typography
+                      variant='h3'
+                      sx={{ color: '#667eea', fontWeight: 600 }}
+                    >
                       {yearlyStats.total.toFixed(1)}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -417,7 +620,13 @@ const JSIHSummary = () => {
             <Typography
               variant='h5'
               gutterBottom
-              sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: 'white',
+                fontWeight: 600,
+              }}
             >
               <BarChart />
               Monthly Breakdown - {selectedYear}
@@ -428,20 +637,46 @@ const JSIHSummary = () => {
               sx={{
                 mb: 4,
                 borderRadius: 3,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                background: 'rgba(255, 255, 255, 0.95)',
               }}
             >
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Month</TableCell>
-                    <TableCell align='right'>Records</TableCell>
-                    <TableCell align='right'>Average (Days/Sum)</TableCell>
-                    <TableCell align='right'>
+                    <TableCell sx={{ fontWeight: 600, color: '#667eea' }}>
+                      Month
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{ fontWeight: 600, color: '#667eea' }}
+                    >
+                      Records
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{ fontWeight: 600, color: '#667eea' }}
+                    >
+                      Average (Days/Sum)
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{ fontWeight: 600, color: '#667eea' }}
+                    >
                       Average (Days/Occurrences)
                     </TableCell>
-                    <TableCell align='right'>Total</TableCell>
-                    <TableCell align='right'>Max</TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{ fontWeight: 600, color: '#667eea' }}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell
+                      align='right'
+                      sx={{ fontWeight: 600, color: '#667eea' }}
+                    >
+                      Max
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -452,8 +687,19 @@ const JSIHSummary = () => {
                     );
 
                     return (
-                      <TableRow key={monthName}>
-                        <TableCell component='th' scope='row'>
+                      <TableRow
+                        key={monthName}
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                          },
+                        }}
+                      >
+                        <TableCell
+                          component='th'
+                          scope='row'
+                          sx={{ fontWeight: 600 }}
+                        >
                           {monthName}
                         </TableCell>
                         <TableCell align='right'>{monthStats.count}</TableCell>

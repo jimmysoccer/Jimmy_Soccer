@@ -15,6 +15,7 @@ import {
   Chip,
   Card,
   CardContent,
+  Divider,
 } from '@mui/material';
 import {
   ChevronLeft,
@@ -23,6 +24,9 @@ import {
   Edit,
   CalendarMonth,
   ViewModule,
+  Analytics,
+  TrendingUp,
+  TrendingDown,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import {
@@ -136,6 +140,275 @@ const JSIHCalendar = () => {
     return '#1976d2'; // Blue for negative values (fallback)
   };
 
+  const calculateMonthStats = () => {
+    if (!records || records.length === 0) {
+      return {
+        total: 0,
+        average: 0,
+        averageWithData: 0,
+        min: 0,
+        max: 0,
+        count: 0,
+        daysInMonth: 0,
+        daysWithData: 0,
+        occurrences: 0,
+      };
+    }
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const numbers = records.map((r) => r.number);
+    const total = numbers.reduce((sum, num) => sum + num, 0);
+    const occurrences = numbers.filter((num) => num > 0).length;
+
+    // Calculate average: days with data / sum of all numbers
+    const average = total > 0 ? records.length / total : 0;
+
+    // Calculate average based on occurrences: total days / number of occurrences
+    const averageWithData = occurrences > 0 ? daysInMonth / occurrences : 0;
+
+    const min = Math.min(...numbers);
+    const max = Math.max(...numbers);
+
+    return {
+      total,
+      average,
+      averageWithData,
+      min,
+      max,
+      count: records.length,
+      daysInMonth,
+      daysWithData: records.length,
+      occurrences,
+    };
+  };
+
+  const getTrendIcon = (current, previous) => {
+    if (current > previous) return <TrendingUp color='success' />;
+    if (current < previous) return <TrendingDown color='error' />;
+    return <TrendingUp color='disabled' />;
+  };
+
+  const renderMonthSummary = () => {
+    const stats = calculateMonthStats();
+    const monthName = currentDate.toLocaleDateString('en-US', {
+      month: 'long',
+    });
+    const year = currentDate.getFullYear();
+
+    return (
+      <Box sx={{ mb: 4 }}>
+        <Paper
+          sx={{
+            p: 3,
+            borderRadius: 3,
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+          }}
+        >
+          <Typography
+            variant='h5'
+            gutterBottom
+            sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}
+          >
+            <Analytics />
+            {monthName} {year} Summary
+          </Typography>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card
+                  sx={{
+                    height: 120,
+                    borderRadius: 2,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Typography color='textSecondary' gutterBottom>
+                      Total Records
+                    </Typography>
+                    <Typography variant='h4' color='primary'>
+                      {stats.count}
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      of {stats.daysInMonth} days
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <Card
+                  sx={{
+                    height: 120,
+                    borderRadius: 2,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Typography color='textSecondary' gutterBottom>
+                      Average (Days/Sum)
+                    </Typography>
+                    <Typography variant='h4' color='primary'>
+                      {stats.average.toFixed(1)}
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      {stats.total > 0
+                        ? `${stats.daysWithData}/${stats.total}`
+                        : 'No data'}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Card
+                  sx={{
+                    height: 120,
+                    borderRadius: 2,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Typography color='textSecondary' gutterBottom>
+                      Average (Days/Occ)
+                    </Typography>
+                    <Typography variant='h4' color='primary'>
+                      {stats.averageWithData.toFixed(1)}
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      {stats.occurrences > 0
+                        ? `${stats.daysInMonth}/${stats.occurrences}`
+                        : 'No occurrences'}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Card
+                  sx={{
+                    height: 120,
+                    borderRadius: 2,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Typography color='textSecondary' gutterBottom>
+                      Total Value
+                    </Typography>
+                    <Typography variant='h4' color='primary'>
+                      {stats.total.toFixed(1)}
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      Max: {stats.max} | Min: {stats.min}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </Grid>
+          </Grid>
+
+          <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 2,
+              flexWrap: 'wrap',
+              alignItems: 'center',
+            }}
+          >
+            <Typography variant='subtitle2' sx={{ fontWeight: 600 }}>
+              Quick Stats:
+            </Typography>
+            <Chip
+              label={`${stats.daysWithData}/${stats.daysInMonth} days with data`}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                borderRadius: 2,
+                fontWeight: 600,
+              }}
+            />
+            <Chip
+              label={`${stats.occurrences} occurrences`}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                borderRadius: 2,
+                fontWeight: 600,
+              }}
+            />
+            <Chip
+              label={`${(
+                (stats.daysWithData / stats.daysInMonth) *
+                100
+              ).toFixed(1)}% coverage`}
+              sx={{
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'white',
+                borderRadius: 2,
+                fontWeight: 600,
+              }}
+            />
+          </Box>
+        </Paper>
+      </Box>
+    );
+  };
+
   const renderYearView = () => {
     const months = [];
     for (let month = 0; month < 12; month++) {
@@ -173,20 +446,17 @@ const JSIHCalendar = () => {
             <Card
               sx={{
                 cursor: 'pointer',
-                backgroundColor:
-                  monthRecords.length > 0
-                    ? getColorForNumber(avgNumber) + '15'
-                    : 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 border:
                   monthRecords.length > 0
                     ? `2px solid ${getColorForNumber(avgNumber)}`
-                    : '1px solid #e0e0e0',
+                    : '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: 3,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                 transition: 'all 0.3s ease',
                 '&:hover': {
                   transform: 'translateY(-4px)',
-                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                 },
               }}
               onClick={() => {
@@ -195,7 +465,7 @@ const JSIHCalendar = () => {
               }}
             >
               <CardContent>
-                <Typography variant='h6' gutterBottom>
+                <Typography variant='h6' gutterBottom sx={{ fontWeight: 600 }}>
                   {monthDate.toLocaleDateString('en-US', { month: 'long' })}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
@@ -204,8 +474,7 @@ const JSIHCalendar = () => {
                 {avgNumber > 0 && (
                   <Typography
                     variant='h6'
-                    color='primary'
-                    sx={{ fontWeight: 600 }}
+                    sx={{ fontWeight: 600, color: '#667eea' }}
                   >
                     Avg (Days/Sum): {avgNumber.toFixed(1)}
                   </Typography>
@@ -213,8 +482,7 @@ const JSIHCalendar = () => {
                 {avgOccurrences > 0 && (
                   <Typography
                     variant='body2'
-                    color='secondary'
-                    sx={{ fontWeight: 500 }}
+                    sx={{ fontWeight: 500, color: '#764ba2' }}
                   >
                     Avg (Days/Occ): {avgOccurrences.toFixed(1)}
                   </Typography>
@@ -260,19 +528,21 @@ const JSIHCalendar = () => {
                 height: 80,
                 cursor: 'pointer',
                 backgroundColor: isCurrentMonth
-                  ? 'rgba(255, 255, 255, 0.9)'
-                  : 'rgba(245, 245, 245, 0.8)',
-                border: isToday ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                  ? 'rgba(255, 255, 255, 0.95)'
+                  : 'rgba(255, 255, 255, 0.7)',
+                border: isToday
+                  ? '2px solid #667eea'
+                  : '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: 2,
                 position: 'relative',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
                 transition: 'all 0.2s ease',
                 '&:hover': {
                   backgroundColor: isCurrentMonth
-                    ? 'rgba(227, 242, 253, 0.8)'
-                    : 'rgba(240, 240, 240, 0.9)',
+                    ? 'rgba(255, 255, 255, 1)'
+                    : 'rgba(255, 255, 255, 0.8)',
                   transform: 'scale(1.02)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                 },
               }}
               onClick={() => handleDateClick(currentDay)}
@@ -280,7 +550,7 @@ const JSIHCalendar = () => {
               <Typography
                 variant='body2'
                 sx={{
-                  color: isCurrentMonth ? 'text.primary' : 'text.disabled',
+                  color: isCurrentMonth ? '#333' : 'rgba(0, 0, 0, 0.5)',
                   fontWeight: isToday ? 'bold' : 'normal',
                 }}
               >
@@ -324,7 +594,7 @@ const JSIHCalendar = () => {
               <Typography
                 variant='subtitle2'
                 align='center'
-                sx={{ fontWeight: 'bold' }}
+                sx={{ fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)' }}
               >
                 {day}
               </Typography>
@@ -358,6 +628,8 @@ const JSIHCalendar = () => {
           p: 3,
           borderRadius: 4,
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
         }}
       >
         {/* Header */}
@@ -370,10 +642,16 @@ const JSIHCalendar = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <IconButton onClick={() => navigateDate(-1)}>
+            <IconButton
+              onClick={() => navigateDate(-1)}
+              sx={{
+                color: 'white',
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
               <ChevronLeft />
             </IconButton>
-            <Typography variant='h4'>
+            <Typography variant='h4' sx={{ color: 'white', fontWeight: 600 }}>
               {viewMode === 'year' && currentDate.getFullYear()}
               {viewMode === 'month' &&
                 currentDate.toLocaleDateString('en-US', {
@@ -381,7 +659,13 @@ const JSIHCalendar = () => {
                   month: 'long',
                 })}
             </Typography>
-            <IconButton onClick={() => navigateDate(1)}>
+            <IconButton
+              onClick={() => navigateDate(1)}
+              sx={{
+                color: 'white',
+                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              }}
+            >
               <ChevronRight />
             </IconButton>
           </Box>
@@ -390,7 +674,15 @@ const JSIHCalendar = () => {
             <Tooltip title='Year View'>
               <IconButton
                 onClick={() => setViewMode('year')}
-                color={viewMode === 'year' ? 'primary' : 'default'}
+                sx={{
+                  color:
+                    viewMode === 'year' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  backgroundColor:
+                    viewMode === 'year'
+                      ? 'rgba(255, 255, 255, 0.2)'
+                      : 'transparent',
+                  '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                }}
               >
                 <CalendarMonth />
               </IconButton>
@@ -398,7 +690,15 @@ const JSIHCalendar = () => {
             <Tooltip title='Month View'>
               <IconButton
                 onClick={() => setViewMode('month')}
-                color={viewMode === 'month' ? 'primary' : 'default'}
+                sx={{
+                  color:
+                    viewMode === 'month' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  backgroundColor:
+                    viewMode === 'month'
+                      ? 'rgba(255, 255, 255, 0.2)'
+                      : 'transparent',
+                  '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                }}
               >
                 <ViewModule />
               </IconButton>
@@ -409,11 +709,16 @@ const JSIHCalendar = () => {
         {/* Calendar Content */}
         <Box sx={{ minHeight: 400 }}>
           {loading ? (
-            <Typography>Loading...</Typography>
+            <Typography sx={{ color: 'white' }}>Loading...</Typography>
           ) : (
             <>
               {viewMode === 'year' && renderYearView()}
-              {viewMode === 'month' && renderMonthView()}
+              {viewMode === 'month' && (
+                <>
+                  {renderMonthSummary()}
+                  {renderMonthView()}
+                </>
+              )}
             </>
           )}
         </Box>
@@ -430,7 +735,7 @@ const JSIHCalendar = () => {
         >
           <Typography
             variant='subtitle2'
-            sx={{ fontWeight: 600, color: '#666' }}
+            sx={{ fontWeight: 600, color: 'rgba(255, 255, 255, 0.9)' }}
           >
             Legend:
           </Typography>
@@ -473,13 +778,24 @@ const JSIHCalendar = () => {
         onClose={() => setDialogOpen(false)}
         maxWidth='sm'
         fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+          },
+        }}
       >
-        <DialogTitle>
+        <DialogTitle sx={{ color: 'white', fontWeight: 600 }}>
           {editingRecord ? 'Edit Record' : 'Add Record'}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
-            <Typography variant='body1' gutterBottom sx={{ fontWeight: 600 }}>
+            <Typography
+              variant='body1'
+              gutterBottom
+              sx={{ fontWeight: 600, color: 'white' }}
+            >
               Date: {selectedDate?.toLocaleDateString()}
             </Typography>
             <TextField
@@ -488,19 +804,55 @@ const JSIHCalendar = () => {
               type='number'
               value={selectedNumber}
               onChange={(e) => setSelectedNumber(e.target.value)}
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                '& .MuiOutlinedInput-root': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  '& fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.8)',
+                  },
+                },
+                '& .MuiInputLabel-root': {
+                  color: 'rgba(255, 255, 255, 0.9)',
+                },
+              }}
               placeholder={editingRecord ? 'Enter new value' : 'Enter a number'}
             />
             {editingRecord && (
-              <Typography variant='body2' color='textSecondary' sx={{ mt: 1 }}>
+              <Typography
+                variant='body2'
+                sx={{ mt: 1, color: 'rgba(255, 255, 255, 0.8)' }}
+              >
                 Current value: {editingRecord.number}
               </Typography>
             )}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleSaveRecord} variant='contained'>
+          <Button
+            onClick={() => setDialogOpen(false)}
+            sx={{
+              color: 'white',
+              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSaveRecord}
+            variant='contained'
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              color: 'white',
+              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.3)' },
+            }}
+          >
             {editingRecord ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
