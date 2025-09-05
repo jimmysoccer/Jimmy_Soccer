@@ -28,10 +28,10 @@ Computer Science from the University of Florida.`,
   const TEXT_2 = getCurrentLanguageText(
     language,
     `🎓 Eager to further my academic journey, I aspire to pursue a Ph.D.
-  position that aligns with my passion for human-centered interaction,
-  machine learning models, and the exciting realm of IoT.`,
-    `🎓 渴望进一步我的学术之旅，我希望攻读与我对以人为中心的交互、
-    机器学习模型和物联网领域的激情相符的博士学位。`
+  position that aligns with my passion for ML models for critical care,
+  their applications in ICU settings, and the exciting realm of IoT.`,
+    `🎓 渴望进一步我的学术之旅，我希望攻读与我对机器学习模型在重症监护室的应用、
+    重症监护室的应用和物联网领域的激情相符的博士学位。`
   ).split(' ');
 
   return (

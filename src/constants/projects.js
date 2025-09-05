@@ -259,7 +259,6 @@ export const projects = [
       imageInpaintingImage2,
       imageInpaintingImage3,
     ],
-    papers: ['/Image_Inpainting.pdf'],
   },
   {
     title: 'Unity Game Development',
