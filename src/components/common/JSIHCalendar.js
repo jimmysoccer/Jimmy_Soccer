@@ -205,8 +205,9 @@ const JSIHCalendar = () => {
             p: 3,
             borderRadius: 3,
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
+            background:
+              'linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)',
+            color: 'black',
           }}
         >
           <Typography
@@ -242,7 +243,7 @@ const JSIHCalendar = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Total Records
                     </Typography>
-                    <Typography variant='h4' color='primary'>
+                    <Typography variant='h4' sx={{ color: 'black' }}>
                       {stats.count}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -276,7 +277,7 @@ const JSIHCalendar = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Average (Days/Sum)
                     </Typography>
-                    <Typography variant='h4' color='primary'>
+                    <Typography variant='h4' sx={{ color: 'black' }}>
                       {stats.average.toFixed(1)}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -312,7 +313,7 @@ const JSIHCalendar = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Average (Days/Occ)
                     </Typography>
-                    <Typography variant='h4' color='primary'>
+                    <Typography variant='h4' sx={{ color: 'black' }}>
                       {stats.averageWithData.toFixed(1)}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -348,7 +349,7 @@ const JSIHCalendar = () => {
                     <Typography color='textSecondary' gutterBottom>
                       Total Value
                     </Typography>
-                    <Typography variant='h4' color='primary'>
+                    <Typography variant='h4' sx={{ color: 'black' }}>
                       {stats.total.toFixed(1)}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
@@ -377,7 +378,7 @@ const JSIHCalendar = () => {
               label={`${stats.daysWithData}/${stats.daysInMonth} days with data`}
               sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
+                color: 'black',
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -386,7 +387,7 @@ const JSIHCalendar = () => {
               label={`${stats.occurrences} occurrences`}
               sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
+                color: 'black',
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -398,7 +399,7 @@ const JSIHCalendar = () => {
               ).toFixed(1)}% coverage`}
               sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'white',
+                color: 'black',
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -570,7 +571,7 @@ const JSIHCalendar = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
+                    color: 'black',
                     fontSize: '0.75rem',
                     fontWeight: 'bold',
                     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
@@ -594,7 +595,7 @@ const JSIHCalendar = () => {
               <Typography
                 variant='subtitle2'
                 align='center'
-                sx={{ fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)' }}
+                sx={{ fontWeight: 'bold', color: 'black' }}
               >
                 {day}
               </Typography>
@@ -628,8 +629,9 @@ const JSIHCalendar = () => {
           p: 3,
           borderRadius: 4,
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
+          background:
+            'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+          color: 'black',
         }}
       >
         {/* Header */}
@@ -645,13 +647,13 @@ const JSIHCalendar = () => {
             <IconButton
               onClick={() => navigateDate(-1)}
               sx={{
-                color: 'white',
+                color: 'black',
                 '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
               }}
             >
               <ChevronLeft />
             </IconButton>
-            <Typography variant='h4' sx={{ color: 'white', fontWeight: 600 }}>
+            <Typography variant='h4' sx={{ color: 'black', fontWeight: 600 }}>
               {viewMode === 'year' && currentDate.getFullYear()}
               {viewMode === 'month' &&
                 currentDate.toLocaleDateString('en-US', {
@@ -662,7 +664,7 @@ const JSIHCalendar = () => {
             <IconButton
               onClick={() => navigateDate(1)}
               sx={{
-                color: 'white',
+                color: 'black',
                 '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
               }}
             >
@@ -675,13 +677,10 @@ const JSIHCalendar = () => {
               <IconButton
                 onClick={() => setViewMode('year')}
                 sx={{
-                  color:
-                    viewMode === 'year' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  color: 'black',
                   backgroundColor:
-                    viewMode === 'year'
-                      ? 'rgba(255, 255, 255, 0.2)'
-                      : 'transparent',
-                  '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                    viewMode === 'year' ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
+                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.05)' },
                 }}
               >
                 <CalendarMonth />
@@ -691,13 +690,10 @@ const JSIHCalendar = () => {
               <IconButton
                 onClick={() => setViewMode('month')}
                 sx={{
-                  color:
-                    viewMode === 'month' ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  color: 'black',
                   backgroundColor:
-                    viewMode === 'month'
-                      ? 'rgba(255, 255, 255, 0.2)'
-                      : 'transparent',
-                  '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                    viewMode === 'month' ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
+                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.05)' },
                 }}
               >
                 <ViewModule />
@@ -709,7 +705,7 @@ const JSIHCalendar = () => {
         {/* Calendar Content */}
         <Box sx={{ minHeight: 400 }}>
           {loading ? (
-            <Typography sx={{ color: 'white' }}>Loading...</Typography>
+            <Typography sx={{ color: 'black' }}>Loading...</Typography>
           ) : (
             <>
               {viewMode === 'year' && renderYearView()}
@@ -735,7 +731,7 @@ const JSIHCalendar = () => {
         >
           <Typography
             variant='subtitle2'
-            sx={{ fontWeight: 600, color: 'rgba(255, 255, 255, 0.9)' }}
+            sx={{ fontWeight: 600, color: 'black' }}
           >
             Legend:
           </Typography>
@@ -743,7 +739,7 @@ const JSIHCalendar = () => {
             label='0'
             sx={{
               backgroundColor: '#388e3c',
-              color: 'white',
+              color: 'black',
               borderRadius: 2,
               fontWeight: 600,
               boxShadow: '0 2px 4px rgba(56, 142, 60, 0.3)',
@@ -763,7 +759,7 @@ const JSIHCalendar = () => {
             label='>1'
             sx={{
               backgroundColor: '#d32f2f',
-              color: 'white',
+              color: 'black',
               borderRadius: 2,
               fontWeight: 600,
               boxShadow: '0 2px 4px rgba(211, 47, 47, 0.3)',
@@ -781,12 +777,13 @@ const JSIHCalendar = () => {
         PaperProps={{
           sx: {
             borderRadius: 3,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
+            backgroundColor: 'white',
+            color: 'black',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
           },
         }}
       >
-        <DialogTitle sx={{ color: 'white', fontWeight: 600 }}>
+        <DialogTitle sx={{ color: 'black', fontWeight: 600 }}>
           {editingRecord ? 'Edit Record' : 'Add Record'}
         </DialogTitle>
         <DialogContent>
@@ -794,7 +791,7 @@ const JSIHCalendar = () => {
             <Typography
               variant='body1'
               gutterBottom
-              sx={{ fontWeight: 600, color: 'white' }}
+              sx={{ fontWeight: 600, color: 'black' }}
             >
               Date: {selectedDate?.toLocaleDateString()}
             </Typography>
@@ -807,28 +804,28 @@ const JSIHCalendar = () => {
               sx={{
                 mt: 2,
                 '& .MuiOutlinedInput-root': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  backgroundColor: 'white',
                   '& fieldset': {
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderColor: 'rgba(0, 0, 0, 0.23)',
                   },
                   '&:hover fieldset': {
-                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderColor: 'rgba(0, 0, 0, 0.5)',
                   },
                   '&.Mui-focused fieldset': {
-                    borderColor: 'rgba(255, 255, 255, 0.8)',
+                    borderColor: '#1976d2',
                   },
                 },
                 '& .MuiInputLabel-root': {
-                  color: 'rgba(255, 255, 255, 0.9)',
+                  color: 'rgba(0, 0, 0, 0.6)',
+                },
+                '& .MuiInputBase-input': {
+                  color: 'black',
                 },
               }}
               placeholder={editingRecord ? 'Enter new value' : 'Enter a number'}
             />
             {editingRecord && (
-              <Typography
-                variant='body2'
-                sx={{ mt: 1, color: 'rgba(255, 255, 255, 0.8)' }}
-              >
+              <Typography variant='body2' sx={{ mt: 1, color: 'black' }}>
                 Current value: {editingRecord.number}
               </Typography>
             )}
@@ -838,7 +835,7 @@ const JSIHCalendar = () => {
           <Button
             onClick={() => setDialogOpen(false)}
             sx={{
-              color: 'white',
+              color: 'black',
               '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
             }}
           >
@@ -849,7 +846,7 @@ const JSIHCalendar = () => {
             variant='contained'
             sx={{
               backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              color: 'white',
+              color: 'black',
               '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.3)' },
             }}
           >
