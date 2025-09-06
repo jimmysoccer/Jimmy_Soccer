@@ -13,6 +13,7 @@ import {
   Box,
   Snackbar,
   Alert,
+  CircularProgress,
 } from '@mui/material';
 import { AnimatePresence, motion, useAnimate } from 'framer-motion';
 import '../../assets/styles/innovationHub.css';
@@ -62,10 +63,15 @@ export default function InnovationHub() {
   const [activeTab, setActiveTab] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [showError, setShowError] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const first = useRef(true);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoggingIn(true);
+    setErrorMessage('');
+    setShowError(false);
+
     try {
       const res = await getUserAuth(username, password);
       if (res.status === 200) {
@@ -83,6 +89,8 @@ export default function InnovationHub() {
       setLoggedIn(false);
       setErrorMessage('Login failed. Please check your username and password.');
       setShowError(true);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -190,15 +198,59 @@ export default function InnovationHub() {
               label={'username'}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              disabled={isLoggingIn}
+              className={`login-form-field ${isLoggingIn ? 'loading' : ''}`}
+              sx={{
+                '& .MuiInputBase-input.Mui-disabled': {
+                  WebkitTextFillColor: 'rgba(0, 0, 0, 0.6)',
+                },
+              }}
             ></TextField>
             <TextField
               label={'password'}
               type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoggingIn}
+              className={`login-form-field ${isLoggingIn ? 'loading' : ''}`}
+              sx={{
+                '& .MuiInputBase-input.Mui-disabled': {
+                  WebkitTextFillColor: 'rgba(0, 0, 0, 0.6)',
+                },
+              }}
             ></TextField>
-            <Button type='submit button' variant='contained'>
-              Login
+            <Button
+              type='submit button'
+              variant='contained'
+              disabled={isLoggingIn}
+              className={`login-loading-button ${isLoggingIn ? 'loading' : ''}`}
+              sx={{
+                position: 'relative',
+                minHeight: '40px',
+                transition: 'all 0.3s ease',
+                '&:disabled': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                  color: 'rgba(0, 0, 0, 0.26)',
+                },
+                '&:hover:not(:disabled)': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                },
+              }}
+            >
+              {isLoggingIn ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <CircularProgress
+                    size={20}
+                    color='inherit'
+                    className='login-spinner'
+                    sx={{ animation: 'spin 1s linear infinite' }}
+                  />
+                  <span className='login-pulse'>Logging in...</span>
+                </Box>
+              ) : (
+                'Login'
+              )}
             </Button>
           </form>
         </Grid>

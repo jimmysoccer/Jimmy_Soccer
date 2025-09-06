@@ -166,8 +166,8 @@ const JSIHCalendar = () => {
     // Calculate average: days with data / sum of all numbers
     const average = total > 0 ? records.length / total : 0;
 
-    // Calculate average based on occurrences: total days / number of occurrences
-    const averageWithData = occurrences > 0 ? daysInMonth / occurrences : 0;
+    // Calculate average based on occurrences: days with data / number of occurrences
+    const averageWithData = occurrences > 0 ? records.length / occurrences : 0;
 
     const min = Math.min(...numbers);
     const max = Math.max(...numbers);
@@ -317,7 +317,7 @@ const JSIHCalendar = () => {
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
                       {stats.occurrences > 0
-                        ? `${stats.daysInMonth}/${stats.occurrences}`
+                        ? `${stats.daysWithData}/${stats.occurrences}`
                         : 'No occurrences'}
                     </Typography>
                   </CardContent>
