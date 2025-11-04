@@ -35,43 +35,64 @@ import { publicationItems } from './publication-items';
 import { techStack } from './tech-stack';
 
 export const projects = [
-  //   {
-  //     "title": "Tibby: RFID-Enabled Voice Assistant for Patient-Physician Interaction",
-  //     "description": [
-  //       "Developed Tibby, a hybrid hardware-software system featuring a small wearable voice AI assistant in the form of a name tag.",
-  //       "Integrated an RFID scanner that detects when a physician approaches a patient’s bed, triggering secure authentication and data retrieval.",
-  //       "Built a synchronized workflow where the physician’s mobile app displays both doctor and patient information, while the web interface shows the same information in real time.",
-  //       "Designed and prototyped the hardware using Raspberry Pi, Bluetooth, NFC, and 3D printing for the assistant device.",
-  //       "Implemented Tibby’s voice interaction capabilities for quick access to patient data and contextual guidance."
-  //     ],
-  //     "time": "January 2025 - March 2025",
-  //     "title_chinese": "Tibby: 面向医患交互的 RFID 语音助手",
-  //     "description_chinese": [
-  //       "开发了 Tibby，一种混合硬件与软件系统，配备可穿戴的语音 AI 助手，形态为姓名牌。",
-  //       "集成 RFID 扫描器，当医生接近病床并刷卡时，可触发安全认证和数据检索。",
-  //       "实现移动端应用与网页端界面同步，医生的移动端应用会显示医患信息，同时网页端界面实时展示相同信息。",
-  //       "基于 Raspberry Pi、蓝牙、NFC 和 3D 打印完成硬件设计与原型构建。",
-  //       "实现 Tibby 的语音交互功能，便于医生快速获取病人数据和上下文信息。"
-  //     ],
-  //     "time_chinese": "2025年1月 - 2025年3月",
-  //     "techStack": [
-  //       "python",
-  //       "react",
-  //       "raspberrypi",
-  //       "hardware design",
-  //       "3d printing",
-  //       "android studio",
-  //       "java",
-  //       "bluetooth",
-  //       "nfc"
-  //     ],
-  //     "images": [
-  //       "tibbyImage1",
-  //       "tibbyImage2",
-  //       "tibbyImage3"
-  //     ]
-  //   }
-  // ,
+  {
+    title: 'Real-Time ICU Video Monitoring and Processing System',
+    description: [
+      'Designed and implemented a real-time system to continuously record RGB-D camera streams from ICU computers in the background.',
+      'Enabled persistent recording across user logouts, allowing new users to preview live camera feeds without interrupting ongoing sessions.',
+      'Developed an automated dual-storage mechanism to save videos to an external drive when connected and simultaneously upload them to the lab’s server.',
+      'Integrated local inference pipelines to process patient posture and movement data under bandwidth and privacy constraints.',
+      'Supports behavioral and safety assessments in real clinical ICU environments.',
+    ],
+    time: 'August 2025 – Present',
+    title_chinese: '实时 ICU 视频监测与处理系统',
+    description_chinese: [
+      '设计并实现了一个实时系统，用于持续记录 ICU 电脑上的 RGB-D 摄像头视频流。',
+      '实现了跨用户登录的持续录制，新用户登录时可预览实时画面而不中断录制。',
+      '开发了自动双存储机制，可在连接外部硬盘时自动保存并同步上传至服务器。',
+      '在本地集成姿态与行为识别推理管线，优化带宽与隐私保护。',
+      '支持临床 ICU 环境中的行为与安全评估。',
+    ],
+    time_chinese: '2025年8月 – 至今',
+    techStack: [
+      techStack.python,
+      techStack.fastAPI,
+      techStack.react,
+      techStack.windows,
+    ],
+    images: [
+      'https://res.cloudinary.com/ds4h9nepa/image/upload/v1762232989/image_1_hbgn8w.png',
+    ],
+  },
+  {
+    title: 'TIBBY – AI-Powered Wearable Clinical Assistant (Patent Pending)',
+    description: [
+      'Developed a wearable AI assistant that automates real-time clinical documentation and retrieves context-aware EHR data at the bedside.',
+      'Integrated RFID-based authentication and voice-driven interaction for hands-free data access.',
+      'Built synchronized mobile and web dashboards showing doctor–patient context via SSE updates.',
+      'Designed and prototyped hardware using Raspberry Pi, Bluetooth, NFC, and 3D printing.',
+      'Implemented speech capture and NLP modules that summarize spoken clinical interactions into structured notes.',
+    ],
+    time: 'March 2025 – Present',
+    title_chinese: 'TIBBY：AI 驱动的可穿戴临床助手（专利申请中）',
+    description_chinese: [
+      '开发了一款可穿戴 AI 助手，用于自动化实时临床文书与上下文 EHR 信息检索。',
+      '集成基于 RFID 的身份验证与语音交互，实现免手操作的数据访问。',
+      '构建同步的移动与网页仪表盘，通过 SSE 实时显示医患信息。',
+      '基于 Raspberry Pi、蓝牙、NFC 和 3D 打印完成硬件设计与原型制作。',
+      '实现语音捕获与 NLP 模块，将医生对话自动生成结构化记录。',
+    ],
+    time_chinese: '2025年3月 – 至今',
+    techStack: [
+      techStack.ai,
+      techStack.python,
+      techStack.gcp,
+      techStack.openAI,
+    ],
+    images: [
+      'https://res.cloudinary.com/ds4h9nepa/image/upload/v1762233220/Computer-Science_1_sbeauq.jpg',
+    ],
+  },
   {
     title: 'ICU-REACT Dataset Annotation Tool',
     description: [
@@ -103,13 +124,13 @@ export const projects = [
   {
     title: 'AI-Powered Content Summarization and Comment Extraction Tool',
     description: [
-      `Built a web-based tool leveraging OpenAI's GPT API to extract the core content from 
+      `Built a web-based tool leveraging OpenAI's GPT API to extract the core content from
       user-submitted text, enabling intelligent summarization and semantic filtering.`,
-      `Developed an automated pipeline to scrape web pages and extract titles, comments, 
+      `Developed an automated pipeline to scrape web pages and extract titles, comments,
       and nested replies from a provided link, enabling real-time content analysis.`,
-      `Implemented a hierarchical comment structure (comments, subcomments, nested replies) 
+      `Implemented a hierarchical comment structure (comments, subcomments, nested replies)
       to represent complex discussion threads.`,
-      `Combined advanced NLP techniques and GPT-based reasoning to surface key 
+      `Combined advanced NLP techniques and GPT-based reasoning to surface key
       questions, opinions, and insights from long-form discussions.`,
     ],
     time: 'February 2025 - April 2025',
@@ -135,19 +156,51 @@ export const projects = [
     ],
   },
   {
+    title: 'ROAMM-EHR – Wearable Data Integration for Post-Surgical Monitoring',
+    description: [
+      'Developed an end-to-end platform that integrates wearable sensor data with electronic health records for monitoring post-surgical recovery in older adults.',
+      'Implemented multimodal data ingestion and processing pipelines for activity and symptom data.',
+      'Built clinician dashboards for longitudinal visualization and trend detection.',
+      'Formed the basis of an ACM publication demonstrating the clinical value of continuous wearable data integration.',
+    ],
+    time: 'January 2024 – December 2024',
+    title_chinese: 'ROAMM-EHR：术后监测可穿戴数据集成系统',
+    description_chinese: [
+      '开发了一个端到端平台，将可穿戴传感器数据与电子病历集成，用于老年患者术后恢复监测。',
+      '实现多模态数据接入与处理管线，用于活动与症状分析。',
+      '构建临床医生可视化仪表盘，用于观察康复趋势与早期预警。',
+      '该系统构成了 ACM 会议论文的核心内容，展示连续可穿戴数据的临床应用价值。',
+    ],
+    time_chinese: '2024年1月 – 2024年12月',
+    techStack: [
+      techStack.react,
+      techStack.python,
+      techStack.mongoDB,
+      techStack.aws,
+      techStack.lambda,
+    ],
+    images: [
+      roammEhrDashboard,
+      roammEhrPatientList,
+      roammEhrClinical,
+      roammEhrNotification,
+    ],
+    papers: [publicationItems[0]],
+  },
+  {
     title: 'Object Annotation Tool',
     description: [
-      `Led the development of a web-based full stack annotation platform to support 
+      `Led the development of a web-based full stack annotation platform to support
         large-scale labeling of medical videos for machine learning research.`,
-      `Designed an intuitive ReactJS frontend integrated with a FastAPI backend, 
+      `Designed an intuitive ReactJS frontend integrated with a FastAPI backend,
         supporting multi-user collaboration.`,
-      `Utilized Python, OpenCV, and PyTorch for preprocessing and auto-suggestion 
+      `Utilized Python, OpenCV, and PyTorch for preprocessing and auto-suggestion
           modules that assist annotators using tracking and ML-based predictions.`,
-      `Generated side-by-side visualizations comparing original medical videos 
-          with annotated outputs, enabling efficient quality control and demonstrating 
+      `Generated side-by-side visualizations comparing original medical videos
+          with annotated outputs, enabling efficient quality control and demonstrating
           annotation accuracy for ML training and validation.`,
     ],
-    time: 'October 2023 - Present',
+    time: 'October 2023 - August 2024',
     title_chinese: '多目标注释工具',
     description_chinese: [
       '使用ReactJS、Atom、Python、MongoDB和FastAPI开发并维护了一款多目标注释工具',
@@ -163,39 +216,6 @@ export const projects = [
       annotationToolBboxTrack,
       annotationToolBboxTrackList,
     ],
-  },
-  {
-    title: 'Healthcare Data Monitor Web',
-    description: [
-      `Designed and developed a real-time clinical data monitoring system for healthcare 
-      providers to track patient data from wearable devices using ReactJS and 
-      AWS Lambda Function.`,
-      `Developed a role-based access control system for clinicians, researchers, and 
-      administrators with custom data permissions.`,
-      `Engineered an automated emergency alert system that triggers emails to physicians 
-      when abnormal or high-risk data patterns are detected.`,
-    ],
-    time: 'October 2023 - Present',
-    title_chinese: '医疗数据监控的网络应用程序',
-    description_chinese: [
-      '使用Figma、ReactJS、Redux和NodeJS设计并开发了一个医疗数据监控的网络应用程序',
-      '与医生和教授合作，构建一个易于使用的应用程序',
-    ],
-    time_chinese: '2023年10月 - 至今',
-    techStack: [
-      techStack.react,
-      techStack.python,
-      techStack.mongoDB,
-      techStack.aws,
-      techStack.lambda,
-    ],
-    images: [
-      roammEhrDashboard,
-      roammEhrPatientList,
-      roammEhrClinical,
-      roammEhrNotification,
-    ],
-    papers: [publicationItems[0]],
   },
   {
     title: 'Life and daily service web application',

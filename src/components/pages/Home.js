@@ -19,19 +19,21 @@ export default function Home() {
   const TEXT_1 = getCurrentLanguageText(
     language,
     `
-🚀 Hi, I'm Heng Sun, a recent graduate with a Bachelor of Science in
-Computer Science from the University of Florida.`,
+  🚀 Hi, I'm Heng Sun — a CS graduate from the University of Florida
+  and a Research Assistant in AI for healthcare at UF.`,
     `
-🚀 你好，我是孙恒，刚刚从佛罗里达大学计算机科学专业毕业，获得理学学士学位`
+  🚀 你好，我是孙恒，佛罗里达大学计算机科学专业毕业生，
+  现任佛罗里达大学医疗人工智能研究助理。`
   ).split(' ');
 
   const TEXT_2 = getCurrentLanguageText(
     language,
-    `🎓 Eager to further my academic journey, I aspire to pursue a Ph.D.
-  position that aligns with my passion for ML models for critical care,
-  their applications in ICU settings, and the exciting realm of IoT.`,
-    `🎓 渴望进一步我的学术之旅，我希望攻读与我对机器学习模型在重症监护室的应用、
-    重症监护室的应用和物联网领域的激情相符的博士学位。`
+    `
+  🎓 I'm applying for Ph.D. programs to advance AI systems that
+  combine multimodal data and human-centered design for medicine.`,
+    `
+  🎓 我正在申请博士项目，致力于开发结合多模态数据
+  与以人为本设计的医疗人工智能系统。`
   ).split(' ');
 
   return (

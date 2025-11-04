@@ -4,6 +4,7 @@ export const techStack = {
   mongoDB: 'mongoDB',
   react: 'react',
   fastAPI: 'fastAPI',
+  windows: 'windows',
   dJango: 'dJango',
   cSharp: 'c#',
   unity: 'unity',

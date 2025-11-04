@@ -23,6 +23,8 @@ import {
   unityImage,
   hardwareImage,
   aiImage,
+  fastAPIImage,
+  windowsImage,
 } from '../../assets/images/images';
 import '../../assets/styles/style.css';
 
@@ -55,6 +57,14 @@ export default function TechStackIcon({ stack }) {
           alt='google map'
           className='project-logo'
         ></img>
+      );
+    case techStack.fastAPI:
+      return (
+        <img src={fastAPIImage} alt='fastAPI' className='project-logo'></img>
+      );
+    case techStack.windows:
+      return (
+        <img src={windowsImage} alt='windows' className='project-logo'></img>
       );
     case techStack.sql:
       return <img src={sqlImage} alt='sql' className='project-logo'></img>;

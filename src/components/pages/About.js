@@ -14,14 +14,14 @@ export default function About() {
 
   const TEXT_1 = getCurrentLanguageText(
     language,
-    `I am Heng Sun. You can call me Jimmy. I live in Gainesville, FL. I
-  am working from home right now. I am passionate about creating
-  high-quality code that follows best practices and industry
-  standards. I am always looking for new challenges and opportunities
-  to grow as a developer.`,
-    `我是孙恒, 你可以叫我Jimmy。我住在佛罗里达州的盖恩斯维尔。
-    目前在家工作。我热衷于编写遵循最佳实践和行业标准的高质量代码，
-    并且始终在寻找新的挑战和机会，以便在开发者的道路上不断成长。`
+    `I am Heng Sun, but you can call me Jimmy. I live in Gainesville, FL,
+    and currently work as a Research Assistant in AI for healthcare at UF. I am passionate
+    about developing intelligent systems that bridge AI and healthcare,
+    and I strive to approach every project with precision, curiosity,
+    and a commitment to research excellence.`,
+    `我是孙恒，你也可以叫我Jimmy。我住在佛罗里达州盖恩斯维尔，
+    目前担任佛罗里达大学医疗人工智能研究助理。我热衷于开发连接人工智能与医疗的智能系统，
+    并以严谨、好奇和追求卓越的态度对待每一个研究项目。`
   ).split(' ');
 
   return (

@@ -78,13 +78,14 @@ export default function Contact() {
         </div>
         <div className='d-flex justify-content-center my-2'>
           <div
-            className='d-flex'
+            className='d-flex align-items-center'
             role='button'
             onClick={() => window.open('mailto:jimmysoccer0927@gmail.com')}
           >
             <EmailIcon className='mx-2'></EmailIcon>
             <div className='language'>
-              {getCurrentLanguageText(language, 'Email', '电子邮箱')}
+              {getCurrentLanguageText(language, 'Email', '电子邮箱')}:{' '}
+              <span>jimmysoccer0927@gmail.com</span>
             </div>
           </div>
         </div>
