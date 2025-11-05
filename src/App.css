@@ -1,6 +1,16 @@
+.navbar {
+  width: 100%;
+}
+
+.navbar-container {
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .nav {
   margin: 0 10px;
-  width: 150px;
+  width: fit-content;
   text-align: center;
   text-decoration: none;
   line-height: 49px;

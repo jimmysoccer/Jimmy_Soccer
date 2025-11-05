@@ -14,6 +14,7 @@ import InnovationHub from './components/pages/InnovationHub';
 import NotFound from './components/pages/NotFound';
 import Work from './components/pages/Work';
 import Publications from './components/pages/Publications';
+import CV from './components/pages/CV';
 import { useAtomValue } from 'jotai';
 import { languageAtom } from './atoms/primitive.atom';
 
@@ -58,6 +59,7 @@ function App() {
           path={NAV_BAR.innovationHub.path}
           element={<InnovationHub />}
         ></Route>
+        <Route path={NAV_BAR.cv.path} element={<CV />}></Route>
         <Route path='*' element={<NotFound />}></Route>
       </Routes>
 

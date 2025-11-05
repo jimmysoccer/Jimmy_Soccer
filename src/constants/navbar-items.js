@@ -9,6 +9,11 @@ export const NAV_BAR = {
     title: 'About',
     titleChinese: '关于',
   },
+  cv: {
+    path: '/cv',
+    title: 'CV',
+    titleChinese: '简历',
+  },
   workingExperience: {
     path: '/work',
     title: 'Work',

@@ -17,9 +17,14 @@ export default function NavBar() {
   }, [language, path]);
 
   return (
-    <div className='navbar justify-content-center mx-2 px-2'>
-      <div className='d-flex shadow rounded-pill m-2 p-2'>
-        <Grid container justifyContent={'center'}>
+    <div className='navbar justify-content-center mx-1 px-1'>
+      <div className='d-flex shadow rounded-pill m-2 p-2 navbar-container'>
+        <Grid
+          container
+          justifyContent={'space-around'}
+          sx={{ width: '100%' }}
+          className='navbar-container mx-2'
+        >
           {Object.values(NAV_BAR).map((navItem) => (
             <Link
               key={`nav-bar-${navItem.title}`}
