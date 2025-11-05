@@ -5,13 +5,13 @@ import { languageAtom } from '../../atoms/primitive.atom';
 import { motion } from 'framer-motion';
 import DownloadIcon from '@mui/icons-material/Download';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import cvPdf from '../../assets/documents/HENG_SUN_CV.pdf';
 
 export default function CV() {
   const language = useAtomValue(languageAtom);
 
-  // CV PDF imported from assets/documents
-  const cvPath = cvPdf;
+  // CV PDF from public folder - accessible as static asset in production
+  // Make sure HENG_SUN_CV.pdf is in the frontend/public folder
+  const cvPath = '/HENG_SUN_CV.pdf';
   // Add zoom parameter for 100% default zoom in viewer
   const cvPathWithZoom = `${cvPath}#zoom=100`;
 
