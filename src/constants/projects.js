@@ -36,7 +36,7 @@ import { techStack } from './tech-stack';
 
 export const projects = [
   {
-    title: 'Real-Time ICU Video Monitoring and Processing System',
+    title: 'Real-Time ICU Monitoring and Processing System',
     description: [
       'Designed and implemented a real-time system to continuously record RGB-D camera streams from ICU computers in the background.',
       'Enabled persistent recording across user logouts, allowing new users to preview live camera feeds without interrupting ongoing sessions.',
@@ -45,7 +45,7 @@ export const projects = [
       'Supports behavioral and safety assessments in real clinical ICU environments.',
     ],
     time: 'August 2025 – Present',
-    title_chinese: '实时 ICU 视频监测与处理系统',
+    title_chinese: '实时 ICU 监测与处理系统',
     description_chinese: [
       '设计并实现了一个实时系统，用于持续记录 ICU 电脑上的 RGB-D 摄像头视频流。',
       '实现了跨用户登录的持续录制，新用户登录时可预览实时画面而不中断录制。',
@@ -65,7 +65,7 @@ export const projects = [
     ],
   },
   {
-    title: 'TIBBY – AI-Powered Wearable Clinical Assistant (Patent Pending)',
+    title: 'TIBBY – AI-Powered Wearable System (Patent Pending)',
     description: [
       'Developed a wearable AI assistant that automates real-time clinical documentation and retrieves context-aware EHR data at the bedside.',
       'Integrated RFID-based authentication and voice-driven interaction for hands-free data access.',
@@ -74,7 +74,7 @@ export const projects = [
       'Implemented speech capture and NLP modules that summarize spoken clinical interactions into structured notes.',
     ],
     time: 'March 2025 – Present',
-    title_chinese: 'TIBBY：AI 驱动的可穿戴临床助手（专利申请中）',
+    title_chinese: 'TIBBY：AI 驱动的可穿戴系统（专利申请中）',
     description_chinese: [
       '开发了一款可穿戴 AI 助手，用于自动化实时临床文书与上下文 EHR 信息检索。',
       '集成基于 RFID 的身份验证与语音交互，实现免手操作的数据访问。',
@@ -156,7 +156,7 @@ export const projects = [
     ],
   },
   {
-    title: 'ROAMM-EHR – Wearable Data Integration for Post-Surgical Monitoring',
+    title: 'ROAMM-EHR: Wearable Data Integration System',
     description: [
       'Developed an end-to-end platform that integrates wearable sensor data with electronic health records for monitoring post-surgical recovery in older adults.',
       'Implemented multimodal data ingestion and processing pipelines for activity and symptom data.',
@@ -164,7 +164,7 @@ export const projects = [
       'Formed the basis of an ACM publication demonstrating the clinical value of continuous wearable data integration.',
     ],
     time: 'January 2024 – December 2024',
-    title_chinese: 'ROAMM-EHR：术后监测可穿戴数据集成系统',
+    title_chinese: 'ROAMM-EHR：可穿戴数据集成系统',
     description_chinese: [
       '开发了一个端到端平台，将可穿戴传感器数据与电子病历集成，用于老年患者术后恢复监测。',
       '实现多模态数据接入与处理管线，用于活动与症状分析。',

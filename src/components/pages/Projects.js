@@ -205,7 +205,7 @@ export default function Projects({ hideHeader = false }) {
                     <div
                       style={{
                         width: '100%',
-                        height: '160px',
+                        maxHeight: hideHeader ? '280px' : '160px',
                         overflow: 'hidden',
                         borderRadius: '4px',
                         marginBottom: '12px',

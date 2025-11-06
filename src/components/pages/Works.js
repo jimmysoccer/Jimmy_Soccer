@@ -47,11 +47,11 @@ export default function WorkingExperience({ hideHeader = false }) {
       )}
 
       <Masonry
-        columns={isMobileMatch ? 1 : 2}
+        columns={hideHeader ? 1 : isMobileMatch ? 1 : 2}
         spacing={2}
         className='container '
       >
-        {(hideHeader ? workingExperience.slice(0, 2) : workingExperience).map(
+        {(hideHeader ? workingExperience.slice(0, 1) : workingExperience).map(
           (experience, index) => {
             return (
               <div

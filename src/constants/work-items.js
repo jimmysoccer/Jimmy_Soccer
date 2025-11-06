@@ -3,28 +3,29 @@ import { techStack } from './tech-stack';
 
 export const workingExperience = [
   {
-    employer: 'Biomedical Engineering at University of Florida',
+    employer: 'University of Florida Biomedical Engineering Department',
     location: 'Gainesville, FL',
-    position: 'Full Stack Developer',
+    position: 'Full Stack & ML Developer',
     time: 'August 2022 - Present',
     description: [
-      `Designed and developed a healthcare data monitor web application using Figma,
-      ReactJS, Redux, and NodeJS`,
-      `Developed and maintained a face annotation tool using ReactJS, Atom, Python,
-      MongoDB, and FastAPI.`,
-      `Collaborated with PhD students on in-depth discussions regarding
-      multiple-object detection and tracking ML models.`,
-      `Collaborated with physicians, and professors to build an easy to use application`,
+      'Conceived and developed TIBBY, an AI-powered wearable assistant that integrates RFID, mobile, and web interfaces to automate clinical documentation and support real-time decision-making (patent pending).',
+      'Processed medical video datasets to develop ML pipelines for automated annotation and behavior recognition in clinical research by using Python.',
+      'Developed an AI-assisted web tool leveraging OpenAI’s GPT API to automatically extract core insights, titles, and hierarchical comment structures from user input and external web content for downstream NLP analysis.',
+      'Developed and evaluated deep learning models for multi-object detection and tracking using PyTorch and TensorFlow, including fine-tuning YOLO-based architectures for medical video analysis.',
+      'Designed and developed a healthcare data monitoring web application using Figma, ReactJS, Redux, and NodeJS, supporting real-time data visualization and clinical analysis.',
+      'Built and maintained a full stack face annotation tool using ReactJS, Python, FastAPI, MongoDB, and Atom, enabling efficient labeling workflows for medical video data.',
     ],
     employer_chinese: '佛罗里达大学生物医学工程系',
     location_chinese: '佛罗里达州盖恩斯维尔',
     position_chinese: '全栈开发者',
     time_chinese: '2022年8月 - 至今',
     description_chinese: [
-      '使用Figma、ReactJS、Redux和NodeJS设计并开发了一个医疗数据监控的网络应用程序',
-      '使用ReactJS、Atom、Python、MongoDB和FastAPI开发并维护了一款面部注释工具',
-      '与博士生深入讨论多目标检测和跟踪的机器学习模型',
-      '与医生和教授合作，构建一个易于使用的应用程序',
+      '构想并开发了 TIBBY，一款 AI 驱动的可穿戴临床助手，集 RFID、移动和网页界面于一体，自动化临床文书并支持实时决策（专利申请中）。',
+      '处理医学视频数据集，开发 ML 管线用于自动化注释与行为识别，支持临床研究。',
+      '开发基于 OpenAI GPT API 的 AI 辅助网页工具，自动提取用户输入与外部网页内容的核心见解、标题与分层评论结构，支持下游 NLP 分析。',
+      '开发和评估多目标检测与跟踪的深度学习模型，包括基于 YOLO 架构的医学视频分析微调。',
+      '设计并开发了支持实时数据可视化与临床分析的医疗数据监控网页应用，使用 Figma、ReactJS、Redux 和 NodeJS。',
+      '构建并维护了全栈面部注释工具，使用 ReactJS、Python、FastAPI、MongoDB 和 Atom，实现高效医学视频标注工作流。',
     ],
     techStack: [
       techStack.react,
