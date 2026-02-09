@@ -1,4 +1,4 @@
-import { LANGUAGE } from '../constants/navbar-items';
+import { LANGUAGE } from "../constants/navbar-items";
 
 export function getCurrentLanguageText(language, englishValue, chineseValue) {
   switch (language) {

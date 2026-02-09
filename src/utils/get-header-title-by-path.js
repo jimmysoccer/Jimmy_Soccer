@@ -1,4 +1,4 @@
-import { LANGUAGE, NAV_BAR } from '../constants/navbar-items';
+import { LANGUAGE, NAV_BAR } from "../constants/navbar-items";
 
 export default function getHeaderTitleByPath(path, language) {
   switch (language) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Paper,
@@ -16,7 +16,7 @@ import {
   Card,
   CardContent,
   Divider,
-} from '@mui/material';
+} from "@mui/material";
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,22 +27,22 @@ import {
   Analytics,
   TrendingUp,
   TrendingDown,
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+} from "@mui/icons-material";
+import { motion } from "framer-motion";
 import {
   getJSIHByYear,
   getJSIHByMonth,
   addJSIHRecord,
-} from '../../services/js-ih-api';
+} from "../../services/js-ih-api";
 
 const JSIHCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewMode, setViewMode] = useState('month'); // 'year', 'month'
+  const [viewMode, setViewMode] = useState("month"); // 'year', 'month'
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedNumber, setSelectedNumber] = useState('');
+  const [selectedNumber, setSelectedNumber] = useState("");
   const [editingRecord, setEditingRecord] = useState(null);
 
   // Load data based on view mode
@@ -57,10 +57,10 @@ const JSIHCalendar = () => {
       const year = currentDate.getFullYear();
 
       switch (viewMode) {
-        case 'year':
+        case "year":
           data = await getJSIHByYear(year);
           break;
-        case 'month':
+        case "month":
           const month = currentDate.getMonth() + 1;
           data = await getJSIHByMonth(year, month);
           break;
@@ -70,7 +70,7 @@ const JSIHCalendar = () => {
 
       setRecords(data.records || []);
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error("Error loading data:", error);
     } finally {
       setLoading(false);
     }
@@ -78,7 +78,7 @@ const JSIHCalendar = () => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    setSelectedNumber('');
+    setSelectedNumber("");
     setEditingRecord(null);
 
     // Check if there's already a record for this date
@@ -101,23 +101,23 @@ const JSIHCalendar = () => {
 
   const handleSaveRecord = async () => {
     if (!selectedNumber || isNaN(selectedNumber)) {
-      alert('Please enter a valid number');
+      alert("Please enter a valid number");
       return;
     }
 
     try {
       // Create a date string in YYYY-MM-DD format to avoid timezone issues
       const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}T00:00:00.000Z`;
 
       await addJSIHRecord(dateString, parseFloat(selectedNumber));
       setDialogOpen(false);
       loadData(); // Reload data to show the new/updated record
     } catch (error) {
-      console.error('Error saving record:', error);
-      alert('Error saving record');
+      console.error("Error saving record:", error);
+      alert("Error saving record");
     }
   };
 
@@ -134,10 +134,10 @@ const JSIHCalendar = () => {
 
   const getColorForNumber = (number) => {
     // Color scale based on number value
-    if (number === 0) return '#388e3c'; // Green for 0
-    if (number === 1) return '#fbc02d'; // Yellow for 1
-    if (number > 1) return '#d32f2f'; // Red for above 1
-    return '#1976d2'; // Blue for negative values (fallback)
+    if (number === 0) return "#388e3c"; // Green for 0
+    if (number === 1) return "#fbc02d"; // Yellow for 1
+    if (number > 1) return "#d32f2f"; // Red for above 1
+    return "#1976d2"; // Blue for negative values (fallback)
   };
 
   const calculateMonthStats = () => {
@@ -186,15 +186,15 @@ const JSIHCalendar = () => {
   };
 
   const getTrendIcon = (current, previous) => {
-    if (current > previous) return <TrendingUp color='success' />;
-    if (current < previous) return <TrendingDown color='error' />;
-    return <TrendingUp color='disabled' />;
+    if (current > previous) return <TrendingUp color="success" />;
+    if (current < previous) return <TrendingDown color="error" />;
+    return <TrendingUp color="disabled" />;
   };
 
   const renderMonthSummary = () => {
     const stats = calculateMonthStats();
-    const monthName = currentDate.toLocaleDateString('en-US', {
-      month: 'long',
+    const monthName = currentDate.toLocaleDateString("en-US", {
+      month: "long",
     });
     const year = currentDate.getFullYear();
 
@@ -204,16 +204,16 @@ const JSIHCalendar = () => {
           sx={{
             p: 3,
             borderRadius: 3,
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             background:
-              'linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)',
-            color: 'black',
+              "linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)",
+            color: "black",
           }}
         >
           <Typography
-            variant='h5'
+            variant="h5"
             gutterBottom
-            sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}
+            sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}
           >
             <Analytics />
             {monthName} {year} Summary
@@ -230,23 +230,23 @@ const JSIHCalendar = () => {
                   sx={{
                     height: 120,
                     borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
                     },
                   }}
                 >
                   <CardContent>
-                    <Typography color='textSecondary' gutterBottom>
+                    <Typography color="textSecondary" gutterBottom>
                       Total Records
                     </Typography>
-                    <Typography variant='h4' sx={{ color: 'black' }}>
+                    <Typography variant="h4" sx={{ color: "black" }}>
                       {stats.count}
                     </Typography>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant="body2" color="textSecondary">
                       of {stats.daysInMonth} days
                     </Typography>
                   </CardContent>
@@ -264,26 +264,26 @@ const JSIHCalendar = () => {
                   sx={{
                     height: 120,
                     borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
                     },
                   }}
                 >
                   <CardContent>
-                    <Typography color='textSecondary' gutterBottom>
+                    <Typography color="textSecondary" gutterBottom>
                       Average (Days/Sum)
                     </Typography>
-                    <Typography variant='h4' sx={{ color: 'black' }}>
+                    <Typography variant="h4" sx={{ color: "black" }}>
                       {stats.average.toFixed(1)}
                     </Typography>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant="body2" color="textSecondary">
                       {stats.total > 0
                         ? `${stats.daysWithData}/${stats.total}`
-                        : 'No data'}
+                        : "No data"}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -300,26 +300,26 @@ const JSIHCalendar = () => {
                   sx={{
                     height: 120,
                     borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
                     },
                   }}
                 >
                   <CardContent>
-                    <Typography color='textSecondary' gutterBottom>
+                    <Typography color="textSecondary" gutterBottom>
                       Average (Days/Occ)
                     </Typography>
-                    <Typography variant='h4' sx={{ color: 'black' }}>
+                    <Typography variant="h4" sx={{ color: "black" }}>
                       {stats.averageWithData.toFixed(1)}
                     </Typography>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant="body2" color="textSecondary">
                       {stats.occurrences > 0
                         ? `${stats.daysWithData}/${stats.occurrences}`
-                        : 'No occurrences'}
+                        : "No occurrences"}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -336,23 +336,23 @@ const JSIHCalendar = () => {
                   sx={{
                     height: 120,
                     borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
                     },
                   }}
                 >
                   <CardContent>
-                    <Typography color='textSecondary' gutterBottom>
+                    <Typography color="textSecondary" gutterBottom>
                       Total Value
                     </Typography>
-                    <Typography variant='h4' sx={{ color: 'black' }}>
+                    <Typography variant="h4" sx={{ color: "black" }}>
                       {stats.total.toFixed(1)}
                     </Typography>
-                    <Typography variant='body2' color='textSecondary'>
+                    <Typography variant="body2" color="textSecondary">
                       Max: {stats.max} | Min: {stats.min}
                     </Typography>
                   </CardContent>
@@ -361,24 +361,24 @@ const JSIHCalendar = () => {
             </Grid>
           </Grid>
 
-          <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Divider sx={{ my: 3, borderColor: "rgba(255, 255, 255, 0.3)" }} />
 
           <Box
             sx={{
-              display: 'flex',
+              display: "flex",
               gap: 2,
-              flexWrap: 'wrap',
-              alignItems: 'center',
+              flexWrap: "wrap",
+              alignItems: "center",
             }}
           >
-            <Typography variant='subtitle2' sx={{ fontWeight: 600 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
               Quick Stats:
             </Typography>
             <Chip
               label={`${stats.daysWithData}/${stats.daysInMonth} days with data`}
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'black',
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "black",
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -386,8 +386,8 @@ const JSIHCalendar = () => {
             <Chip
               label={`${stats.occurrences} occurrences`}
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'black',
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "black",
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -398,8 +398,8 @@ const JSIHCalendar = () => {
                 100
               ).toFixed(1)}% coverage`}
               sx={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                color: 'black',
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "black",
                 borderRadius: 2,
                 fontWeight: 600,
               }}
@@ -423,13 +423,13 @@ const JSIHCalendar = () => {
       const daysInMonth = new Date(
         currentDate.getFullYear(),
         month + 1,
-        0
+        0,
       ).getDate();
 
       // Calculate total sum of all numbers
       const totalSum = monthRecords.reduce(
         (sum, record) => sum + record.number,
-        0
+        0,
       );
 
       // Calculate average: total days / sum of all numbers
@@ -437,7 +437,7 @@ const JSIHCalendar = () => {
 
       // Calculate average based on occurrences (count each date with number > 0 as 1)
       const occurrences = monthRecords.filter(
-        (record) => record.number > 0
+        (record) => record.number > 0,
       ).length;
       const avgOccurrences = totalSum > 0 ? daysInMonth / occurrences : 0;
 
@@ -446,44 +446,44 @@ const JSIHCalendar = () => {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Card
               sx={{
-                cursor: 'pointer',
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                cursor: "pointer",
+                backgroundColor: "rgba(255, 255, 255, 0.95)",
                 border:
                   monthRecords.length > 0
                     ? `2px solid ${getColorForNumber(avgNumber)}`
-                    : '1px solid rgba(255, 255, 255, 0.3)',
+                    : "1px solid rgba(255, 255, 255, 0.3)",
                 borderRadius: 3,
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
                 },
               }}
               onClick={() => {
                 setCurrentDate(monthDate);
-                setViewMode('month');
+                setViewMode("month");
               }}
             >
               <CardContent>
-                <Typography variant='h6' gutterBottom sx={{ fontWeight: 600 }}>
-                  {monthDate.toLocaleDateString('en-US', { month: 'long' })}
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+                  {monthDate.toLocaleDateString("en-US", { month: "long" })}
                 </Typography>
-                <Typography variant='body2' color='textSecondary'>
+                <Typography variant="body2" color="textSecondary">
                   {monthRecords.length} records
                 </Typography>
                 {avgNumber > 0 && (
                   <Typography
-                    variant='h6'
-                    sx={{ fontWeight: 600, color: '#667eea' }}
+                    variant="h6"
+                    sx={{ fontWeight: 600, color: "#667eea" }}
                   >
                     Avg (Days/Sum): {avgNumber.toFixed(1)}
                   </Typography>
                 )}
                 {avgOccurrences > 0 && (
                   <Typography
-                    variant='body2'
-                    sx={{ fontWeight: 500, color: '#764ba2' }}
+                    variant="body2"
+                    sx={{ fontWeight: 500, color: "#764ba2" }}
                   >
                     Avg (Days/Occ): {avgOccurrences.toFixed(1)}
                   </Typography>
@@ -491,7 +491,7 @@ const JSIHCalendar = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </Grid>
+        </Grid>,
       );
     }
 
@@ -527,32 +527,32 @@ const JSIHCalendar = () => {
               sx={{
                 p: 1,
                 height: 80,
-                cursor: 'pointer',
+                cursor: "pointer",
                 backgroundColor: isCurrentMonth
-                  ? 'rgba(255, 255, 255, 0.95)'
-                  : 'rgba(255, 255, 255, 0.7)',
+                  ? "rgba(255, 255, 255, 0.95)"
+                  : "rgba(255, 255, 255, 0.7)",
                 border: isToday
-                  ? '2px solid #667eea'
-                  : '1px solid rgba(255, 255, 255, 0.3)',
+                  ? "2px solid #667eea"
+                  : "1px solid rgba(255, 255, 255, 0.3)",
                 borderRadius: 2,
-                position: 'relative',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.2s ease',
-                '&:hover': {
+                position: "relative",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                transition: "all 0.2s ease",
+                "&:hover": {
                   backgroundColor: isCurrentMonth
-                    ? 'rgba(255, 255, 255, 1)'
-                    : 'rgba(255, 255, 255, 0.8)',
-                  transform: 'scale(1.02)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    ? "rgba(255, 255, 255, 1)"
+                    : "rgba(255, 255, 255, 0.8)",
+                  transform: "scale(1.02)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                 },
               }}
               onClick={() => handleDateClick(currentDay)}
             >
               <Typography
-                variant='body2'
+                variant="body2"
                 sx={{
-                  color: isCurrentMonth ? '#333' : 'rgba(0, 0, 0, 0.5)',
-                  fontWeight: isToday ? 'bold' : 'normal',
+                  color: isCurrentMonth ? "#333" : "rgba(0, 0, 0, 0.5)",
+                  fontWeight: isToday ? "bold" : "normal",
                 }}
               >
                 {currentDay.getDate()}
@@ -560,22 +560,22 @@ const JSIHCalendar = () => {
               {record && (
                 <Box
                   sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
                     width: 28,
                     height: 28,
-                    borderRadius: '50%',
+                    borderRadius: "50%",
                     backgroundColor: getColorForNumber(record.number),
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'black',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "black",
+                    fontSize: "0.75rem",
+                    fontWeight: "bold",
+                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+                    border: "2px solid rgba(255, 255, 255, 0.3)",
                   }}
                 >
                   {record.number}
@@ -583,19 +583,19 @@ const JSIHCalendar = () => {
               )}
             </Paper>
           </motion.div>
-        </Grid>
+        </Grid>,
       );
     }
 
     return (
       <Box>
         <Grid container spacing={1}>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <Grid item xs={1.7} key={day}>
               <Typography
-                variant='subtitle2'
-                align='center'
-                sx={{ fontWeight: 'bold', color: 'black' }}
+                variant="subtitle2"
+                align="center"
+                sx={{ fontWeight: "bold", color: "black" }}
               >
                 {day}
               </Typography>
@@ -611,10 +611,10 @@ const JSIHCalendar = () => {
     const newDate = new Date(currentDate);
 
     switch (viewMode) {
-      case 'year':
+      case "year":
         newDate.setFullYear(newDate.getFullYear() + direction);
         break;
-      case 'month':
+      case "month":
         newDate.setMonth(newDate.getMonth() + direction);
         break;
     }
@@ -628,72 +628,72 @@ const JSIHCalendar = () => {
         sx={{
           p: 3,
           borderRadius: 4,
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
           background:
-            'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          color: 'black',
+            "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
+          color: "black",
         }}
       >
         {/* Header */}
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             mb: 3,
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <IconButton
               onClick={() => navigateDate(-1)}
               sx={{
-                color: 'black',
-                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                color: "black",
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
               <ChevronLeft />
             </IconButton>
-            <Typography variant='h4' sx={{ color: 'black', fontWeight: 600 }}>
-              {viewMode === 'year' && currentDate.getFullYear()}
-              {viewMode === 'month' &&
-                currentDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
+            <Typography variant="h4" sx={{ color: "black", fontWeight: 600 }}>
+              {viewMode === "year" && currentDate.getFullYear()}
+              {viewMode === "month" &&
+                currentDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
                 })}
             </Typography>
             <IconButton
               onClick={() => navigateDate(1)}
               sx={{
-                color: 'black',
-                '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                color: "black",
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
               <ChevronRight />
             </IconButton>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Tooltip title='Year View'>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Tooltip title="Year View">
               <IconButton
-                onClick={() => setViewMode('year')}
+                onClick={() => setViewMode("year")}
                 sx={{
-                  color: 'black',
+                  color: "black",
                   backgroundColor:
-                    viewMode === 'year' ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
-                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.05)' },
+                    viewMode === "year" ? "rgba(0, 0, 0, 0.1)" : "transparent",
+                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.05)" },
                 }}
               >
                 <CalendarMonth />
               </IconButton>
             </Tooltip>
-            <Tooltip title='Month View'>
+            <Tooltip title="Month View">
               <IconButton
-                onClick={() => setViewMode('month')}
+                onClick={() => setViewMode("month")}
                 sx={{
-                  color: 'black',
+                  color: "black",
                   backgroundColor:
-                    viewMode === 'month' ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
-                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.05)' },
+                    viewMode === "month" ? "rgba(0, 0, 0, 0.1)" : "transparent",
+                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.05)" },
                 }}
               >
                 <ViewModule />
@@ -705,11 +705,11 @@ const JSIHCalendar = () => {
         {/* Calendar Content */}
         <Box sx={{ minHeight: 400 }}>
           {loading ? (
-            <Typography sx={{ color: 'black' }}>Loading...</Typography>
+            <Typography sx={{ color: "black" }}>Loading...</Typography>
           ) : (
             <>
-              {viewMode === 'year' && renderYearView()}
-              {viewMode === 'month' && (
+              {viewMode === "year" && renderYearView()}
+              {viewMode === "month" && (
                 <>
                   {renderMonthSummary()}
                   {renderMonthView()}
@@ -723,46 +723,46 @@ const JSIHCalendar = () => {
         <Box
           sx={{
             mt: 3,
-            display: 'flex',
+            display: "flex",
             gap: 2,
-            flexWrap: 'wrap',
-            alignItems: 'center',
+            flexWrap: "wrap",
+            alignItems: "center",
           }}
         >
           <Typography
-            variant='subtitle2'
-            sx={{ fontWeight: 600, color: 'black' }}
+            variant="subtitle2"
+            sx={{ fontWeight: 600, color: "black" }}
           >
             Legend:
           </Typography>
           <Chip
-            label='0'
+            label="0"
             sx={{
-              backgroundColor: '#388e3c',
-              color: 'black',
+              backgroundColor: "#388e3c",
+              color: "black",
               borderRadius: 2,
               fontWeight: 600,
-              boxShadow: '0 2px 4px rgba(56, 142, 60, 0.3)',
+              boxShadow: "0 2px 4px rgba(56, 142, 60, 0.3)",
             }}
           />
           <Chip
-            label='1'
+            label="1"
             sx={{
-              backgroundColor: '#fbc02d',
-              color: 'black',
+              backgroundColor: "#fbc02d",
+              color: "black",
               borderRadius: 2,
               fontWeight: 600,
-              boxShadow: '0 2px 4px rgba(251, 192, 45, 0.3)',
+              boxShadow: "0 2px 4px rgba(251, 192, 45, 0.3)",
             }}
           />
           <Chip
-            label='>1'
+            label=">1"
             sx={{
-              backgroundColor: '#d32f2f',
-              color: 'black',
+              backgroundColor: "#d32f2f",
+              color: "black",
               borderRadius: 2,
               fontWeight: 600,
-              boxShadow: '0 2px 4px rgba(211, 47, 47, 0.3)',
+              boxShadow: "0 2px 4px rgba(211, 47, 47, 0.3)",
             }}
           />
         </Box>
@@ -772,60 +772,60 @@ const JSIHCalendar = () => {
       <Dialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        maxWidth='sm'
+        maxWidth="sm"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: 3,
-            backgroundColor: 'white',
-            color: 'black',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+            backgroundColor: "white",
+            color: "black",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
           },
         }}
       >
-        <DialogTitle sx={{ color: 'black', fontWeight: 600 }}>
-          {editingRecord ? 'Edit Record' : 'Add Record'}
+        <DialogTitle sx={{ color: "black", fontWeight: 600 }}>
+          {editingRecord ? "Edit Record" : "Add Record"}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ mt: 2 }}>
             <Typography
-              variant='body1'
+              variant="body1"
               gutterBottom
-              sx={{ fontWeight: 600, color: 'black' }}
+              sx={{ fontWeight: 600, color: "black" }}
             >
               Date: {selectedDate?.toLocaleDateString()}
             </Typography>
             <TextField
               fullWidth
-              label='Number'
-              type='number'
+              label="Number"
+              type="number"
               value={selectedNumber}
               onChange={(e) => setSelectedNumber(e.target.value)}
               sx={{
                 mt: 2,
-                '& .MuiOutlinedInput-root': {
-                  backgroundColor: 'white',
-                  '& fieldset': {
-                    borderColor: 'rgba(0, 0, 0, 0.23)',
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "white",
+                  "& fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.23)",
                   },
-                  '&:hover fieldset': {
-                    borderColor: 'rgba(0, 0, 0, 0.5)',
+                  "&:hover fieldset": {
+                    borderColor: "rgba(0, 0, 0, 0.5)",
                   },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#1976d2',
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#1976d2",
                   },
                 },
-                '& .MuiInputLabel-root': {
-                  color: 'rgba(0, 0, 0, 0.6)',
+                "& .MuiInputLabel-root": {
+                  color: "rgba(0, 0, 0, 0.6)",
                 },
-                '& .MuiInputBase-input': {
-                  color: 'black',
+                "& .MuiInputBase-input": {
+                  color: "black",
                 },
               }}
-              placeholder={editingRecord ? 'Enter new value' : 'Enter a number'}
+              placeholder={editingRecord ? "Enter new value" : "Enter a number"}
             />
             {editingRecord && (
-              <Typography variant='body2' sx={{ mt: 1, color: 'black' }}>
+              <Typography variant="body2" sx={{ mt: 1, color: "black" }}>
                 Current value: {editingRecord.number}
               </Typography>
             )}
@@ -835,22 +835,22 @@ const JSIHCalendar = () => {
           <Button
             onClick={() => setDialogOpen(false)}
             sx={{
-              color: 'black',
-              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              color: "black",
+              "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
             }}
           >
             Cancel
           </Button>
           <Button
             onClick={handleSaveRecord}
-            variant='contained'
+            variant="contained"
             sx={{
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              color: 'black',
-              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.3)' },
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              color: "black",
+              "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.3)" },
             }}
           >
-            {editingRecord ? 'Update' : 'Add'}
+            {editingRecord ? "Update" : "Add"}
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
-import { getCurrentLanguageText } from '../../utils/get-current-language-text';
-import { useAtom, useAtomValue } from 'jotai';
-import { languageAtom, loggedInAtom } from '../../atoms/primitive.atom';
-import DataTable from '../common/DataTable';
+import { useEffect, useRef, useState } from "react";
+import { getCurrentLanguageText } from "../../utils/get-current-language-text";
+import { useAtom, useAtomValue } from "jotai";
+import { languageAtom, loggedInAtom } from "../../atoms/primitive.atom";
+import DataTable from "../common/DataTable";
 import {
   Button,
   Grid,
@@ -14,21 +14,21 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
-} from '@mui/material';
-import { AnimatePresence, motion, useAnimate } from 'framer-motion';
-import '../../assets/styles/innovationHub.css';
-import '../../assets/styles/js-ih-styles.css';
-import { getUserAuth } from '../../services/get-user-auth';
-import JSIHCalendar from '../common/JSIHCalendar';
-import JSIHSummary from '../common/JSIHSummary';
+} from "@mui/material";
+import { AnimatePresence, motion, useAnimate } from "framer-motion";
+import "../../assets/styles/innovationHub.css";
+import "../../assets/styles/js-ih-styles.css";
+import { getUserAuth } from "../../services/get-user-auth";
+import JSIHCalendar from "../common/JSIHCalendar";
+import JSIHSummary from "../common/JSIHSummary";
 
 function Gallery({ items, setIndex }) {
   return (
-    <div className='d-flex justify-content-center my-4'>
-      <ul className='gallery-container'>
+    <div className="d-flex justify-content-center my-4">
+      <ul className="gallery-container">
         {items.map((color, i) => (
           <motion.li
-            className='gallery-item'
+            className="gallery-item"
             key={color}
             onClick={() => setIndex(i)}
             style={{ backgroundColor: color }}
@@ -42,10 +42,10 @@ function Gallery({ items, setIndex }) {
 
 function SingleImage({ color, onClick }) {
   return (
-    <div className='single-image-container' onClick={onClick}>
+    <div className="single-image-container" onClick={onClick}>
       <motion.div
         layoutId={color}
-        className='single-image'
+        className="single-image"
         style={{ backgroundColor: color }}
       />
     </div>
@@ -55,13 +55,13 @@ export default function InnovationHub() {
   const language = useAtomValue(languageAtom);
   const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
   const [records, setRecords] = useState([]);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [index, setIndex] = useState(false);
   const [loadingTable, setLoadingTable] = useState(false);
   const [scope, animate] = useAnimate();
   const [activeTab, setActiveTab] = useState(0);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [showError, setShowError] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const first = useRef(true);
@@ -69,25 +69,25 @@ export default function InnovationHub() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
-    setErrorMessage('');
+    setErrorMessage("");
     setShowError(false);
 
     try {
       const res = await getUserAuth(username, password);
       if (res.status === 200) {
         setLoggedIn(true);
-        setErrorMessage('');
+        setErrorMessage("");
         setShowError(false);
       } else {
         setLoggedIn(false);
         setErrorMessage(
-          'Login failed. Please check your username and password.'
+          "Login failed. Please check your username and password.",
         );
         setShowError(true);
       }
     } catch (error) {
       setLoggedIn(false);
-      setErrorMessage('Login failed. Please check your username and password.');
+      setErrorMessage("Login failed. Please check your username and password.");
       setShowError(true);
     } finally {
       setIsLoggingIn(false);
@@ -97,7 +97,7 @@ export default function InnovationHub() {
   const handleLogOut = () => {
     setLoggedIn(false);
     setRecords([]);
-    setErrorMessage('');
+    setErrorMessage("");
     setShowError(false);
   };
 
@@ -119,22 +119,22 @@ export default function InnovationHub() {
   const numColors = 4 * 4;
   const makeColor = (hue) => `hsl(${hue}, 100%, 50%)`;
   const colors = Array.from(Array(numColors)).map((_, i) =>
-    makeColor(Math.round((360 / numColors) * i))
+    makeColor(Math.round((360 / numColors) * i)),
   );
 
   return (
     <motion.div
-      className='container my-5 text-center'
+      className="container my-5 text-center"
       initial={{ y: 10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: -10, opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className='px-3'>
-        <h1 className='text-success'>
-          {getCurrentLanguageText(language, 'Innovation Hub', '创新Hub')}
+      <div className="px-3">
+        <h1 className="text-success">
+          {getCurrentLanguageText(language, "Innovation Hub", "创新Hub")}
         </h1>
-        <h3 className='text-success opacity-50'>
+        <h3 className="text-success opacity-50">
           {getCurrentLanguageText(
             language,
             `Discover groundbreaking designs and state-of-the-art tech solutions that
@@ -142,16 +142,16 @@ export default function InnovationHub() {
           of innovation.`,
             `发现开创性的设计和前沿技术解决方案，
           重新定义数字体验，
-          展示创新的无限可能性。`
+          展示创新的无限可能性。`,
           )
-            .split(' ')
+            .split(" ")
             .map((el, i) => (
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.25, delay: i / 10 }}
               >
-                {el}{' '}
+                {el}{" "}
               </motion.span>
             ))}
         </h3>
@@ -160,23 +160,23 @@ export default function InnovationHub() {
       {loggedIn ? (
         <>
           <Button
-            className='mt-3 mb-4'
-            variant='contained'
+            className="mt-3 mb-4"
+            variant="contained"
             onClick={handleLogOut}
           >
             Log Out
           </Button>
 
           {/* JS-IH-1 Data Visualization */}
-          <Box sx={{ width: '100%', mt: 4 }}>
+          <Box sx={{ width: "100%", mt: 4 }}>
             <Tabs
               value={activeTab}
               onChange={(e, newValue) => setActiveTab(newValue)}
               centered
               sx={{ mb: 3 }}
             >
-              <Tab label='Calendar View' />
-              <Tab label='Summary Report' />
+              <Tab label="Calendar View" />
+              <Tab label="Summary Report" />
             </Tabs>
 
             {activeTab === 0 && <JSIHCalendar />}
@@ -187,69 +187,69 @@ export default function InnovationHub() {
         <Grid
           container
           md={12}
-          justifyContent={'center'}
-          className='container mt-5'
+          justifyContent={"center"}
+          className="container mt-5"
         >
           <form
-            className='d-flex flex-column gap-4'
+            className="d-flex flex-column gap-4"
             onSubmit={(e) => handleLogin(e)}
           >
             <TextField
-              label={'username'}
+              label={"username"}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={isLoggingIn}
-              className={`login-form-field ${isLoggingIn ? 'loading' : ''}`}
+              className={`login-form-field ${isLoggingIn ? "loading" : ""}`}
               sx={{
-                '& .MuiInputBase-input.Mui-disabled': {
-                  WebkitTextFillColor: 'rgba(0, 0, 0, 0.6)',
+                "& .MuiInputBase-input.Mui-disabled": {
+                  WebkitTextFillColor: "rgba(0, 0, 0, 0.6)",
                 },
               }}
             ></TextField>
             <TextField
-              label={'password'}
-              type='password'
+              label={"password"}
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isLoggingIn}
-              className={`login-form-field ${isLoggingIn ? 'loading' : ''}`}
+              className={`login-form-field ${isLoggingIn ? "loading" : ""}`}
               sx={{
-                '& .MuiInputBase-input.Mui-disabled': {
-                  WebkitTextFillColor: 'rgba(0, 0, 0, 0.6)',
+                "& .MuiInputBase-input.Mui-disabled": {
+                  WebkitTextFillColor: "rgba(0, 0, 0, 0.6)",
                 },
               }}
             ></TextField>
             <Button
-              type='submit button'
-              variant='contained'
+              type="submit button"
+              variant="contained"
               disabled={isLoggingIn}
-              className={`login-loading-button ${isLoggingIn ? 'loading' : ''}`}
+              className={`login-loading-button ${isLoggingIn ? "loading" : ""}`}
               sx={{
-                position: 'relative',
-                minHeight: '40px',
-                transition: 'all 0.3s ease',
-                '&:disabled': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.12)',
-                  color: 'rgba(0, 0, 0, 0.26)',
+                position: "relative",
+                minHeight: "40px",
+                transition: "all 0.3s ease",
+                "&:disabled": {
+                  backgroundColor: "rgba(0, 0, 0, 0.12)",
+                  color: "rgba(0, 0, 0, 0.26)",
                 },
-                '&:hover:not(:disabled)': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                "&:hover:not(:disabled)": {
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                 },
               }}
             >
               {isLoggingIn ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <CircularProgress
                     size={20}
-                    color='inherit'
-                    className='login-spinner'
-                    sx={{ animation: 'spin 1s linear infinite' }}
+                    color="inherit"
+                    className="login-spinner"
+                    sx={{ animation: "spin 1s linear infinite" }}
                   />
-                  <span className='login-pulse'>Logging in...</span>
+                  <span className="login-pulse">Logging in...</span>
                 </Box>
               ) : (
-                'Login'
+                "Login"
               )}
             </Button>
           </form>
@@ -261,12 +261,12 @@ export default function InnovationHub() {
         open={showError}
         autoHideDuration={6000}
         onClose={() => setShowError(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => setShowError(false)}
-          severity='error'
-          sx={{ width: '100%' }}
+          severity="error"
+          sx={{ width: "100%" }}
         >
           {errorMessage}
         </Alert>

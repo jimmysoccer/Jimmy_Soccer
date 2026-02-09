@@ -1,22 +1,22 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
-import Home from './components/pages/Home';
-import { LANGUAGE, NAV_BAR } from './constants/navbar-items';
-import About from './components/pages/About';
-import Projects from './components/pages/Projects';
-import Contact from './components/pages/Contact';
-import WorkingExperience from './components/pages/Works';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Project from './components/pages/Project';
-import NavBar from './components/layout/NavBar';
-import Footer from './components/layout/Footer';
-import InnovationHub from './components/pages/InnovationHub';
-import NotFound from './components/pages/NotFound';
-import Work from './components/pages/Work';
-import Publications from './components/pages/Publications';
-import CV from './components/pages/CV';
-import { useAtomValue } from 'jotai';
-import { languageAtom } from './atoms/primitive.atom';
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import Home from "./components/pages/Home";
+import { LANGUAGE, NAV_BAR } from "./constants/navbar-items";
+import About from "./components/pages/About";
+import Projects from "./components/pages/Projects";
+import Contact from "./components/pages/Contact";
+import WorkingExperience from "./components/pages/Works";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Project from "./components/pages/Project";
+import NavBar from "./components/layout/NavBar";
+import Footer from "./components/layout/Footer";
+import InnovationHub from "./components/pages/InnovationHub";
+import NotFound from "./components/pages/NotFound";
+import Work from "./components/pages/Work";
+import Publications from "./components/pages/Publications";
+import CV from "./components/pages/CV";
+import { useAtomValue } from "jotai";
+import { languageAtom } from "./atoms/primitive.atom";
 
 function App() {
   const language = useAtomValue(languageAtom);
@@ -24,7 +24,7 @@ function App() {
   return (
     <div
       style={{
-        fontFamily: language === LANGUAGE.chinese.value ? 'ChineseFont' : '',
+        fontFamily: language === LANGUAGE.chinese.value ? "ChineseFont" : "",
       }}
     >
       <NavBar />
@@ -36,7 +36,7 @@ function App() {
           element={<WorkingExperience></WorkingExperience>}
         ></Route>
         <Route
-          path={NAV_BAR.workingExperience.path + '/:name'}
+          path={NAV_BAR.workingExperience.path + "/:name"}
           element={<Work></Work>}
         ></Route>
         <Route
@@ -44,7 +44,7 @@ function App() {
           element={<Projects></Projects>}
         ></Route>
         <Route
-          path={NAV_BAR.projects.path + '/:name'}
+          path={NAV_BAR.projects.path + "/:name"}
           element={<Project></Project>}
         ></Route>
         <Route
@@ -60,7 +60,7 @@ function App() {
           element={<InnovationHub />}
         ></Route>
         <Route path={NAV_BAR.cv.path} element={<CV />}></Route>
-        <Route path='*' element={<NotFound />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
 
       <Footer />

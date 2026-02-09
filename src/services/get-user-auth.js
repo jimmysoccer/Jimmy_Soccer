@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { getUserAuthenUrl } from './api-url';
+import axios from "axios";
+import { getUserAuthenUrl } from "./api-url";
 
 export const getUserAuth = async (username, password) => {
   try {
@@ -9,6 +9,6 @@ export const getUserAuth = async (username, password) => {
     });
     return res;
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
   }
 };

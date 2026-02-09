@@ -56,8 +56,8 @@
 }
 
 @font-face {
-  font-family: 'ChineseFont';
-  src: url('./assets/fonts/chinese.ttf') format('truetype');
+  font-family: "ChineseFont";
+  src: url("./assets/fonts/chinese.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

@@ -16,18 +16,19 @@ This is Jimmy's personal website. It may include blogs, gallaries, or any other 
    ```
 
 ## Library Used
-* React
-* Lottie
-* framer-motion
-* bootstrap
-* react-hot-toast
+
+- React
+- Lottie
+- framer-motion
+- bootstrap
+- react-hot-toast
 
 ## Deploy Guide
 
 1. modify code on text editor
 2. git commit and git push modified codes to main branch
 3. the auto deployment will be made via AWS Amplify
-4. Visit https://jimmysoccer.com/. 
+4. Visit https://jimmysoccer.com/.
 
 ## Server
 
