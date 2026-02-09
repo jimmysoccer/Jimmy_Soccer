@@ -5,7 +5,7 @@ export function getCategoriesFromTechStack(stack) {
     frontend: ['javascript', 'react', 'figma', '3d.js'],
     backend: ['nodejs', 'fastapi', 'django', 'php', 'mongodb', 'sql', 'go'],
     database: ['mongodb', 'sql'],
-    mobile: ['wechat'],
+    mobile: ['wechat', 'mobile'],
     ai: ['openai', 'ai'],
     map: ['googlemap'],
     game: ['c#', 'unity'],

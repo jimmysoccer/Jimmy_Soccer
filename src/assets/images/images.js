@@ -60,6 +60,7 @@ import hardware from './hardware.png';
 import ai from './ai.png';
 import fastAPI from './fastapi.webp';
 import windows from './windows.png';
+import mobile from './mobile.png';
 
 export const aboutImage = about;
 export const fullStackImage = full_stack;
@@ -123,3 +124,4 @@ export const hardwareImage = hardware;
 export const aiImage = ai;
 export const fastAPIImage = fastAPI;
 export const windowsImage = windows;
+export const mobileImage = mobile;

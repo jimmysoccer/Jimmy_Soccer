@@ -113,7 +113,7 @@ export default function Project() {
                 </Grid>
               )
             ) : (
-              <ImageCarousel images={project?.images}></ImageCarousel>
+              <ImageCarousel images={project?.images || ["https://res.cloudinary.com/ds4h9nepa/image/upload/v1770679077/project_lzgyse.png"]}></ImageCarousel>
             )}
           </div>
         </div>

@@ -23,4 +23,5 @@ export const techStack = {
   aws: 'aws',
   hardware: 'hardware',
   ai: 'ai',
+  mobile: 'mobile',
 };

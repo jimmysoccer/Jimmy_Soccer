@@ -23,8 +23,8 @@ import {
   unityImage,
   hardwareImage,
   aiImage,
-  fastAPIImage,
   windowsImage,
+  mobileImage,
 } from '../../assets/images/images';
 import '../../assets/styles/style.css';
 
@@ -112,7 +112,9 @@ export default function TechStackIcon({ stack }) {
       );
     case techStack.ai:
       return <img src={aiImage} alt='ai' className='project-logo'></img>;
-    default:
+    case techStack.mobile:
+      return <img src={mobileImage} alt='mobile' className='project-logo'></img>;
+      default:
       return (
         <QuestionMarkIcon
           className='project-logo'

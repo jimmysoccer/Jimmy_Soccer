@@ -58,7 +58,11 @@ export const projects = [
       techStack.python,
       techStack.fastAPI,
       techStack.react,
+      techStack.ai,
+      techStack.hardware,
+      techStack.mongoDB,
       techStack.windows,
+
     ],
     images: [
       'https://res.cloudinary.com/ds4h9nepa/image/upload/v1762232989/image_1_hbgn8w.png',
@@ -88,6 +92,8 @@ export const projects = [
       techStack.python,
       techStack.gcp,
       techStack.openAI,
+      techStack.mobile,
+      techStack.hardware,
     ],
     images: [
       'https://res.cloudinary.com/ds4h9nepa/image/upload/v1762233220/Computer-Science_1_sbeauq.jpg',
@@ -176,6 +182,7 @@ export const projects = [
       techStack.react,
       techStack.python,
       techStack.mongoDB,
+      techStack.sql,
       techStack.aws,
       techStack.lambda,
     ],
@@ -323,7 +330,6 @@ export const projects = [
     techStack: [
       techStack.js,
       techStack.python,
-      techStack.sql,
       techStack.googleMap,
     ],
     images: [sunSpotImage1, sunSpotImage2, sunSpotImage3],
@@ -341,7 +347,7 @@ export const projects = [
       '通过使用Three.js嵌入了一个3D球体, 用于显示问题, 用户可以旋转球体找到问题。',
       '通过PHP、SQL与Oracle SQL数据库建立连接, 用户可以发送和检索帖子信息。',
     ],
-    techStack: [techStack.js, techStack.threeDJS, techStack.sql, techStack.php],
+    techStack: [techStack.js, techStack.threeDJS],
   },
   {
     title: 'Minesweeper',

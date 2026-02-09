@@ -201,8 +201,7 @@ export default function Projects({ hideHeader = false }) {
                     minHeight: '280px',
                   }}
                 >
-                  {project.images && (
-                    <div
+                  <div
                       style={{
                         width: '100%',
                         maxHeight: hideHeader ? '280px' : '160px',
@@ -212,7 +211,7 @@ export default function Projects({ hideHeader = false }) {
                       }}
                     >
                       <img
-                        src={project.images[0]}
+                        src={project?.images?.[0] || "https://res.cloudinary.com/ds4h9nepa/image/upload/v1770679077/project_lzgyse.png"}
                         alt='projects'
                         style={{
                           width: '100%',
@@ -221,7 +220,6 @@ export default function Projects({ hideHeader = false }) {
                         }}
                       ></img>
                     </div>
-                  )}
                   <div
                     style={{
                       display: 'flex',
@@ -336,21 +334,19 @@ export default function Projects({ hideHeader = false }) {
                     selectedProject.time_chinese
                   )}
                 </div>
-                {selectedProject.images && (
-                  <div className='mb-3'>
-                    <img
-                      className='img-fluid'
-                      src={selectedProject.images[0]}
-                      alt='project'
-                      style={{
-                        borderRadius: '4px',
-                        width: '100%',
-                        maxHeight: '400px',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </div>
-                )}
+                <div className='mb-3'>
+                  <img
+                    className='img-fluid'
+                    src={selectedProject?.images?.[0] || "https://res.cloudinary.com/ds4h9nepa/image/upload/v1770679077/project_lzgyse.png"}
+                    alt='project'
+                    style={{
+                      borderRadius: '4px',
+                      width: '100%',
+                      maxHeight: '400px',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
                 <ul>
                   {(language === LANGUAGE.chinese.value
                     ? selectedProject.description_chinese
