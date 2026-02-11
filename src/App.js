@@ -24,7 +24,8 @@ function App() {
   return (
     <div
       style={{
-        fontFamily: language === LANGUAGE.chinese.value ? "ChineseFont" : "",
+        // fontFamily: language === LANGUAGE.chinese.value ? "ChineseFont" : "",
+        fontFamily: language === LANGUAGE.chinese.value ? "" : "",
       }}
     >
       <NavBar />
