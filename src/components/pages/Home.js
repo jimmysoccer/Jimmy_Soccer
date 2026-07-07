@@ -18,22 +18,20 @@ export default function Home() {
 
   const TEXT_1 = getCurrentLanguageText(
     language,
-    `
-  🚀 Hi, I'm Heng Sun — a CS graduate from the University of Florida
-  and a Research Assistant in AI for healthcare at UF.`,
-    `
-  🚀 你好，我是孙恒，佛罗里达大学计算机科学专业毕业生，
-  现任佛罗里达大学医疗人工智能研究助理。`,
+    `🚀 Hi, I'm Heng Sun, a Ph.D. student in Computer Science at Emory University.`,
+    `🚀 你好，我是孙恒，埃默里大学计算机科学专业博士生。`,
   ).split(" ");
 
   const TEXT_2 = getCurrentLanguageText(
     language,
-    `
-  🎓 I'm applying for Ph.D. programs to advance AI systems that
-  combine multimodal data and human-centered design for medicine.`,
-    `
-  🎓 我正在申请博士项目，致力于开发结合多模态数据
-  与以人为本设计的医疗人工智能系统。`,
+    `I build end-to-end AI systems that combine modern full-stack engineering with machine learning to solve real-world healthcare challenges. My goal is to bridge cutting-edge AI research with scalable software that can make a meaningful impact in clinical practice.`,
+    `我构建端到端的AI系统，结合现代全栈工程和机器学习，解决现实世界的医疗挑战。我的目标是将前沿的AI研究与可扩展的软件相结合，为临床实践带来实际意义。`,
+  ).split(" ");
+
+  const TEXT_3 = getCurrentLanguageText(
+    language,
+    `Current Interests: Machine Learning • Foundation Models • Clinical AI • Full-Stack Engineering • Intelligent Healthcare Systems`,
+    `当前兴趣: 机器学习 • 基础模型 • 临床AI • 全栈工程 • 智能医疗系统`,
   ).split(" ");
 
   return (
@@ -49,8 +47,8 @@ export default function Home() {
           <h2 className="text-center fw-bold">
             {getCurrentLanguageText(
               language,
-              "Full-stack web application developer",
-              "全栈网络应用程序开发者",
+              "AI Researcher & Full-Stack Engineer",
+              "人工智能研究员 & 全栈工程师",
             )}
           </h2>
           <p className="fs-5 text-secondary">
@@ -67,6 +65,18 @@ export default function Home() {
           </p>
           <p className="fs-5 text-secondary">
             {TEXT_2.map((el, i) => (
+              <motion.span
+                className="fs-5 text-secondary"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.25, delay: i / 10 }}
+              >
+                {el}{" "}
+              </motion.span>
+            ))}
+          </p>
+          <p className="fs-5 text-secondary">
+            {TEXT_3.map((el, i) => (
               <motion.span
                 className="fs-5 text-secondary"
                 initial={{ opacity: 0 }}
