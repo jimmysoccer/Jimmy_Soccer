@@ -78,8 +78,10 @@ const MONTH_NAMES = [
 ];
 
 const GRADIENT_COLORS = [
-  "#388e3c", "#558b2f", "#9e9d24", "#fbc02d", "#f9a825",
-  "#f57f17", "#ff6f00", "#ef6c00", "#e65100", "#d32f2f", "#b71c1c",
+  "#388e3c", // 0 - green
+  "#fbc02d", // 1 - yellow
+  "#d32f2f", "#d32f2f", "#d32f2f", "#d32f2f", "#d32f2f",
+  "#d32f2f", "#d32f2f", "#d32f2f", "#d32f2f", // 2+ - red
 ];
 
 const PALETTE = {

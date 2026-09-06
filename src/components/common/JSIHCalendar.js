@@ -131,21 +131,9 @@ const JSIHCalendar = () => {
   };
 
   const getColorForNumber = (number) => {
-    // Color scale: green (0) → yellow (3-4) → orange (6-7) → red (9-10)
-    const colors = [
-      "#388e3c", // 0 - green
-      "#558b2f", // 1 - dark green
-      "#9e9d24", // 2 - olive
-      "#fbc02d", // 3 - yellow
-      "#f9a825", // 4 - dark yellow
-      "#f57f17", // 5 - orange-yellow
-      "#ff6f00", // 6 - orange
-      "#ef6c00", // 7 - dark orange
-      "#e65100", // 8 - deep orange
-      "#d32f2f", // 9 - red
-      "#b71c1c", // 10 - dark red
-    ];
-    if (number >= 0 && number <= 10) return colors[number];
+    if (number === 0) return "#388e3c"; // Green
+    if (number === 1) return "#fbc02d"; // Yellow
+    if (number >= 2) return "#d32f2f"; // Red
     return "#1976d2"; // Blue fallback
   };
 
@@ -728,7 +716,7 @@ const JSIHCalendar = () => {
           )}
         </Box>
 
-        {/* Legend - Gradient Scale 0-10 */}
+        {/* Legend - 0, 1, and 2+ */}
         <Box
           sx={{
             mt: 3,
@@ -745,8 +733,7 @@ const JSIHCalendar = () => {
             Legend:
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-            <Typography variant="caption" sx={{ color: "#388e3c", fontWeight: 700 }}>Low</Typography>
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+            {[0, 1, 2].map((num) => (
               <Box
                 key={num}
                 sx={{
@@ -757,17 +744,16 @@ const JSIHCalendar = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "white",
+                  color: num === 1 ? "black" : "white",
                   fontSize: "0.65rem",
                   fontWeight: "bold",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
                   cursor: "default",
                 }}
               >
-                {num}
+                {num === 2 ? "2+" : num}
               </Box>
             ))}
-            <Typography variant="caption" sx={{ color: "#b71c1c", fontWeight: 700 }}>High</Typography>
           </Box>
         </Box>
       </Paper>
