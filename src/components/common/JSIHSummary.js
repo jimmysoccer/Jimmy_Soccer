@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Paper,
@@ -30,11 +30,12 @@ import {
   TrendingDown,
   Analytics,
   Assessment,
-  BarChart,
+  BarChart as BarChartIcon,
   NavigateBefore,
   NavigateNext,
   CalendarToday,
   ShowChart,
+  PieChart as PieChartIcon,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import {
@@ -48,12 +49,14 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
+  ArcElement,
   Title,
   Tooltip as ChartTooltip,
   Legend,
   Filler,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
 
 // Register Chart.js components
 ChartJS.register(
@@ -61,34 +64,48 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
+  ArcElement,
   Title,
   ChartTooltip,
   Legend,
   Filler,
 );
 
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+const GRADIENT_COLORS = [
+  "#388e3c", "#558b2f", "#9e9d24", "#fbc02d", "#f9a825",
+  "#f57f17", "#ff6f00", "#ef6c00", "#e65100", "#d32f2f", "#b71c1c",
+];
+
+const PALETTE = {
+  primary: "#667eea",
+  secondary: "#764ba2",
+  accent: "#00bcd4",
+  success: "#4caf50",
+  warning: "#ff9800",
+  error: "#f44336",
+  info: "#2196f3",
+};
+
 const JSIHSummary = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // Default to current month
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
   const [loading, setLoading] = useState(false);
   const [yearlyData, setYearlyData] = useState([]);
   const [monthlyData, setMonthlyData] = useState([]);
   const [availableYears, setAvailableYears] = useState([]);
-  const [chartView, setChartView] = useState("monthly"); // 'monthly' or 'yearly'
-  const [singleChartView, setSingleChartView] = useState(false); // Show only one chart at a time
+  const [chartView, setChartView] = useState("monthly");
+  const [singleChartView, setSingleChartView] = useState(false);
 
-  useEffect(() => {
-    loadAllData();
-  }, []);
-
-  useEffect(() => {
-    loadYearlyData();
-  }, [selectedYear]);
-
-  useEffect(() => {
-    loadMonthlyData();
-  }, [selectedYear, selectedMonth]);
+  useEffect(() => { loadAllData(); }, []);
+  useEffect(() => { loadYearlyData(); }, [selectedYear]);
+  useEffect(() => { loadMonthlyData(); }, [selectedYear, selectedMonth]);
 
   const loadAllData = async () => {
     setLoading(true);
@@ -96,20 +113,10 @@ const JSIHSummary = () => {
       const data = await getAllJSIHRecords();
       const records = data.records || [];
       setAllRecords(records);
-
-      // Extract available years from data
-      const years = [
-        ...new Set(
-          records.map((record) => new Date(record.date).getFullYear()),
-        ),
-      ];
-      years.sort((a, b) => a - b); // Sort ascending (oldest first)
+      const years = [...new Set(records.map((r) => new Date(r.date).getFullYear()))];
+      years.sort((a, b) => a - b);
       setAvailableYears(years);
-
-      // Set selected year to most recent year with data, or current year
-      if (years.length > 0) {
-        setSelectedYear(years[years.length - 1]); // Most recent year (last in ascending order)
-      }
+      if (years.length > 0) setSelectedYear(years[years.length - 1]);
     } catch (error) {
       console.error("Error loading all data:", error);
     } finally {
@@ -136,128 +143,62 @@ const JSIHSummary = () => {
   };
 
   const navigateYear = (direction) => {
-    const currentIndex = availableYears.indexOf(selectedYear);
-    if (currentIndex !== -1) {
-      const newIndex = currentIndex + direction;
-      if (newIndex >= 0 && newIndex < availableYears.length) {
-        setSelectedYear(availableYears[newIndex]);
-      }
+    const idx = availableYears.indexOf(selectedYear);
+    if (idx !== -1) {
+      const newIdx = idx + direction;
+      if (newIdx >= 0 && newIdx < availableYears.length) setSelectedYear(availableYears[newIdx]);
     }
   };
 
   const goToCurrentYear = () => {
-    const currentYear = new Date().getFullYear();
-    if (availableYears.includes(currentYear)) {
-      setSelectedYear(currentYear);
-    }
+    const y = new Date().getFullYear();
+    if (availableYears.includes(y)) setSelectedYear(y);
   };
 
-  const canNavigatePrevious = () => {
-    const currentIndex = availableYears.indexOf(selectedYear);
-    return currentIndex > 0; // Can go to smaller index (older year)
-  };
-
-  const canNavigateNext = () => {
-    const currentIndex = availableYears.indexOf(selectedYear);
-    return currentIndex < availableYears.length - 1; // Can go to larger index (newer year)
-  };
+  const canNavigatePrevious = () => availableYears.indexOf(selectedYear) > 0;
+  const canNavigateNext = () => availableYears.indexOf(selectedYear) < availableYears.length - 1;
 
   const calculateStats = (records, totalDays = null) => {
     if (!records || records.length === 0) {
-      return {
-        total: 0,
-        average: 0,
-        averageWithData: 0,
-        averageOccurrences: 0,
-        min: 0,
-        max: 0,
-        count: 0,
-        daysWithData: 0,
-      };
+      return { total: 0, average: 0, averageWithData: 0, averageOccurrences: 0, min: 0, max: 0, count: 0, daysWithData: 0 };
     }
-
     const numbers = records.map((r) => r.number);
-    const total = numbers.reduce((sum, num) => sum + num, 0);
-
-    // Calculate average: days with data (including 0) / sum of all numbers
-    const daysWithData = records.length; // All records count as days with data
+    const total = numbers.reduce((s, n) => s + n, 0);
+    const daysWithData = records.length;
     const average = total > 0 ? daysWithData / total : 0;
-
-    // Calculate sum/occ: total days / number of occurrences (same as yearly calendar view)
-    const occurrences = numbers.filter((num) => num > 0).length;
-    const averageWithData =
-      totalDays && occurrences > 0 ? totalDays / occurrences : 0;
-
-    // Calculate average based on occurrences (count each date with number > 0 as 1)
-    const averageOccurrences =
-      total > 0 && totalDays ? totalDays / occurrences : 0;
-
-    const min = Math.min(...numbers);
-    const max = Math.max(...numbers);
-
+    const occurrences = numbers.filter((n) => n > 0).length;
+    const averageWithData = totalDays && occurrences > 0 ? totalDays / occurrences : 0;
+    const averageOccurrences = total > 0 && totalDays ? totalDays / occurrences : 0;
     return {
-      total,
-      average,
-      averageWithData,
-      averageOccurrences,
-      min,
-      max,
-      count: records.length,
-      daysWithData,
+      total, average, averageWithData, averageOccurrences,
+      min: Math.min(...numbers), max: Math.max(...numbers),
+      count: records.length, daysWithData,
     };
   };
 
   const getMonthlyStats = (records) => {
-    const monthlyData = {};
-
-    for (let month = 1; month <= 12; month++) {
-      const monthRecords = records.filter((record) => {
-        const recordDate = new Date(record.date);
-        return recordDate.getMonth() + 1 === month;
-      });
-
-      // Calculate total days in the month (accounting for leap years)
-      const daysInMonth = new Date(selectedYear, month, 0).getDate();
-      monthlyData[month] = calculateStats(monthRecords, daysInMonth);
+    const md = {};
+    for (let m = 1; m <= 12; m++) {
+      const mr = records.filter((r) => new Date(r.date).getMonth() + 1 === m);
+      const dim = new Date(selectedYear, m, 0).getDate();
+      md[m] = calculateStats(mr, dim);
     }
-
-    return monthlyData;
+    return md;
   };
 
   const getTrendIcon = (current, previous) => {
-    if (current > previous) return <TrendingUp color="success" />;
-    if (current < previous) return <TrendingDown color="error" />;
-    return <TrendingUp color="disabled" />;
+    if (current > previous) return <TrendingUp sx={{ color: PALETTE.success, fontSize: 20 }} />;
+    if (current < previous) return <TrendingDown sx={{ color: PALETTE.error, fontSize: 20 }} />;
+    return <TrendingUp sx={{ color: "text.disabled", fontSize: 20 }} />;
   };
 
-  const getColorForValue = (value, maxValue) => {
-    const percentage = (value / maxValue) * 100;
-    if (percentage >= 80) return "#d32f2f";
-    if (percentage >= 60) return "#f57c00";
-    if (percentage >= 40) return "#fbc02d";
-    if (percentage >= 20) return "#388e3c";
-    return "#1976d2";
-  };
-
-  // Calculate total days in the year (accounting for leap years)
-  const isLeapYear =
-    selectedYear % 4 === 0 &&
-    (selectedYear % 100 !== 0 || selectedYear % 400 === 0);
+  const isLeapYear = selectedYear % 4 === 0 && (selectedYear % 100 !== 0 || selectedYear % 400 === 0);
   const daysInYear = isLeapYear ? 366 : 365;
 
-  // Calculate total days for overall stats (from earliest to latest record)
   const calculateTotalDaysForOverall = (records) => {
     if (!records || records.length === 0) return 0;
-
     const dates = records.map((r) => new Date(r.date));
-    const earliestDate = new Date(Math.min(...dates));
-    const latestDate = new Date(Math.max(...dates));
-
-    // Calculate days between earliest and latest record (inclusive)
-    const timeDiff = latestDate.getTime() - earliestDate.getTime();
-    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-
-    return daysDiff;
+    return Math.ceil((Math.max(...dates) - Math.min(...dates)) / 86400000) + 1;
   };
 
   const totalDaysOverall = calculateTotalDaysForOverall(allRecords);
@@ -265,819 +206,398 @@ const JSIHSummary = () => {
   const yearlyStats = calculateStats(yearlyData, daysInYear);
   const monthlyStats = getMonthlyStats(yearlyData);
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  // Value distribution data (count of each value 0-10 in selected year)
+  const valueDistribution = useMemo(() => {
+    const dist = Array(11).fill(0);
+    yearlyData.forEach((r) => {
+      const n = r.number;
+      if (n >= 0 && n <= 10) dist[n]++;
+    });
+    return dist;
+  }, [yearlyData]);
 
-  // Chart.js configuration
-  const chartOptions = {
+  const maxMonthlyAvg = Math.max(...Object.values(monthlyStats).map((s) => s.average), 0.1);
+
+  // ============ Chart configs ============
+  const baseChartOpts = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          color: "black",
-          font: {
-            size: 12,
-          },
-        },
-      },
-      title: {
-        display: true,
-        color: "black",
-        font: {
-          size: 16,
-          weight: "bold",
-        },
-      },
-      tooltip: {
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
-        titleColor: "white",
-        bodyColor: "white",
-        borderColor: "#667eea",
-        borderWidth: 1,
-      },
+      legend: { position: "top", labels: { color: "#555", font: { size: 12, family: "'Inter', sans-serif" }, padding: 16, usePointStyle: true, pointStyle: "circle" } },
+      tooltip: { backgroundColor: "rgba(30,30,60,0.92)", titleColor: "#fff", bodyColor: "#ddd", borderColor: PALETTE.primary, borderWidth: 1, cornerRadius: 8, padding: 12 },
     },
     scales: {
-      x: {
-        ticks: {
-          color: "black",
-          font: {
-            size: 11,
-          },
-        },
-        grid: {
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-      },
-      y: {
-        ticks: {
-          color: "black",
-          font: {
-            size: 11,
-          },
-        },
-        grid: {
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-      },
+      x: { ticks: { color: "#666", font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.04)" } },
+      y: { ticks: { color: "#666", font: { size: 11 } }, grid: { color: "rgba(0,0,0,0.06)" }, beginAtZero: true },
     },
   };
 
-  // Prepare chart data
-  const getChartData = (type) => {
-    if (chartView === "monthly") {
-      // For monthly view, show daily data within the selected month
-      const sortedMonthlyData = [...monthlyData].sort(
-        (a, b) => new Date(a.date) - new Date(b.date),
-      );
-
-      const labels = sortedMonthlyData.map((record) => {
-        const date = new Date(record.date);
-        return `${date.getDate()}`; // Show day of month
-      });
-
-      const data = sortedMonthlyData.map((record) => {
-        return record.number;
-      });
-
-      return {
-        labels,
-        datasets: [
-          {
-            label: "Value",
-            data,
-            borderColor: "#667eea",
-            backgroundColor: "rgba(102, 126, 234, 0.1)",
-            borderWidth: 3,
-            pointBackgroundColor: "#667eea",
-            pointBorderColor: "white",
-            pointBorderWidth: 2,
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            fill: true,
-            tension: 0.4,
-          },
-        ],
-      };
-    } else {
-      const labels = availableYears.map((year) => year.toString());
-      const data = availableYears.map((year) => {
-        const yearRecords = allRecords.filter(
-          (record) => new Date(record.date).getFullYear() === year,
-        );
-        const yearStats = calculateStats(yearRecords);
-        if (type === "average") return yearStats.average;
-        if (type === "total") return yearStats.total;
-        return 0;
-      });
-
-      return {
-        labels,
-        datasets: [
-          {
-            label: type === "average" ? "Average" : "Total",
-            data,
-            borderColor: "#667eea",
-            backgroundColor: "rgba(102, 126, 234, 0.1)",
-            borderWidth: 3,
-            pointBackgroundColor: "#667eea",
-            pointBorderColor: "white",
-            pointBorderWidth: 2,
-            pointRadius: 6,
-            pointHoverRadius: 8,
-            fill: true,
-            tension: 0.4,
-          },
-        ],
-      };
-    }
+  // Monthly line chart (daily values within month)
+  const getMonthlyLineData = () => {
+    const sorted = [...monthlyData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    return {
+      labels: sorted.map((r) => `${new Date(r.date).getDate()}`),
+      datasets: [{
+        label: "Daily Value",
+        data: sorted.map((r) => r.number),
+        borderColor: PALETTE.primary,
+        backgroundColor: (ctx) => {
+          const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 300);
+          g.addColorStop(0, "rgba(102,126,234,0.35)");
+          g.addColorStop(1, "rgba(102,126,234,0.02)");
+          return g;
+        },
+        borderWidth: 2.5,
+        pointBackgroundColor: sorted.map((r) => GRADIENT_COLORS[Math.min(Math.max(Math.round(r.number), 0), 10)]),
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        fill: true,
+        tension: 0.35,
+      }],
+    };
   };
 
+  // Yearly trend line chart
+  const getYearlyLineData = (type) => {
+    const labels = availableYears.map(String);
+    const data = availableYears.map((y) => {
+      const yr = allRecords.filter((r) => new Date(r.date).getFullYear() === y);
+      const s = calculateStats(yr);
+      return type === "average" ? s.average : s.total;
+    });
+    return {
+      labels,
+      datasets: [{
+        label: type === "average" ? "Yearly Average" : "Yearly Total",
+        data,
+        borderColor: type === "average" ? PALETTE.primary : PALETTE.secondary,
+        backgroundColor: type === "average" ? "rgba(102,126,234,0.12)" : "rgba(118,75,162,0.12)",
+        borderWidth: 2.5,
+        pointBackgroundColor: type === "average" ? PALETTE.primary : PALETTE.secondary,
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        fill: true,
+        tension: 0.35,
+      }],
+    };
+  };
+
+  // Monthly bar chart (total per month)
+  const getMonthlyBarData = () => ({
+    labels: MONTH_NAMES.map((m) => m.slice(0, 3)),
+    datasets: [
+      {
+        label: "Total Value",
+        data: MONTH_NAMES.map((_, i) => monthlyStats[i + 1].total),
+        backgroundColor: MONTH_NAMES.map((_, i) => {
+          const avg = monthlyStats[i + 1].average;
+          const ratio = maxMonthlyAvg > 0 ? avg / maxMonthlyAvg : 0;
+          return `rgba(102,126,234,${0.25 + ratio * 0.65})`;
+        }),
+        borderColor: PALETTE.primary,
+        borderWidth: 1,
+        borderRadius: 6,
+      },
+      {
+        label: "Record Count",
+        data: MONTH_NAMES.map((_, i) => monthlyStats[i + 1].count),
+        backgroundColor: "rgba(118,75,162,0.35)",
+        borderColor: PALETTE.secondary,
+        borderWidth: 1,
+        borderRadius: 6,
+      },
+    ],
+  });
+
+  // Value distribution doughnut
+  const getValueDoughnutData = () => ({
+    labels: Array.from({ length: 11 }, (_, i) => `Value ${i}`),
+    datasets: [{
+      data: valueDistribution,
+      backgroundColor: GRADIENT_COLORS.map((c) => c + "cc"),
+      borderColor: GRADIENT_COLORS,
+      borderWidth: 2,
+      hoverOffset: 8,
+    }],
+  });
+
+  const doughnutOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: "right", labels: { color: "#555", font: { size: 11 }, padding: 10, usePointStyle: true, pointStyle: "circle" } },
+      tooltip: baseChartOpts.plugins.tooltip,
+    },
+    cutout: "55%",
+  };
+
+  // ============ Stat Card component ============
+  const StatCard = ({ title, value, subtitle, color = PALETTE.primary, delay = 0, icon }) => (
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay }}>
+      <Card sx={{
+        height: 160, borderRadius: 3, position: "relative", overflow: "hidden",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+        background: `linear-gradient(135deg, ${color}11 0%, ${color}08 100%)`,
+        border: `1px solid ${color}22`,
+        transition: "all 0.3s ease",
+        "&:hover": { transform: "translateY(-4px)", boxShadow: `0 8px 30px ${color}22` },
+      }}>
+        <Box sx={{ position: "absolute", top: 12, right: 16, opacity: 0.1, fontSize: 48 }}>{icon}</Box>
+        <CardContent>
+          <Typography variant="overline" sx={{ color: "text.secondary", fontWeight: 600, letterSpacing: 1 }}>{title}</Typography>
+          <Typography variant="h3" sx={{ color, fontWeight: 700, mt: 0.5 }}>{value}</Typography>
+          {subtitle && <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{subtitle}</Typography>}
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+
+  // ============ Chart wrapper ============
+  const ChartPaper = ({ title, icon, children, height = 380 }) => (
+    <Paper sx={{
+      p: 3, borderRadius: 3,
+      background: "rgba(255,255,255,0.97)",
+      border: "1px solid rgba(0,0,0,0.06)",
+      boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+      height,
+    }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+        {icon}
+        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333" }}>{title}</Typography>
+      </Box>
+      <Box sx={{ height: height - 72 }}>{children}</Box>
+    </Paper>
+  );
+
   return (
-    <Box sx={{ p: 3 }}>
-      <Paper
-        sx={{
-          p: 3,
-          borderRadius: 4,
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-          background:
-            "linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%)",
-          color: "text.primary",
-        }}
-      >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            color: "text.primary",
-            fontWeight: 600,
-          }}
-        >
-          <Analytics />
-          JS-IH-1 Summary Report
-        </Typography>
+    <Box sx={{ p: { xs: 1, md: 3 } }}>
+      <Paper sx={{
+        p: { xs: 2, md: 3 }, borderRadius: 4,
+        boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
+        background: "linear-gradient(160deg, #f8f9ff 0%, #f0f2ff 50%, #faf5ff 100%)",
+      }}>
+        {/* Header */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
+          <Analytics sx={{ color: PALETTE.primary, fontSize: 32 }} />
+          <Typography variant="h4" sx={{ fontWeight: 700, color: "#1a1a2e" }}>
+            Analytics Dashboard
+          </Typography>
+        </Box>
 
-        {/* Enhanced Year Selector */}
+        {/* Year Selector */}
         <Box sx={{ mb: 3 }}>
-          <Paper
-            sx={{
-              p: 2,
-              borderRadius: 3,
-              background:
-                "linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
-              border: "1px solid rgba(0, 0, 0, 0.12)",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                flexWrap: "wrap",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{ fontWeight: 600, color: "black" }}
-              >
-                Select Year:
-              </Typography>
-
+          <Paper sx={{
+            p: 2, borderRadius: 3,
+            background: "rgba(255,255,255,0.8)",
+            border: "1px solid rgba(0,0,0,0.06)",
+          }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#333" }}>Year:</Typography>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Tooltip title="Previous Year">
-                  <IconButton
-                    onClick={() => navigateYear(-1)}
-                    disabled={!canNavigatePrevious()}
-                    sx={{
-                      color: canNavigatePrevious()
-                        ? "text.primary"
-                        : "text.disabled",
-                      "&:hover": {
-                        backgroundColor: canNavigatePrevious()
-                          ? "rgba(0, 0, 0, 0.04)"
-                          : "transparent",
-                      },
-                    }}
-                  >
-                    <NavigateBefore />
-                  </IconButton>
+                  <span>
+                    <IconButton onClick={() => navigateYear(-1)} disabled={!canNavigatePrevious()} size="small">
+                      <NavigateBefore />
+                    </IconButton>
+                  </span>
                 </Tooltip>
-
-                <FormControl
-                  sx={{
-                    minWidth: 120,
-                  }}
-                >
-                  <InputLabel>Year</InputLabel>
-                  <Select
-                    value={selectedYear}
-                    label="Year"
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                  >
-                    {availableYears.map((year) => (
-                      <MenuItem key={year} value={year}>
-                        {year}
-                      </MenuItem>
-                    ))}
+                <FormControl sx={{ minWidth: 100 }} size="small">
+                  <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} sx={{ fontWeight: 600 }}>
+                    {availableYears.map((y) => <MenuItem key={y} value={y}>{y}</MenuItem>)}
                   </Select>
                 </FormControl>
-
                 <Tooltip title="Next Year">
-                  <IconButton
-                    onClick={() => navigateYear(1)}
-                    disabled={!canNavigateNext()}
-                    sx={{
-                      color: canNavigateNext()
-                        ? "text.primary"
-                        : "text.disabled",
-                      "&:hover": {
-                        backgroundColor: canNavigateNext()
-                          ? "rgba(0, 0, 0, 0.04)"
-                          : "transparent",
-                      },
-                    }}
-                  >
-                    <NavigateNext />
-                  </IconButton>
+                  <span>
+                    <IconButton onClick={() => navigateYear(1)} disabled={!canNavigateNext()} size="small">
+                      <NavigateNext />
+                    </IconButton>
+                  </span>
                 </Tooltip>
-
-                <Tooltip title="Go to Current Year">
-                  <IconButton
-                    onClick={goToCurrentYear}
-                    sx={{
-                      color: "text.primary",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.04)",
-                      },
-                    }}
-                  >
-                    <CalendarToday />
-                  </IconButton>
+                <Tooltip title="Current Year">
+                  <IconButton onClick={goToCurrentYear} size="small"><CalendarToday sx={{ fontSize: 18 }} /></IconButton>
                 </Tooltip>
               </Box>
-
-              <Chip
-                label={`${availableYears.length} year${
-                  availableYears.length !== 1 ? "s" : ""
-                } available`}
-                sx={{
-                  backgroundColor: "rgba(0, 0, 0, 0.08)",
-                  color: "text.primary",
-                  borderRadius: 2,
-                  fontWeight: 600,
-                }}
-              />
+              <Chip label={`${availableYears.length} year${availableYears.length !== 1 ? "s" : ""}`} size="small" sx={{ fontWeight: 600, bgcolor: "rgba(0,0,0,0.05)" }} />
             </Box>
           </Paper>
         </Box>
 
         {loading ? (
-          <LinearProgress />
+          <LinearProgress sx={{ borderRadius: 2, height: 6 }} />
         ) : (
           <>
-            {/* Overall Statistics */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid item xs={12} md={6} lg={3}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Card
-                    sx={{
-                      height: 160,
-                      borderRadius: 3,
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                      background: "rgba(255, 255, 255, 0.95)",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
-                      },
-                    }}
-                  >
-                    <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        Total Records
-                      </Typography>
-                      <Typography
-                        variant="h4"
-                        sx={{ color: "#667eea", fontWeight: 600 }}
-                      >
-                        {overallStats.count}
-                      </Typography>
-                      <LinearProgress
-                        variant="determinate"
-                        value={Math.min((overallStats.count / 100) * 100, 100)}
-                        sx={{
-                          mt: 1,
-                          borderRadius: 2,
-                          backgroundColor: "rgba(102, 126, 234, 0.2)",
-                          "& .MuiLinearProgress-bar": {
-                            backgroundColor: "#667eea",
-                            borderRadius: 2,
-                          },
-                        }}
-                      />
-                    </CardContent>
-                  </Card>
-                </motion.div>
+            {/* ===== Overall Stats ===== */}
+            <Typography variant="h6" sx={{ fontWeight: 600, color: "#333", mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+              <Assessment sx={{ fontSize: 22 }} /> Overall Statistics
+            </Typography>
+            <Grid container spacing={2.5} sx={{ mb: 4 }}>
+              <Grid item xs={6} md={3}>
+                <StatCard title="Total Records" value={overallStats.count} subtitle={`across ${availableYears.length} year(s)`} color={PALETTE.primary} icon="📊" />
               </Grid>
-
-              <Grid item xs={12} md={6} lg={3}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <Card
-                    sx={{
-                      height: 160,
-                      borderRadius: 3,
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                      background: "rgba(255, 255, 255, 0.95)",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
-                      },
-                    }}
-                  >
-                    <CardContent>
-                      <Typography color="textSecondary" gutterBottom>
-                        Overall Average
-                      </Typography>
-                      <Typography
-                        variant="h4"
-                        sx={{ color: "#667eea", fontWeight: 600 }}
-                      >
-                        {overallStats.average.toFixed(1)}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        Sum/Occ: {overallStats.averageWithData.toFixed(1)}
-                      </Typography>
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", mt: 1 }}
-                      >
-                        {getTrendIcon(
-                          overallStats.average,
-                          yearlyStats.average,
-                        )}
-                        <Typography variant="body2" sx={{ ml: 1 }}>
-                          vs {selectedYear}
-                        </Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+              <Grid item xs={6} md={3}>
+                <StatCard title="Overall Avg" value={overallStats.average.toFixed(2)} subtitle={`Sum/Occ: ${overallStats.averageWithData.toFixed(1)}`} color={PALETTE.accent} delay={0.08} icon="📈" />
+              </Grid>
+              <Grid item xs={6} md={3}>
+                <StatCard title={`${selectedYear} Records`} value={yearlyStats.count} subtitle={`${((yearlyStats.count / (overallStats.count || 1)) * 100).toFixed(0)}% of total`} color={PALETTE.success} delay={0.16} icon="📅" />
+              </Grid>
+              <Grid item xs={6} md={3}>
+                <StatCard title={`${selectedYear} Total`} value={yearlyStats.total.toFixed(0)} subtitle={`Max: ${yearlyStats.max} · Min: ${yearlyStats.min}`} color={PALETTE.secondary} delay={0.24} icon="🔢" />
               </Grid>
             </Grid>
 
             <Divider sx={{ my: 3 }} />
 
-            {/* Yearly Statistics */}
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                color: "text.primary",
-                fontWeight: 600,
-              }}
-            >
-              <Assessment />
-              {selectedYear} Statistics
+            {/* ===== Yearly Comparison ===== */}
+            <Typography variant="h6" sx={{ fontWeight: 600, color: "#333", mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+              <ShowChart sx={{ fontSize: 22 }} /> Yearly Comparison
             </Typography>
-
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid item xs={12} md={4}>
-                <Card
-                  sx={{
-                    height: 160,
-                    borderRadius: 3,
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                    background: "rgba(255, 255, 255, 0.95)",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Typography color="textSecondary" gutterBottom>
-                      Records in {selectedYear}
-                    </Typography>
-                    <Typography
-                      variant="h3"
-                      sx={{ color: "#667eea", fontWeight: 600 }}
-                    >
-                      {yearlyStats.count}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {((yearlyStats.count / overallStats.count) * 100).toFixed(
-                        1,
-                      )}
-                      % of total
-                    </Typography>
-                  </CardContent>
-                </Card>
+            <Grid container spacing={2.5} sx={{ mb: 4 }}>
+              <Grid item xs={6} md={3}>
+                <StatCard title={`${selectedYear} Avg`} value={yearlyStats.average.toFixed(2)} subtitle={
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    {getTrendIcon(yearlyStats.average, overallStats.average)} vs Overall
+                  </Box>
+                } color={PALETTE.primary} />
               </Grid>
-
-              <Grid item xs={12} md={4}>
-                <Card
-                  sx={{
-                    height: 160,
-                    borderRadius: 3,
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                    background: "rgba(255, 255, 255, 0.95)",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Typography color="textSecondary" gutterBottom>
-                      Average in {selectedYear}
-                    </Typography>
-                    <Typography
-                      variant="h3"
-                      sx={{ color: "#667eea", fontWeight: 600 }}
-                    >
-                      {yearlyStats.average.toFixed(1)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Sum/Occ: {yearlyStats.averageWithData.toFixed(1)}
-                    </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                      {getTrendIcon(yearlyStats.average, overallStats.average)}
-                      <Typography variant="body2" sx={{ ml: 1 }}>
-                        vs Overall
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
+              <Grid item xs={6} md={3}>
+                <StatCard title="Sum / Occ" value={yearlyStats.averageWithData.toFixed(1)} subtitle="Days per occurrence" color={PALETTE.warning} delay={0.08} />
               </Grid>
-
-              <Grid item xs={12} md={4}>
-                <Card
-                  sx={{
-                    height: 160,
-                    borderRadius: 3,
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                    background: "rgba(255, 255, 255, 0.95)",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 8px 25px rgba(0, 0, 0, 0.2)",
-                    },
-                  }}
-                >
-                  <CardContent>
-                    <Typography color="textSecondary" gutterBottom>
-                      Total Value in {selectedYear}
-                    </Typography>
-                    <Typography
-                      variant="h3"
-                      sx={{ color: "#667eea", fontWeight: 600 }}
-                    >
-                      {yearlyStats.total.toFixed(1)}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Sum of all numbers
-                    </Typography>
-                  </CardContent>
-                </Card>
+              <Grid item xs={6} md={3}>
+                <StatCard title="Days w/ Data" value={yearlyStats.count} subtitle={`${((yearlyStats.count / daysInYear) * 100).toFixed(1)}% coverage`} color={PALETTE.info} delay={0.16} />
+              </Grid>
+              <Grid item xs={6} md={3}>
+                <StatCard title="Occurrences" value={yearlyData.filter((r) => r.number > 0).length} subtitle="Days with value > 0" color={PALETTE.error} delay={0.24} />
               </Grid>
             </Grid>
 
-            {/* Chart.js Line Charts Section */}
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                color: "text.primary",
-                fontWeight: 600,
-                mt: 4,
-              }}
-            >
-              <ShowChart />
-              Data Visualization
+            <Divider sx={{ my: 3 }} />
+
+            {/* ===== Charts Section ===== */}
+            <Typography variant="h6" sx={{ fontWeight: 600, color: "#333", mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+              <ShowChart sx={{ fontSize: 22 }} /> Data Visualization
             </Typography>
 
             {/* Chart Controls */}
             <Box sx={{ mb: 3 }}>
-              <Paper
-                sx={{
-                  p: 2,
-                  borderRadius: 3,
-                  background:
-                    "linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
-                  border: "1px solid rgba(0, 0, 0, 0.12)",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: 600, color: "black" }}
-                  >
-                    Chart View:
-                  </Typography>
+              <Paper sx={{ p: 2, borderRadius: 3, background: "rgba(255,255,255,0.8)", border: "1px solid rgba(0,0,0,0.06)" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap", justifyContent: "space-between" }}>
+                  <ToggleButtonGroup value={chartView} exclusive onChange={(e, v) => v && setChartView(v)} size="small"
+                    sx={{ "& .MuiToggleButton-root": { textTransform: "none", fontWeight: 600, px: 2, "&.Mui-selected": { bgcolor: `${PALETTE.primary}18`, color: PALETTE.primary } } }}>
+                    <ToggleButton value="monthly"><ShowChart sx={{ mr: 0.5, fontSize: 18 }} /> Monthly</ToggleButton>
+                    <ToggleButton value="yearly"><BarChartIcon sx={{ mr: 0.5, fontSize: 18 }} /> Yearly</ToggleButton>
+                  </ToggleButtonGroup>
 
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <ToggleButtonGroup
-                      value={chartView}
-                      exclusive
-                      onChange={(e, newView) =>
-                        newView && setChartView(newView)
-                      }
-                      sx={{
-                        "& .MuiToggleButton-root": {
-                          color: "text.primary",
-                          borderColor: "rgba(0, 0, 0, 0.12)",
-                          "&.Mui-selected": {
-                            backgroundColor: "rgba(0, 0, 0, 0.08)",
-                            color: "text.primary",
-                          },
-                        },
-                      }}
-                    >
-                      <ToggleButton value="monthly">
-                        <ShowChart sx={{ mr: 1 }} />
-                        Monthly
-                      </ToggleButton>
-                      <ToggleButton value="yearly">
-                        <BarChart sx={{ mr: 1 }} />
-                        Yearly
-                      </ToggleButton>
-                    </ToggleButtonGroup>
-
-                    {chartView === "monthly" && (
-                      <FormControl
-                        sx={{
-                          minWidth: 120,
-                        }}
-                      >
-                        <InputLabel>Month</InputLabel>
-                        <Select
-                          value={selectedMonth}
-                          label="Month"
-                          onChange={(e) => setSelectedMonth(e.target.value)}
-                        >
-                          {monthNames.map((month, index) => (
-                            <MenuItem key={index} value={index + 1}>
-                              {month}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    )}
-                  </Box>
+                  {chartView === "monthly" && (
+                    <FormControl size="small" sx={{ minWidth: 120 }}>
+                      <Select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                        {MONTH_NAMES.map((m, i) => <MenuItem key={i} value={i + 1}>{m}</MenuItem>)}
+                      </Select>
+                    </FormControl>
+                  )}
 
                   {chartView === "yearly" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2,
-                        mt: 2,
-                      }}
-                    >
-                      <Button
-                        variant={singleChartView ? "contained" : "outlined"}
-                        onClick={() => setSingleChartView(!singleChartView)}
-                        startIcon={<ShowChart />}
-                        sx={{
-                          color: singleChartView ? "white" : "black",
-                          borderColor: "rgba(0, 0, 0, 0.12)",
-                          backgroundColor: singleChartView
-                            ? "rgba(0, 0, 0, 0.8)"
-                            : "transparent",
-                          "&:hover": {
-                            backgroundColor: singleChartView
-                              ? "rgba(0, 0, 0, 0.9)"
-                              : "rgba(0, 0, 0, 0.05)",
-                          },
-                        }}
-                      >
-                        {singleChartView
-                          ? "Show Both Charts"
-                          : "Show Single Chart"}
-                      </Button>
-                    </Box>
+                    <Button variant={singleChartView ? "contained" : "outlined"} onClick={() => setSingleChartView(!singleChartView)} size="small"
+                      sx={{ textTransform: "none", fontWeight: 600, bgcolor: singleChartView ? PALETTE.primary : "transparent", color: singleChartView ? "#fff" : "#333", borderColor: "rgba(0,0,0,0.15)", "&:hover": { bgcolor: singleChartView ? PALETTE.secondary : "rgba(0,0,0,0.04)" } }}>
+                      {singleChartView ? "Show All" : "Focus View"}
+                    </Button>
                   )}
                 </Box>
               </Paper>
             </Box>
 
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid
-                item
-                xs={12}
-                md={chartView === "monthly" ? 12 : singleChartView ? 12 : 6}
-              >
-                <Paper
-                  sx={{
-                    p: 2,
-                    borderRadius: 3,
-                    background:
-                      "linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
-                    border: "1px solid rgba(0, 0, 0, 0.12)",
-                    height: 400,
-                  }}
-                >
-                  <Box sx={{ height: 350 }}>
-                    <Line
-                      data={getChartData(
-                        chartView === "monthly" ? "value" : "average",
-                      )}
-                      options={{
-                        ...chartOptions,
-                        plugins: {
-                          ...chartOptions.plugins,
-                          title: {
-                            ...chartOptions.plugins.title,
-                            text:
-                              chartView === "monthly"
-                                ? `Daily Values - ${
-                                    monthNames[selectedMonth - 1]
-                                  } ${selectedYear}`
-                                : "Yearly Average Trend",
-                          },
-                        },
-                      }}
-                    />
-                  </Box>
-                </Paper>
-              </Grid>
-
-              {chartView === "yearly" && !singleChartView && (
-                <Grid item xs={12} md={6}>
-                  <Paper
-                    sx={{
-                      p: 2,
-                      borderRadius: 3,
-                      background:
-                        "linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
-                      border: "1px solid rgba(0, 0, 0, 0.12)",
-                      height: 400,
-                    }}
-                  >
-                    <Box sx={{ height: 350 }}>
-                      <Line
-                        data={getChartData(
-                          chartView === "monthly" ? "value" : "total",
-                        )}
-                        options={{
-                          ...chartOptions,
-                          plugins: {
-                            ...chartOptions.plugins,
-                            title: {
-                              ...chartOptions.plugins.title,
-                              text:
-                                chartView === "monthly"
-                                  ? `Daily Values (Alt) - ${
-                                      monthNames[selectedMonth - 1]
-                                    } ${selectedYear}`
-                                  : "Yearly Total Trend",
-                            },
-                          },
-                        }}
-                      />
-                    </Box>
-                  </Paper>
-                </Grid>
+            {/* Main Charts */}
+            <Grid container spacing={2.5} sx={{ mb: 4 }}>
+              {chartView === "monthly" ? (
+                <>
+                  <Grid item xs={12} md={8}>
+                    <ChartPaper title={`Daily Values — ${MONTH_NAMES[selectedMonth - 1]} ${selectedYear}`} icon={<ShowChart sx={{ color: PALETTE.primary, fontSize: 20 }} />}>
+                      <Line data={getMonthlyLineData()} options={{
+                        ...baseChartOpts,
+                        plugins: { ...baseChartOpts.plugins, legend: { ...baseChartOpts.plugins.legend, display: false } },
+                      }} />
+                    </ChartPaper>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <ChartPaper title={`Value Distribution — ${selectedYear}`} icon={<PieChartIcon sx={{ color: PALETTE.secondary, fontSize: 20 }} />} height={380}>
+                      <Doughnut data={getValueDoughnutData()} options={doughnutOpts} />
+                    </ChartPaper>
+                  </Grid>
+                </>
+              ) : (
+                <>
+                  <Grid item xs={12} md={singleChartView ? 12 : 6}>
+                    <ChartPaper title="Yearly Average Trend" icon={<ShowChart sx={{ color: PALETTE.primary, fontSize: 20 }} />}>
+                      <Line data={getYearlyLineData("average")} options={baseChartOpts} />
+                    </ChartPaper>
+                  </Grid>
+                  {!singleChartView && (
+                    <Grid item xs={12} md={6}>
+                      <ChartPaper title="Yearly Total Trend" icon={<BarChartIcon sx={{ color: PALETTE.secondary, fontSize: 20 }} />}>
+                        <Line data={getYearlyLineData("total")} options={baseChartOpts} />
+                      </ChartPaper>
+                    </Grid>
+                  )}
+                </>
               )}
             </Grid>
 
-            {/* Monthly Breakdown */}
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                color: "text.primary",
-                fontWeight: 600,
-              }}
-            >
-              <BarChart />
-              Monthly Breakdown - {selectedYear}
+            {/* Monthly Bar Chart */}
+            <Grid container spacing={2.5} sx={{ mb: 4 }}>
+              <Grid item xs={12}>
+                <ChartPaper title={`Monthly Overview — ${selectedYear}`} icon={<BarChartIcon sx={{ color: PALETTE.accent, fontSize: 20 }} />} height={360}>
+                  <Bar data={getMonthlyBarData()} options={{
+                    ...baseChartOpts,
+                    plugins: { ...baseChartOpts.plugins },
+                    scales: { ...baseChartOpts.scales, y: { ...baseChartOpts.scales.y, stacked: false } },
+                  }} />
+                </ChartPaper>
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ my: 3 }} />
+
+            {/* ===== Monthly Breakdown Table ===== */}
+            <Typography variant="h6" sx={{ fontWeight: 600, color: "#333", mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+              <BarChartIcon sx={{ fontSize: 22 }} /> Monthly Breakdown — {selectedYear}
             </Typography>
 
-            <TableContainer
-              component={Paper}
-              sx={{
-                mb: 4,
-                borderRadius: 3,
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-                backgroundColor: "transparent",
-              }}
-            >
-              <Table>
+            <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.06)", overflow: "hidden" }}>
+              <Table size="small">
                 <TableHead>
-                  <TableRow>
-                    <TableCell sx={{ fontWeight: 600, color: "black" }}>
-                      Month
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ fontWeight: 600, color: "black" }}
-                    >
-                      Records
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ fontWeight: 600, color: "black" }}
-                    >
-                      Average (Days/Sum)
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ fontWeight: 600, color: "black" }}
-                    >
-                      Average (Days/Occurrences)
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ fontWeight: 600, color: "black" }}
-                    >
-                      Total
-                    </TableCell>
-                    <TableCell
-                      align="right"
-                      sx={{ fontWeight: 600, color: "black" }}
-                    >
-                      Max
-                    </TableCell>
+                  <TableRow sx={{ background: `linear-gradient(90deg, ${PALETTE.primary}11, ${PALETTE.secondary}11)` }}>
+                    {["Month", "Records", "Avg (Days/Sum)", "Avg (Days/Occ)", "Total", "Max", "Distribution"].map((h) => (
+                      <TableCell key={h} align={h === "Month" ? "left" : "right"} sx={{ fontWeight: 700, color: "#333", py: 1.5, fontSize: 13 }}>{h}</TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {monthNames.map((monthName, index) => {
-                    const monthStats = monthlyStats[index + 1];
-                    const maxAvg = Math.max(
-                      ...Object.values(monthlyStats).map((s) => s.average),
-                    );
-
+                  {MONTH_NAMES.map((name, i) => {
+                    const s = monthlyStats[i + 1];
+                    const barWidth = maxMonthlyAvg > 0 ? (s.average / maxMonthlyAvg) * 100 : 0;
                     return (
-                      <TableRow
-                        key={monthName}
-                        sx={{
-                          "&:hover": {
-                            backgroundColor: "rgba(0, 0, 0, 0.04)",
-                          },
-                        }}
-                      >
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          sx={{ fontWeight: 600 }}
-                        >
-                          {monthName}
-                        </TableCell>
-                        <TableCell align="right">{monthStats.count}</TableCell>
+                      <TableRow key={name} sx={{ "&:hover": { bgcolor: "rgba(102,126,234,0.04)" }, "&:nth-of-type(even)": { bgcolor: "rgba(0,0,0,0.015)" } }}>
+                        <TableCell sx={{ fontWeight: 600 }}>{name.slice(0, 3)}</TableCell>
+                        <TableCell align="right">{s.count}</TableCell>
+                        <TableCell align="right">{s.average.toFixed(2)}</TableCell>
+                        <TableCell align="right">{s.averageOccurrences.toFixed(1)}</TableCell>
+                        <TableCell align="right" sx={{ fontWeight: 600 }}>{s.total.toFixed(0)}</TableCell>
                         <TableCell align="right">
-                          {monthStats.average.toFixed(1)}
+                          {s.count > 0 ? (
+                            <Chip label={s.max} size="small" sx={{ bgcolor: GRADIENT_COLORS[Math.min(s.max, 10)], color: "#fff", fontWeight: 700, minWidth: 32, height: 24 }} />
+                          ) : "—"}
                         </TableCell>
-                        <TableCell align="right">
-                          {monthStats.averageOccurrences.toFixed(1)}
+                        <TableCell align="right" sx={{ minWidth: 120 }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 1, justifyContent: "flex-end" }}>
+                            <Box sx={{ width: 80, height: 8, bgcolor: "rgba(0,0,0,0.06)", borderRadius: 4, overflow: "hidden" }}>
+                              <Box sx={{ width: `${barWidth}%`, height: "100%", borderRadius: 4, background: `linear-gradient(90deg, ${PALETTE.primary}, ${PALETTE.secondary})` }} />
+                            </Box>
+                            <Typography variant="caption" sx={{ color: "text.secondary", minWidth: 28, textAlign: "right" }}>{((barWidth)).toFixed(0)}%</Typography>
+                          </Box>
                         </TableCell>
-                        <TableCell align="right">
-                          {monthStats.total.toFixed(1)}
-                        </TableCell>
-                        <TableCell align="right">{monthStats.max}</TableCell>
                       </TableRow>
                     );
                   })}

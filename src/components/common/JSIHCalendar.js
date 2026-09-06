@@ -9,7 +9,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
   IconButton,
   Tooltip,
   Chip,
@@ -42,7 +45,7 @@ const JSIHCalendar = () => {
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedNumber, setSelectedNumber] = useState("");
+  const [selectedNumber, setSelectedNumber] = useState(0);
   const [editingRecord, setEditingRecord] = useState(null);
 
   // Load data based on view mode
@@ -78,7 +81,7 @@ const JSIHCalendar = () => {
 
   const handleDateClick = (date) => {
     setSelectedDate(date);
-    setSelectedNumber("");
+    setSelectedNumber(0);
     setEditingRecord(null);
 
     // Check if there's already a record for this date
@@ -93,18 +96,13 @@ const JSIHCalendar = () => {
 
     if (existingRecord) {
       setEditingRecord(existingRecord);
-      setSelectedNumber(existingRecord.number.toString());
+      setSelectedNumber(existingRecord.number);
     }
 
     setDialogOpen(true);
   };
 
   const handleSaveRecord = async () => {
-    if (!selectedNumber || isNaN(selectedNumber)) {
-      alert("Please enter a valid number");
-      return;
-    }
-
     try {
       // Create a date string in YYYY-MM-DD format to avoid timezone issues
       const year = selectedDate.getFullYear();
@@ -112,7 +110,7 @@ const JSIHCalendar = () => {
       const day = String(selectedDate.getDate()).padStart(2, "0");
       const dateString = `${year}-${month}-${day}T00:00:00.000Z`;
 
-      await addJSIHRecord(dateString, parseFloat(selectedNumber));
+      await addJSIHRecord(dateString, selectedNumber);
       setDialogOpen(false);
       loadData(); // Reload data to show the new/updated record
     } catch (error) {
@@ -133,11 +131,22 @@ const JSIHCalendar = () => {
   };
 
   const getColorForNumber = (number) => {
-    // Color scale based on number value
-    if (number === 0) return "#388e3c"; // Green for 0
-    if (number === 1) return "#fbc02d"; // Yellow for 1
-    if (number > 1) return "#d32f2f"; // Red for above 1
-    return "#1976d2"; // Blue for negative values (fallback)
+    // Color scale: green (0) → yellow (3-4) → orange (6-7) → red (9-10)
+    const colors = [
+      "#388e3c", // 0 - green
+      "#558b2f", // 1 - dark green
+      "#9e9d24", // 2 - olive
+      "#fbc02d", // 3 - yellow
+      "#f9a825", // 4 - dark yellow
+      "#f57f17", // 5 - orange-yellow
+      "#ff6f00", // 6 - orange
+      "#ef6c00", // 7 - dark orange
+      "#e65100", // 8 - deep orange
+      "#d32f2f", // 9 - red
+      "#b71c1c", // 10 - dark red
+    ];
+    if (number >= 0 && number <= 10) return colors[number];
+    return "#1976d2"; // Blue fallback
   };
 
   const calculateMonthStats = () => {
@@ -719,7 +728,7 @@ const JSIHCalendar = () => {
           )}
         </Box>
 
-        {/* Legend */}
+        {/* Legend - Gradient Scale 0-10 */}
         <Box
           sx={{
             mt: 3,
@@ -735,36 +744,31 @@ const JSIHCalendar = () => {
           >
             Legend:
           </Typography>
-          <Chip
-            label="0"
-            sx={{
-              backgroundColor: "#388e3c",
-              color: "black",
-              borderRadius: 2,
-              fontWeight: 600,
-              boxShadow: "0 2px 4px rgba(56, 142, 60, 0.3)",
-            }}
-          />
-          <Chip
-            label="1"
-            sx={{
-              backgroundColor: "#fbc02d",
-              color: "black",
-              borderRadius: 2,
-              fontWeight: 600,
-              boxShadow: "0 2px 4px rgba(251, 192, 45, 0.3)",
-            }}
-          />
-          <Chip
-            label=">1"
-            sx={{
-              backgroundColor: "#d32f2f",
-              color: "black",
-              borderRadius: 2,
-              fontWeight: 600,
-              boxShadow: "0 2px 4px rgba(211, 47, 47, 0.3)",
-            }}
-          />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Typography variant="caption" sx={{ color: "#388e3c", fontWeight: 700 }}>Low</Typography>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+              <Box
+                key={num}
+                sx={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: "50%",
+                  backgroundColor: getColorForNumber(num),
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "white",
+                  fontSize: "0.65rem",
+                  fontWeight: "bold",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                  cursor: "default",
+                }}
+              >
+                {num}
+              </Box>
+            ))}
+            <Typography variant="caption" sx={{ color: "#b71c1c", fontWeight: 700 }}>High</Typography>
+          </Box>
         </Box>
       </Paper>
 
@@ -795,35 +799,35 @@ const JSIHCalendar = () => {
             >
               Date: {selectedDate?.toLocaleDateString()}
             </Typography>
-            <TextField
-              fullWidth
-              label="Number"
-              type="number"
-              value={selectedNumber}
-              onChange={(e) => setSelectedNumber(e.target.value)}
-              sx={{
-                mt: 2,
-                "& .MuiOutlinedInput-root": {
+            <FormControl fullWidth sx={{ mt: 2 }}>
+              <InputLabel>Number</InputLabel>
+              <Select
+                value={selectedNumber}
+                label="Number"
+                onChange={(e) => setSelectedNumber(Number(e.target.value))}
+                sx={{
                   backgroundColor: "white",
-                  "& fieldset": {
+                  "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "rgba(0, 0, 0, 0.23)",
                   },
-                  "&:hover fieldset": {
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
                     borderColor: "rgba(0, 0, 0, 0.5)",
                   },
-                  "&.Mui-focused fieldset": {
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#1976d2",
                   },
-                },
-                "& .MuiInputLabel-root": {
-                  color: "rgba(0, 0, 0, 0.6)",
-                },
-                "& .MuiInputBase-input": {
-                  color: "black",
-                },
-              }}
-              placeholder={editingRecord ? "Enter new value" : "Enter a number"}
-            />
+                  "& .MuiSelect-select": {
+                    color: "black",
+                  },
+                }}
+              >
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             {editingRecord && (
               <Typography variant="body2" sx={{ mt: 1, color: "black" }}>
                 Current value: {editingRecord.number}
