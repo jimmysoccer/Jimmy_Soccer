@@ -5,8 +5,10 @@ import { languageAtom } from "../../atoms/primitive.atom";
 import { getCurrentLanguageText } from "../../utils/get-current-language-text";
 import { motion } from "framer-motion";
 import { publicationItems } from "../../constants/publication-items";
+import { patentItems } from "../../constants/patent-items";
 import Masonry from "@mui/lab/Masonry";
 import Publication from "../common/Publication";
+import Patent from "../common/Patent";
 
 export default function Publications({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
@@ -52,6 +54,14 @@ export default function Publications({ hideHeader = false }) {
         <Masonry columns={1} spacing={2} className="container">
           {publicationItems.map((p) => {
             return <Publication publication={p}></Publication>;
+          })}
+        </Masonry>
+      </div>
+      <div className={`${hideHeader ? "" : "px-3"}`}>
+        {!hideHeader && <h2>Patents</h2>}
+        <Masonry columns={1} spacing={2} className="container">
+          {patentItems.map((p) => {
+            return <Patent patent={p}></Patent>;
           })}
         </Masonry>
       </div>

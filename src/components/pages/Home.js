@@ -18,8 +18,8 @@ export default function Home() {
 
   const TEXT_1 = getCurrentLanguageText(
     language,
-    `🚀 Hi, I'm Heng Sun, a Ph.D. student in Computer Science at Emory University.`,
-    `🚀 你好，我是孙恒，埃默里大学计算机科学专业博士生。`,
+    `🚀 Hi, I'm Heng Sun, a first-year Ph.D. student in Computer Science at Emory University, advised by Dr. Xiao Hu.`,
+    `🚀 你好，我是孙恒，埃默里大学计算机科学专业一年级博士生，导师为 Xiao Hu 博士。`,
   ).split(" ");
 
   const TEXT_2 = getCurrentLanguageText(

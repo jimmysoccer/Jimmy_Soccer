@@ -1,0 +1,19 @@
+﻿PWD: G:\Jimmy_Soccer_Website
+NODE: v22.22.2
+NPM: 10.9.7
+---LS---
+
+Name              Length 
+----              ------ 
+build                    
+node_modules             
+public                   
+src                      
+.env.local        47     
+.gitignore        321    
+package-lock.json 1326681
+package.json      1640   
+README.md         837    
+_env_check.txt    2266   
+
+

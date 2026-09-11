@@ -1,5 +1,19 @@
 export const educationExperience = [
   {
+    school: "Emory University",
+    location: "Atlanta, GA",
+    degree: "Ph.D. in Computer Science",
+    time: "August 2025 – Present",
+    advisor: "Dr. Xiao Hu",
+    courses: [],
+    school_chinese: "埃默里大学(Emory University)",
+    location_chinese: "亚特兰大, 佐治亚州",
+    degree_chinese: "计算机科学专业博士",
+    time_chinese: "2025年八月 – 至今",
+    advisor_chinese: "导师: Xiao Hu 博士",
+    courses_chinese: [],
+  },
+  {
     school: "University of Florida",
     location: "Gainesville, FL",
     degree: "Bachelor of Science in Computer Science",

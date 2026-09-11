@@ -1,0 +1,60 @@
+﻿
+> my-app@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+[eslint] 
+src\components\common\JSIHCalendar.js
+  Line 26:3:    'Add' is defined but never used                                                                              no-unused-vars
+  Line 27:3:    'Edit' is defined but never used                                                                             no-unused-vars
+  Line 54:6:    React Hook useEffect has a missing dependency: 'loadData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 185:9:   'getTrendIcon' is assigned a value but never used                                                            no-unused-vars
+  Line 506:11:  'lastDay' is assigned a value but never used                                                                 no-unused-vars
+  Line 610:5:   Expected a default case                                                                                      default-case
+
+src\components\common\JSIHSummary.js
+  Line 21:3:    'InputLabel' is defined but never used                                                                              no-unused-vars
+  Line 109:42:  React Hook useEffect has a missing dependency: 'loadYearlyData'. Either include it or remove the dependency array   react-hooks/exhaustive-deps
+  Line 110:43:  React Hook useEffect has a missing dependency: 'loadMonthlyData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+src\components\pages\InnovationHub.js
+  Line 6:8:    'DataTable' is defined but never used                 no-unused-vars
+  Line 18:10:  'AnimatePresence' is defined but never used           no-unused-vars
+  Line 25:10:  'Gallery' is defined but never used                   no-unused-vars
+  Line 43:10:  'SingleImage' is defined but never used               no-unused-vars
+  Line 57:10:  'records' is assigned a value but never used          no-unused-vars
+  Line 60:10:  'index' is assigned a value but never used            no-unused-vars
+  Line 60:17:  'setIndex' is assigned a value but never used         no-unused-vars
+  Line 61:10:  'loadingTable' is assigned a value but never used     no-unused-vars
+  Line 61:24:  'setLoadingTable' is assigned a value but never used  no-unused-vars
+  Line 121:9:  'colors' is assigned a value but never used           no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  602.15 kB  build\static\js\main.bfa401b4.js
+  33.75 kB   build\static\css\main.7bad9431.css
+  1.77 kB    build\static\js\787.28cb0dcd.chunk.js
+
+The bundle size is significantly larger than recommended.
+Consider reducing it with code splitting: https://goo.gl/9VhYWB
+You can also analyze the project dependencies: https://goo.gl/LeUzfb
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+塅呉䍟䑏㩅〠਍

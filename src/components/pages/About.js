@@ -1,7 +1,7 @@
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { UFImage, aboutImage, aquinasImage } from "../../assets/images/images";
+import { UFImage, aboutImage, aquinasImage, emoryImage } from "../../assets/images/images";
 import { educationExperience } from "../../constants/education-items";
 import { Grid } from "@mui/material";
 import { getCurrentLanguageText } from "../../utils/get-current-language-text";
@@ -14,13 +14,11 @@ export default function About() {
 
   const TEXT_1 = getCurrentLanguageText(
     language,
-    `I am Heng Sun, but you can call me Jimmy. I live in Gainesville, FL,
-    and currently work as a Research Assistant in AI for healthcare at UF. I am passionate
+    `I am Heng Sun, but you can call me Jimmy. I am a first-year Ph.D. student in Computer Science at Emory University in Atlanta, GA, where I work on AI for healthcare under the guidance of Dr. Xiao Hu. I am passionate
     about developing intelligent systems that bridge AI and healthcare,
     and I strive to approach every project with precision, curiosity,
     and a commitment to research excellence.`,
-    `我是孙恒，你也可以叫我Jimmy。我住在佛罗里达州盖恩斯维尔，
-    目前担任佛罗里达大学医疗人工智能研究助理。我热衷于开发连接人工智能与医疗的智能系统，
+    `我是孙恒，你也可以叫我Jimmy。我是埃默里大学（亚特兰大）计算机科学专业一年级博士生，在 Xiao Hu 博士指导下从事医疗人工智能研究。我热衷于开发连接人工智能与医疗的智能系统，
     并以严谨、好奇和追求卓越的态度对待每一个研究项目。`,
   ).split(" ");
 
@@ -37,8 +35,8 @@ export default function About() {
           <h2 className="text-center fw-bold">
             {getCurrentLanguageText(
               language,
-              `I am Heng Sun. I live in Gainesville.`,
-              `我是孙恒，现居于盖恩斯维尔，佛罗里达州`,
+              `I am Heng Sun. I am in Atlanta, GA.`,
+              `我是孙恒，现居于佐治亚州亚特兰大`,
             )}
           </h2>
           <p className="fs-5 text-secondary">
@@ -118,10 +116,17 @@ export default function About() {
                 src={
                   exp.school === "University of Florida"
                     ? UFImage
+                    : exp.school === "Emory University"
+                    ? emoryImage
                     : aquinasImage
                 }
                 alt="school-logo"
                 className="img-fluid"
+                style={{
+                  maxWidth: "200px",
+                  maxHeight: "100px",
+                  objectFit: "contain",
+                }}
               ></img>
             </div>
             <h3 className="mt-2 mb-0 fs-5">
@@ -138,13 +143,24 @@ export default function About() {
             <div className="fs-4">
               {getCurrentLanguageText(language, exp.time, exp.time_chinese)}
             </div>
-            <div className="fs-5 text-secondary">
-              {getCurrentLanguageText(
-                language,
-                "Main courses: " + exp.courses.map((des) => des),
-                "主要课程: " + exp.courses_chinese.map((des) => des),
-              )}
-            </div>
+            {exp.advisor && (
+              <div className="fs-5 fw-semibold text-dark">
+                {getCurrentLanguageText(
+                  language,
+                  "Advisor: " + exp.advisor,
+                  exp.advisor_chinese,
+                )}
+              </div>
+            )}
+            {exp.courses && exp.courses.length > 0 && (
+              <div className="fs-5 text-secondary">
+                {getCurrentLanguageText(
+                  language,
+                  "Main courses: " + exp.courses.map((des) => des),
+                  "主要课程: " + exp.courses_chinese.map((des) => des),
+                )}
+              </div>
+            )}
           </Grid>
         ))}
       </Grid>

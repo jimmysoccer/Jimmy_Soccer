@@ -1,0 +1,10 @@
+﻿
+Name                          Length
+----                          ------
+787.28cb0dcd.chunk.js           4593
+787.28cb0dcd.chunk.js.map      10592
+main.bfa401b4.js             2760827
+main.bfa401b4.js.LICENSE.txt    2615
+main.bfa401b4.js.map         7463702
+
+
