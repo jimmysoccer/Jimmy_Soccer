@@ -1,6 +1,6 @@
 {
-  "short_name": "Jimmy_Soccer",
-  "name": "Create React App Sample",
+  "short_name": "Jimmy Sun",
+  "name": "Heng (Jimmy) Sun",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#14b8a6",
   "background_color": "#ffffff"
 }

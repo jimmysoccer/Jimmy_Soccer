@@ -1,0 +1,149 @@
+/* Jimmy's Corner — same teal theme as the rest of the site, slightly softer */
+.corner {
+  --corner-bg: #f0fdfa;
+  --corner-surface: #ffffff;
+  --corner-ink: var(--ink);
+  --corner-ink-2: var(--muted);
+  --corner-line: var(--line);
+  --corner-accent: var(--brand);
+  --corner-accent-dark: var(--brand-700);
+  --corner-tint: var(--brand-50);
+  color: var(--corner-ink);
+  background: linear-gradient(180deg, var(--corner-bg), rgba(240, 253, 250, 0));
+  border-radius: 28px;
+  padding: 8px 20px 40px;
+  margin-top: 24px;
+}
+.corner__header {
+  text-align: center;
+  padding: 40px 8px 28px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.corner__eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--corner-accent-dark);
+  background: var(--corner-tint);
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+.corner__title {
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
+  color: var(--corner-ink);
+  margin-bottom: 4px;
+}
+.corner__subtitle {
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--corner-accent-dark);
+  margin-bottom: 12px;
+}
+.corner__lead,
+.corner-muted {
+  color: var(--corner-ink-2);
+}
+.corner__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.corner__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.corner__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--corner-ink-2);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.corner__tab:hover {
+  background: var(--corner-tint);
+  color: var(--corner-ink);
+}
+.corner__tab.is-active {
+  background: var(--corner-surface);
+  border-color: var(--corner-line);
+  color: var(--corner-accent-dark);
+  box-shadow: 0 2px 8px -4px rgba(15, 23, 42, 0.25);
+}
+.corner-card {
+  background: var(--corner-surface);
+  border: 1px solid var(--corner-line);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px -18px rgba(15, 23, 42, 0.35);
+}
+.corner-login {
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 32px 28px;
+  text-align: center;
+}
+.corner-login__icon,
+.corner-empty__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  color: var(--corner-accent-dark);
+  background: var(--corner-tint);
+  margin-bottom: 12px;
+}
+.corner-empty {
+  padding: 48px 24px;
+  text-align: center;
+}
+.corner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.corner-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px;
+  color: var(--corner-ink);
+  text-decoration: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.corner-tile:hover {
+  color: var(--corner-ink);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -18px rgba(15, 23, 42, 0.5);
+}
+.corner-tile .corner-empty__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+@media (max-width: 600px) {
+  .corner {
+    padding: 4px 12px 28px;
+    border-radius: 20px;
+  }
+}

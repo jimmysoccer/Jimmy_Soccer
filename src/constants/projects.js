@@ -36,24 +36,37 @@ import { techStack } from "./tech-stack";
 
 export const projects = [
   {
-    title: "Real-Time ICU Monitoring and Processing System",
-    description: [
-      "Designed and implemented a real-time system to continuously record RGB-D camera streams from ICU computers in the background.",
-      "Enabled persistent recording across user logouts, allowing new users to preview live camera feeds without interrupting ongoing sessions.",
-      "Developed an automated dual-storage mechanism to save videos to an external drive when connected and simultaneously upload them to the lab’s server.",
-      "Integrated local inference pipelines to process patient posture and movement data under bandwidth and privacy constraints.",
-      "Supports behavioral and safety assessments in real clinical ICU environments.",
+    slug: "multimodal-icu-monitoring",
+    category: "research-systems",
+    featured: true,
+    title: "Real-Time Multimodal ICU Monitoring System",
+    summary:
+      "A research-oriented platform for synchronized multimodal data acquisition, processing, and analysis in intensive care environments.",
+    summary_chinese:
+      "面向重症监护环境的研究平台，用于多模态数据的同步采集、处理与分析。",
+    keywords: [
+      "Multimodal Sensing",
+      "Healthcare Systems",
+      "Real-Time Processing",
     ],
-    time: "August 2025 – Present",
-    title_chinese: "实时 ICU 监测与处理系统",
+    keywords_chinese: ["多模态传感", "医疗系统", "实时处理"],
+    description: [
+      "Motivation: studying patient behavior and safety in the ICU requires continuous, synchronized data that does not interrupt clinical workflows.",
+      "Designed a background recording system for RGB-D camera streams on ICU computers that persists across user logouts, so clinicians can preview live feeds without interrupting ongoing sessions.",
+      "Built an automated dual-storage mechanism that saves recordings to an external drive when connected while uploading them to the lab server.",
+      "Integrated local inference pipelines for patient posture and movement under bandwidth and privacy constraints.",
+      "Supports research on behavioral and safety assessment in real clinical ICU environments.",
+    ],
+    time: "August 2025 – May 2026",
+    title_chinese: "实时多模态 ICU 监测系统",
     description_chinese: [
-      "设计并实现了一个实时系统，用于持续记录 ICU 电脑上的 RGB-D 摄像头视频流。",
-      "实现了跨用户登录的持续录制，新用户登录时可预览实时画面而不中断录制。",
+      "研究动机：研究 ICU 中患者的行为与安全，需要在不打扰临床工作流程的前提下获得连续、同步的数据。",
+      "设计了在 ICU 电脑后台持续记录 RGB-D 摄像头视频流的系统，跨用户登录持续录制，新用户可预览实时画面而不中断录制。",
       "开发了自动双存储机制，可在连接外部硬盘时自动保存并同步上传至服务器。",
       "在本地集成姿态与行为识别推理管线，优化带宽与隐私保护。",
       "支持临床 ICU 环境中的行为与安全评估。",
     ],
-    time_chinese: "2025年8月 – 至今",
+    time_chinese: "2025年8月 – 2026年5月",
     techStack: [
       techStack.python,
       techStack.fastAPI,
@@ -68,24 +81,34 @@ export const projects = [
     ],
   },
   {
-    title: "TIBBY – AI-Powered Wearable System (Patent Pending)",
+    slug: "tibby",
+    category: "ai-applications",
+    featured: true,
+    title: "TIBBY — Intelligent Wearable Assistant",
+    summary:
+      "An AI-powered wearable system exploring speech interaction, context-aware assistance, and automated clinical documentation.",
+    summary_chinese:
+      "一款AI驱动的可穿戴系统，探索语音交互、情境感知辅助与临床文书自动化。",
+    keywords: ["Wearable AI", "Human-AI Interaction", "Clinical Applications"],
+    keywords_chinese: ["可穿戴AI", "人机交互", "临床应用"],
     description: [
-      "Developed a wearable AI assistant that automates real-time clinical documentation and retrieves context-aware EHR data at the bedside.",
-      "Integrated RFID-based authentication and voice-driven interaction for hands-free data access.",
-      "Built synchronized mobile and web dashboards showing doctor–patient context via SSE updates.",
-      "Designed and prototyped hardware using Raspberry Pi, Bluetooth, NFC, and 3D printing.",
+      "Motivation: clinical documentation takes substantial time away from patient care; TIBBY explores how a wearable assistant could capture and organize bedside information hands-free.",
       "Implemented speech capture and NLP modules that summarize spoken clinical interactions into structured notes.",
+      "Integrated RFID-based authentication and voice-driven interaction for hands-free, context-aware EHR access at the bedside.",
+      "Built synchronized mobile and web dashboards that display doctor–patient context via server-sent events.",
+      "Prototyped the hardware using Raspberry Pi, Bluetooth, NFC, and 3D printing. A patent application is pending.",
     ],
-    time: "March 2025 – Present",
-    title_chinese: "TIBBY：AI 驱动的可穿戴系统（专利申请中）",
+    time: "March 2025 – May 2026",
+    title_chinese: "TIBBY：智能可穿戴助手",
     description_chinese: [
+      "研究动机：临床文书工作占用大量诊疗时间；TIBBY 探索可穿戴助手如何在床旁免手操作地记录并整理信息。",
       "开发了一款可穿戴 AI 助手，用于自动化实时临床文书与上下文 EHR 信息检索。",
       "集成基于 RFID 的身份验证与语音交互，实现免手操作的数据访问。",
       "构建同步的移动与网页仪表盘，通过 SSE 实时显示医患信息。",
-      "基于 Raspberry Pi、蓝牙、NFC 和 3D 打印完成硬件设计与原型制作。",
+      "基于 Raspberry Pi、蓝牙、NFC 和 3D 打印完成硬件原型制作（专利申请中）。",
       "实现语音捕获与 NLP 模块，将医生对话自动生成结构化记录。",
     ],
-    time_chinese: "2025年3月 – 至今",
+    time_chinese: "2025年3月 – 2026年5月",
     techStack: [
       techStack.ai,
       techStack.python,
@@ -99,13 +122,20 @@ export const projects = [
     ],
   },
   {
+    slug: "icu-react-annotation",
+    category: "research-systems",
     title: "ICU-REACT Dataset Annotation Tool",
+    summary:
+      "A web platform supporting the curation of a clinical question-answering dataset for ICU-related AI research.",
+    summary_chinese: "支持 ICU 相关AI研究临床问答数据集构建的网页标注平台。",
+    keywords: ["Clinical NLP Data", "Dataset Curation", "Research Software"],
+    keywords_chinese: ["临床NLP数据", "数据集构建", "科研软件"],
     description: [
       "Designed and implemented a web-based platform to streamline annotation of clinical contexts and questions for ICU-related datasets.",
       "Built the backend in Go and the frontend in React (Vite), enabling efficient validation workflows for annotators.",
       "Developed features for validating clinical contexts, answering supplemental questions, and managing annotator access.",
       "Implemented an admin page to monitor annotator progress and question assignment history, with functionality to assign questions directly to annotators.",
-      "Used by more than 20 annotators, improving dataset quality and consistency to support downstream medical AI research and clinical decision-making tools.",
+      "Used by more than 20 annotators, helping keep annotations consistent for downstream medical AI research.",
       "Deployed the application to Google Cloud Platform (GCP) for scalable and reliable access.",
     ],
     time: "May 2025 - August 2025",
@@ -115,7 +145,7 @@ export const projects = [
       "使用 Go 构建后端,React (Vite) 构建前端，为标注人员提供高效的验证工作流。",
       "开发了临床语境验证、补充问题回答和标注人员管理等功能。",
       "实现了管理员页面，可监控标注人员进度与问题分配历史，并支持直接向标注人员分配问题。",
-      "被超过 20 名标注人员使用，有效提升了数据集质量与一致性，支持后续医学人工智能研究与临床决策工具。",
+      "被超过 20 名标注人员使用，帮助保持标注一致性，支持后续医学人工智能研究。",
       "部署在 Google Cloud Platform (GCP)，实现可扩展和高可靠的访问。",
     ],
     time_chinese: "2025年5月 - 2025年8月",
@@ -127,7 +157,15 @@ export const projects = [
     ],
   },
   {
+    slug: "llm-content-extraction",
+    category: "ai-applications",
     title: "AI-Powered Content Summarization and Comment Extraction Tool",
+    summary:
+      "An LLM-based tool that extracts core content and structured discussion threads from text and web pages for downstream NLP analysis.",
+    summary_chinese:
+      "基于大语言模型的工具，从文本与网页中提取核心内容与结构化讨论，用于后续NLP分析。",
+    keywords: ["Large Language Models", "NLP", "Information Extraction"],
+    keywords_chinese: ["大语言模型", "自然语言处理", "信息抽取"],
     description: [
       `Built a web-based tool leveraging OpenAI's GPT API to extract the core content from
       user-submitted text, enabling intelligent summarization and semantic filtering.`,
@@ -135,8 +173,8 @@ export const projects = [
       and nested replies from a provided link, enabling real-time content analysis.`,
       `Implemented a hierarchical comment structure (comments, subcomments, nested replies)
       to represent complex discussion threads.`,
-      `Combined advanced NLP techniques and GPT-based reasoning to surface key
-      questions, opinions, and insights from long-form discussions.`,
+      `Combined NLP techniques with GPT-based reasoning to surface key questions,
+      opinions, and insights from long-form discussions.`,
     ],
     time: "February 2025 - April 2025",
     title_chinese: "基于AI的内容摘要与评论提取工具",
@@ -161,20 +199,31 @@ export const projects = [
     ],
   },
   {
-    title: "ROAMM-EHR: Wearable Data Integration System",
+    slug: "roamm-ehr",
+    category: "research-systems",
+    featured: true,
+    title: "ROAMM-EHR: Wearable-Based Health Monitoring",
+    summary:
+      "Integrating wearable sensor measurements and patient-reported information to support longitudinal health monitoring and clinical research.",
+    summary_chinese:
+      "整合可穿戴传感器测量与患者自报信息，支持纵向健康监测与临床研究。",
+    keywords: ["Digital Health", "Physiological Sensing", "Data Integration"],
+    keywords_chinese: ["数字健康", "生理传感", "数据整合"],
     description: [
-      "Developed an end-to-end platform that integrates wearable sensor data with electronic health records for monitoring post-surgical recovery in older adults.",
+      "Motivation: post-surgical recovery in older adults unfolds at home, between clinic visits, where clinicians have little visibility.",
+      "Developed an end-to-end platform that integrates wearable sensor data and patient-reported symptoms with electronic health records for monitoring post-surgical recovery in older adults.",
       "Implemented multimodal data ingestion and processing pipelines for activity and symptom data.",
       "Built clinician dashboards for longitudinal visualization and trend detection.",
-      "Formed the basis of an ACM publication demonstrating the clinical value of continuous wearable data integration.",
+      "The system is described in an ACM MobiCom '24 publication (see Related Publications).",
     ],
     time: "January 2024 – December 2024",
-    title_chinese: "ROAMM-EHR：可穿戴数据集成系统",
+    title_chinese: "ROAMM-EHR：基于可穿戴设备的健康监测",
     description_chinese: [
-      "开发了一个端到端平台，将可穿戴传感器数据与电子病历集成，用于老年患者术后恢复监测。",
+      "研究动机：老年患者的术后康复主要发生在家中、两次就诊之间，临床医生难以掌握情况。",
+      "开发了一个端到端平台，将可穿戴传感器数据与患者自报症状同电子病历集成，用于老年患者术后恢复监测。",
       "实现多模态数据接入与处理管线，用于活动与症状分析。",
-      "构建临床医生可视化仪表盘，用于观察康复趋势与早期预警。",
-      "该系统构成了 ACM 会议论文的核心内容，展示连续可穿戴数据的临床应用价值。",
+      "构建临床医生可视化仪表盘，用于纵向观察康复趋势。",
+      "该系统发表于 ACM MobiCom '24 论文（见相关刊物）。",
     ],
     time_chinese: "2024年1月 – 2024年12月",
     techStack: [
@@ -194,7 +243,15 @@ export const projects = [
     papers: [publicationItems[0]],
   },
   {
-    title: "Object Annotation Tool",
+    slug: "object-annotation-tool",
+    category: "research-systems",
+    title: "Medical Video Annotation Tool",
+    summary:
+      "An annotation platform with tracking-based suggestions that supports large-scale labeling of medical videos for machine learning research.",
+    summary_chinese:
+      "带有基于跟踪的辅助建议的标注平台，支持面向机器学习研究的大规模医学视频标注。",
+    keywords: ["Computer Vision", "Medical Video", "Human-in-the-Loop"],
+    keywords_chinese: ["计算机视觉", "医学视频", "人机协同"],
     description: [
       `Led the development of a web-based full stack annotation platform to support
         large-scale labeling of medical videos for machine learning research.`,
@@ -207,12 +264,14 @@ export const projects = [
           annotation accuracy for ML training and validation.`,
     ],
     time: "October 2023 - August 2024",
-    title_chinese: "多目标注释工具",
+    title_chinese: "医学视频标注工具",
     description_chinese: [
-      "使用ReactJS、Atom、Python、MongoDB和FastAPI开发并维护了一款多目标注释工具",
-      "与医生和教授合作，构建一个易于使用的应用程序",
+      "主导开发基于网页的全栈标注平台，支持面向机器学习研究的大规模医学视频标注。",
+      "使用 React 前端与 FastAPI 后端，支持多用户协作。",
+      "使用 Python、OpenCV 与 PyTorch 实现预处理与自动建议模块，借助跟踪与模型预测辅助标注。",
+      "生成原始视频与标注结果的并排可视化，便于质量控制。",
     ],
-    time_chinese: "2023年10月 - 至今",
+    time_chinese: "2023年10月 – 2024年8月",
     techStack: [techStack.react, techStack.python, techStack.mongoDB],
     images: [
       annotationToolActivity,
@@ -224,7 +283,15 @@ export const projects = [
     ],
   },
   {
-    title: "Life and daily service web application",
+    slug: "life-service-app",
+    summary:
+      "A community platform for sharing activities and organizing small gatherings, built with a 10-person team.",
+    summary_chinese:
+      "与 10 人团队共同开发的社区平台，用于分享动态与组织小型聚会。",
+    keywords: ["Full-Stack", "Mini Program", "Teamwork"],
+    keywords_chinese: ["全栈", "小程序", "团队协作"],
+    category: "software-engineering",
+    title: "Life and Daily Service Web Application",
     time: "January 2022 - January 2023",
     description: [
       `Worked with 10 members of the creative team to develop a life and daily service online platform that allows the users to post recent activities, organize a small group of party and respond to other's
@@ -264,12 +331,19 @@ export const projects = [
     ],
   },
   {
+    slug: "image-inpainting",
+    summary:
+      "A CNN-based model for restoring damaged image regions and removing occluding objects.",
+    summary_chinese:
+      "基于 CNN 的图像修复模型，用于修复受损区域并去除遮挡物体。",
+    keywords: ["Computer Vision", "Deep Learning"],
+    keywords_chinese: ["计算机视觉", "深度学习"],
+    category: "ai-applications",
     title: "Image Inpainting",
     description: [
-      `Developed image inpainting algorithm using CNNs and ReLU.`,
-      `Utilized TensorFlow and CV2 for model development and training.`,
-      `Successfully restored damaged images and removed obstacles while preserving image
-      coherence.`,
+      `Implemented a CNN-based image inpainting model to restore damaged regions and remove occluding objects.`,
+      `Used TensorFlow and OpenCV for model development and training.`,
+      `Produced restorations that preserve the visual coherence of the surrounding image.`,
     ],
     time: "March 2022 - April 2022",
     title_chinese: "图像修复",
@@ -287,6 +361,14 @@ export const projects = [
     ],
   },
   {
+    slug: "unity-dial-game",
+    summary:
+      "An adventure game controlled with a Surface Dial, exploring alternative physical input for gameplay.",
+    summary_chinese:
+      "一款用 Surface Dial 操控的冒险游戏，探索游戏中的非传统物理输入方式。",
+    keywords: ["Game Development", "Interaction"],
+    keywords_chinese: ["游戏开发", "交互"],
+    category: "software-engineering",
     title: "Unity Game Development",
     description: [
       `Developed an adventure game and combined the game with the use of surface dial.`,
@@ -311,6 +393,14 @@ export const projects = [
     ],
   },
   {
+    slug: "solar-panel-website",
+    summary:
+      "A web tool that helps users find suitable sites for solar panel installation using maps and weather data.",
+    summary_chinese:
+      "借助地图与天气数据，帮助用户寻找合适太阳能板安装位置的网页工具。",
+    keywords: ["Web Development", "Maps & Data"],
+    keywords_chinese: ["Web开发", "地图与数据"],
+    category: "software-engineering",
     title: "Solar Panel Website",
     description: [
       `Developed a website through using Python, Flask, Bootstrap framework, and HTML, CSS, JS that allows users to quickly find the best site to install the solar panel`,
@@ -330,7 +420,14 @@ export const projects = [
     images: [sunSpotImage1, sunSpotImage2, sunSpotImage3],
   },
   {
-    title: "Question box web app",
+    slug: "question-box",
+    summary:
+      "A Q&A web app that presents questions on an interactive, rotatable 3D sphere.",
+    summary_chinese: "在可旋转的交互式 3D 球体上展示问题的问答网页应用。",
+    keywords: ["Web Development", "3D Graphics"],
+    keywords_chinese: ["Web开发", "3D图形"],
+    category: "software-engineering",
+    title: "Question Box Web App",
     description: [
       `Developed a question box application that allows the users to answer and post questions by utilizing HTML, CSS, JS, Apache server`,
       `Embedded a 3D sphere by using Three.js to display the questions for users to rotate the sphere and find the questions`,
@@ -345,9 +442,15 @@ export const projects = [
     techStack: [techStack.js, techStack.threeDJS],
   },
   {
+    slug: "minesweeper",
+    summary: "A classic Minesweeper game implemented in C++ with SFML.",
+    summary_chinese: "使用 C++ 与 SFML 实现的经典扫雷游戏。",
+    keywords: ["C++", "Game"],
+    keywords_chinese: ["C++", "游戏"],
+    category: "software-engineering",
     title: "Minesweeper",
     description: [
-      `Designed and implmented a classical minesweeper game by using C++, SFML.`,
+      `Designed and implemented a classic Minesweeper game using C++ and SFML.`,
     ],
     title_chinese: "扫雷游戏",
     description_chinese: ["使用C++和SFML设计并实现了一个经典的扫雷游戏。"],

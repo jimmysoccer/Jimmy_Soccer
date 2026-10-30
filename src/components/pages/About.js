@@ -1,169 +1,178 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { UFImage, aboutImage, aquinasImage, emoryImage } from "../../assets/images/images";
-import { educationExperience } from "../../constants/education-items";
-import { Grid } from "@mui/material";
-import { getCurrentLanguageText } from "../../utils/get-current-language-text";
-import { useAtomValue } from "jotai";
-import { languageAtom } from "../../atoms/primitive.atom";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import Lightbox from '../common/Lightbox';
+import { useAtomValue } from 'jotai';
+import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
+import DownhillSkiingRoundedIcon from '@mui/icons-material/DownhillSkiingRounded';
+import FlightTakeoffRoundedIcon from '@mui/icons-material/FlightTakeoffRounded';
+import MemoryRoundedIcon from '@mui/icons-material/MemoryRounded';
+import PhotoCameraBackRoundedIcon from '@mui/icons-material/PhotoCameraBackRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import { languageAtom } from '../../atoms/primitive.atom';
+import { LANGUAGE } from '../../constants/navbar-items';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { funFacts, gallery, hobbies } from '../../constants/about-items';
+import { Page, PageHeader, Reveal } from '../common/Motion';
+import Avatar from '../common/Avatar';
+import ContactCards from './Contact';
+
+const HOBBY_ICONS = {
+  soccer: SportsSoccerRoundedIcon,
+  realmadrid: EmojiEventsRoundedIcon,
+  skiing: DownhillSkiingRoundedIcon,
+  travel: FlightTakeoffRoundedIcon,
+  tech: MemoryRoundedIcon,
+};
+
+function Block({ id, title, children }) {
+  return (
+    <section id={id} className="section about-block">
+      <Reveal className="section-head">
+        <h2 className="section-title">{title}</h2>
+      </Reveal>
+      {children}
+    </section>
+  );
+}
 
 export default function About() {
   const language = useAtomValue(languageAtom);
+  const t = (en, zh) => getCurrentLanguageText(language, en, zh);
+  const zh = language === LANGUAGE.chinese.value;
 
-  const TEXT_1 = getCurrentLanguageText(
-    language,
-    `I am Heng Sun, but you can call me Jimmy. I am a first-year Ph.D. student in Computer Science at Emory University in Atlanta, GA, where I work on AI for healthcare under the guidance of Dr. Xiao Hu. I am passionate
-    about developing intelligent systems that bridge AI and healthcare,
-    and I strive to approach every project with precision, curiosity,
-    and a commitment to research excellence.`,
-    `我是孙恒，你也可以叫我Jimmy。我是埃默里大学（亚特兰大）计算机科学专业一年级博士生，在 Xiao Hu 博士指导下从事医疗人工智能研究。我热衷于开发连接人工智能与医疗的智能系统，
-    并以严谨、好奇和追求卓越的态度对待每一个研究项目。`,
-  ).split(" ");
+  const intro = zh
+    ? [
+        '嗨，我是 Jimmy！工作之外的我，大部分时间都和足球有关——不是在球场上踢球，就是在看皇马的比赛。',
+        '我喜欢到处走走：去新的城市、尝当地的美食，冬天有机会就去滑雪。旅行总能带给我新的视角和灵感。',
+        '我也一直喜欢动手做东西，经常拿新技术做些小项目，这个网站就是其中之一。如果你也喜欢足球、旅行或者科技，欢迎来聊聊！',
+      ]
+    : [
+        "Hi, I'm Jimmy! When I'm not working, there's a good chance I'm thinking about soccer — either playing it or watching Real Madrid.",
+        'I love getting out and exploring: new cities, local food, and, when winter comes around, a day on the slopes. Travel keeps giving me fresh perspectives and ideas.',
+        "I've also always enjoyed making things, and I often pick up new technologies through small side projects — this website is one of them. If you're into soccer, travel, or tech, I'd love to chat.",
+      ];
+
+  const [lightbox, setLightbox] = useState(null);
+  const tiles = gallery.length
+    ? gallery
+    : Array.from({ length: 6 }, (_, i) => ({ placeholder: true, key: i }));
 
   return (
-    <motion.div
-      className="container"
-      initial={{ y: 10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -10, opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Grid container className="mt-5 justify-content-center px-3" gap={5}>
-        <Grid item md={4}>
-          <h2 className="text-center fw-bold">
-            {getCurrentLanguageText(
-              language,
-              `I am Heng Sun. I am in Atlanta, GA.`,
-              `我是孙恒，现居于佐治亚州亚特兰大`,
-            )}
-          </h2>
-          <p className="fs-5 text-secondary">
-            {TEXT_1.map((el, i) => (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.25, delay: i / 20 }}
-              >
-                {el}{" "}
-              </motion.span>
+    <Page>
+      <div className="about-hero">
+        <PageHeader
+          eyebrow={t('About', '关于')}
+          title={t('Beyond the Code', '代码之外')}
+        >
+          <div className="about-prose mt-3">
+            {intro.map((p) => (
+              <p key={p}>{p}</p>
             ))}
-          </p>
-        </Grid>
-        <Grid item md={4}>
-          <img className="img-fluid" src={aboutImage} alt="about me" />
-          <div className="d-flex justify-content-center">
-            <div
-              style={{ cursor: "pointer" }}
-              className="d-flex justify-content-center my-2"
-              onClick={() => window.open("https://github.com/jimmysoccer")}
-            >
-              <GitHubIcon className="me-3"></GitHubIcon>
-              <div className="language">
-                {getCurrentLanguageText(
-                  language,
-                  "Follow on Github",
-                  "关注我的Github",
-                )}
-              </div>
-            </div>
           </div>
-          <div className="d-flex justify-content-center">
-            <div
-              style={{ cursor: "pointer" }}
-              className="d-flex justify-content-center my-2"
-              onClick={() =>
-                window.open("https://www.linkedin.com/in/jimmysoccer/")
-              }
-            >
-              <LinkedInIcon className="me-3"></LinkedInIcon>
-              <div className="language">
-                {getCurrentLanguageText(
-                  language,
-                  "Follow on LinkedIn",
-                  "关注我的领英",
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="d-flex justify-content-center">
-            <div
-              style={{ cursor: "pointer" }}
-              className="d-flex justify-content-center my-2"
-              onClick={() => window.open("mailto:jimmysoccer0927@gmail.com")}
-            >
-              <EmailIcon className="me-3"></EmailIcon>
-              <div className="language">
-                {getCurrentLanguageText(language, "Email", "电子邮箱")}
-              </div>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+        </PageHeader>
+        <Reveal className="about-hero__avatar">
+          <Avatar size={220} />
+        </Reveal>
+      </div>
 
-      <Grid container justifyContent={"center"}>
-        <h2 className="text-center fw-bold">Education Experience</h2>
-        {educationExperience.map((exp) => (
-          <Grid
-            item
-            md={12}
-            key={`about-education-${exp.school}`}
-            className="text-center my-5"
-          >
-            <div className="d-flex justify-content-center">
-              <img
-                src={
-                  exp.school === "University of Florida"
-                    ? UFImage
-                    : exp.school === "Emory University"
-                    ? emoryImage
-                    : aquinasImage
-                }
-                alt="school-logo"
-                className="img-fluid"
-                style={{
-                  maxWidth: "200px",
-                  maxHeight: "100px",
-                  objectFit: "contain",
-                }}
-              ></img>
-            </div>
-            <h3 className="mt-2 mb-0 fs-5">
-              {getCurrentLanguageText(
-                language,
-                exp.school + ", " + exp.location + " --- " + exp.degree,
-                exp.school_chinese +
-                  ", " +
-                  exp.location_chinese +
-                  " --- " +
-                  exp.degree_chinese,
-              )}
-            </h3>
-            <div className="fs-4">
-              {getCurrentLanguageText(language, exp.time, exp.time_chinese)}
-            </div>
-            {exp.advisor && (
-              <div className="fs-5 fw-semibold text-dark">
-                {getCurrentLanguageText(
-                  language,
-                  "Advisor: " + exp.advisor,
-                  exp.advisor_chinese,
-                )}
+      <Block id="interests" title={t('Interests & Hobbies', '兴趣爱好')}>
+        <div className="hobby-grid">
+          {hobbies.map((h, i) => {
+            const Icon = HOBBY_ICONS[h.key] || AutoAwesomeRoundedIcon;
+            return (
+              <Reveal key={h.key} delay={(i % 5) * 0.05}>
+                <div className="card-surface hobby-card">
+                  <span className="research-card__icon" aria-hidden>
+                    <Icon fontSize="small" />
+                  </span>
+                  <h3 className="card-title">{t(h.en, h.zh)}</h3>
+                  <p className="card-meta mb-0">{t(h.den, h.dzh)}</p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </Block>
+
+      <Block id="gallery" title={t('Personal Gallery', '生活相册')}>
+        <div className="gallery-grid">
+          {tiles.map((g, i) =>
+            g.placeholder ? (
+              <div
+                key={g.key}
+                className="gallery-tile gallery-tile--empty"
+                aria-hidden
+              >
+                <PhotoCameraBackRoundedIcon />
               </div>
+            ) : (
+              <Reveal key={g.src} delay={(i % 3) * 0.05}>
+                <button
+                  type="button"
+                  className="gallery-tile gallery-tile--button"
+                  onClick={() => setLightbox(i)}
+                  aria-label={
+                    t(g.caption, g.caption_chinese) || t('Open photo', '查看照片')
+                  }
+                >
+                  <img
+                    src={g.src}
+                    alt={t(g.caption, g.caption_chinese) || ''}
+                    loading="lazy"
+                  />
+                  {g.caption && (
+                    <span className="gallery-tile__caption">
+                      {t(g.caption, g.caption_chinese)}
+                    </span>
+                  )}
+                </button>
+              </Reveal>
+            )
+          )}
+        </div>
+        <Lightbox
+          items={gallery.map((g) => ({
+            src: g.src,
+            caption: t(g.caption, g.caption_chinese),
+          }))}
+          index={lightbox}
+          onClose={() => setLightbox(null)}
+          onChange={setLightbox}
+        />
+        {!gallery.length && (
+          <p className="card-meta px-3 mt-3 mb-0">
+            {t(
+              'Photos from travels and memorable moments are coming soon.',
+              '旅行与难忘瞬间的照片即将上线。'
             )}
-            {exp.courses && exp.courses.length > 0 && (
-              <div className="fs-5 text-secondary">
-                {getCurrentLanguageText(
-                  language,
-                  "Main courses: " + exp.courses.map((des) => des),
-                  "主要课程: " + exp.courses_chinese.map((des) => des),
-                )}
+          </p>
+        )}
+      </Block>
+
+      <Block id="fun-facts" title={t('Fun Facts', '趣味小事')}>
+        <div className="card-grid card-grid--2">
+          {funFacts.map((f, i) => (
+            <Reveal key={f.en} delay={(i % 2) * 0.05}>
+              <div className="card-surface fact-card">
+                <span className="fact-card__num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>{t(f.en, f.zh)}</span>
               </div>
-            )}
-          </Grid>
-        ))}
-      </Grid>
-    </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </Block>
+
+      <Block id="contact" title={t('Contact & Socials', '联系方式')}>
+        <p className="page-lead px-3 mb-4" style={{ maxWidth: 760 }}>
+          {t(
+            "I'm always interested in connecting with researchers, developers, and collaborators working on artificial intelligence, machine learning, and interdisciplinary applications. Feel free to reach out to discuss research, projects, or potential collaborations.",
+            '我很乐意与从事人工智能、机器学习及跨学科应用的研究者、开发者和合作者交流。欢迎联系我，探讨研究、项目或潜在的合作。'
+          )}
+        </p>
+        <ContactCards />
+      </Block>
+    </Page>
   );
 }

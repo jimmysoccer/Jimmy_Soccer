@@ -1,13 +1,20 @@
 import { LANGUAGE, NAV_BAR } from "../constants/navbar-items";
 
+/** Find the site section a path belongs to (longest matching prefix). */
+export function getSectionByPath(path) {
+  return Object.values(NAV_BAR)
+    .filter((item) =>
+      item.path === "/"
+        ? path === "/"
+        : path === item.path || path.startsWith(item.path + "/"),
+    )
+    .sort((a, b) => b.path.length - a.path.length)[0];
+}
+
 export default function getHeaderTitleByPath(path, language) {
-  switch (language) {
-    case LANGUAGE.english.value:
-      return Object.values(NAV_BAR).find((item) => item.path === path)?.title;
-    case LANGUAGE.chinese.value:
-      return Object.values(NAV_BAR).find((item) => item.path === path)
-        ?.titleChinese;
-    default:
-      return Object.values(NAV_BAR).find((item) => item.path === path)?.title;
-  }
+  const item = getSectionByPath(path);
+  if (!item) return undefined;
+  return language === LANGUAGE.chinese.value
+    ? item.seoTitleChinese || item.titleChinese
+    : item.seoTitle || item.title;
 }

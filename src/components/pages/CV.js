@@ -1,90 +1,62 @@
-import { Grid, Button, Box } from "@mui/material";
-import { getCurrentLanguageText } from "../../utils/get-current-language-text";
 import { useAtomValue } from "jotai";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import { languageAtom } from "../../atoms/primitive.atom";
-import { motion } from "framer-motion";
-import DownloadIcon from "@mui/icons-material/Download";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { getCurrentLanguageText } from "../../utils/get-current-language-text";
+import { technicalSkills } from "../../constants/research-items";
+import { Reveal } from "../common/Motion";
 
-export default function CV() {
+// CV PDF lives in /public so it is served as a static asset
+export const CV_PATH = "/HENG_SUN_CV.pdf";
+
+/** CV block rendered inside the Research page: actions, skills, embedded PDF. */
+export default function CvSection() {
   const language = useAtomValue(languageAtom);
-
-  // CV PDF from public folder - accessible as static asset in production
-  // Make sure HENG_SUN_CV.pdf is in the frontend/public folder
-  const cvPath = "/HENG_SUN_CV.pdf";
-  // Add zoom parameter for 100% default zoom in viewer
-  const cvPathWithZoom = `${cvPath}#zoom=100`;
-
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = cvPath;
-    link.download = "CV.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const t = (en, zh) => getCurrentLanguageText(language, en, zh);
 
   return (
-    <motion.div
-      className="container"
-      initial={{ y: 10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -10, opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <Grid container className="mt-3 justify-content-center px-2" spacing={2}>
-        <Grid item xs={12}>
-          <Box className="text-center mb-3">
-            <PictureAsPdfIcon sx={{ fontSize: 50, color: "#14b8a6", mb: 1 }} />
-            <h2 className="fw-bold mb-2">
-              {getCurrentLanguageText(language, "Curriculum Vitae", "个人简历")}
-            </h2>
-            <p className="text-secondary fs-6 mb-2">
-              {getCurrentLanguageText(
-                language,
-                "View or download my CV below.",
-                "您可以在下方查看或下载我的简历。",
-              )}
-            </p>
-            <Button
-              variant="contained"
-              startIcon={<DownloadIcon />}
-              onClick={handleDownload}
-              sx={{
-                backgroundColor: "#14b8a6",
-                "&:hover": {
-                  backgroundColor: "#0d9488",
-                },
-                mb: 2,
-              }}
-            >
-              {getCurrentLanguageText(language, "Download CV", "下载简历")}
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "90vh",
-              minHeight: "600px",
-              border: "2px solid #e0e0e0",
-              borderRadius: 2,
-              overflow: "hidden",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              backgroundColor: "#f5f5f5",
-            }}
-          >
-            <iframe
-              src={cvPathWithZoom}
-              title="CV"
-              width="100%"
-              height="100%"
-              style={{ border: "none" }}
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </motion.div>
+    <div className="px-3">
+      <div className="d-flex flex-wrap gap-2 mb-4">
+        <a className="btn-brand" href={CV_PATH} download="HENG_SUN_CV.pdf">
+          <DownloadRoundedIcon fontSize="small" />
+          {t("Download PDF", "下载 PDF")}
+        </a>
+        <a
+          className="btn-ghost"
+          href={CV_PATH}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t("Open in new tab", "在新标签页打开")}
+          <OpenInNewRoundedIcon fontSize="small" />
+        </a>
+      </div>
+
+      <Reveal className="card-surface cv-skills">
+        <h3 className="cv-section__title mb-3">
+          {t("Technical Skills", "技术能力")}
+        </h3>
+        <div className="cv-skills__grid">
+          {technicalSkills.map((g) => (
+            <div key={g.group}>
+              <div className="fw-semibold mb-2">
+                {t(g.group, g.group_chinese)}
+              </div>
+              <div className="d-flex flex-wrap gap-2">
+                {g.items.map((s) => (
+                  <span key={s} className="skill-pill">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal className="card-surface cv-frame mt-4">
+        <iframe src={`${CV_PATH}#zoom=100`} title="CV" loading="lazy" />
+      </Reveal>
+    </div>
   );
 }

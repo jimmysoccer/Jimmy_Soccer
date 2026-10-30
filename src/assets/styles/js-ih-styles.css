@@ -1,7 +1,7 @@
 /* JS-IH-1 Component Styles */
 
 .js-ih-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
   min-height: 100vh;
   padding: 20px;
 }
@@ -17,7 +17,7 @@
 }
 
 .calendar-day.has-data {
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  background: linear-gradient(45deg, #14b8a6 30%, #5eead4 90%);
   color: white;
 }
 
@@ -37,7 +37,7 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: bold;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #14b8a6, #0d9488);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -54,7 +54,7 @@
 .progress-bar {
   height: 8px;
   border-radius: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #14b8a6, #0d9488);
 }
 
 .month-card {
@@ -209,10 +209,10 @@
 }
 
 .js-ih-container ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #14b8a6, #0d9488);
   border-radius: 4px;
 }
 
 .js-ih-container ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #5a6fd8, #6a4190);
+  background: linear-gradient(45deg, #0d9488, #0f766e);
 }

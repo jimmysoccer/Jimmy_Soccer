@@ -1,129 +1,101 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { useMediaQuery } from "@mui/material";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import TechStackIcon from "../common/TechStackIcon";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { LANGUAGE, NAV_BAR } from "../../constants/navbar-items";
 import NotFound from "./NotFound";
-import { Grid, useMediaQuery } from "@mui/material";
-import { useAtomValue } from "jotai";
 import { languageAtom } from "../../atoms/primitive.atom";
 import { getCurrentLanguageText } from "../../utils/get-current-language-text";
 import ImageCarousel from "../common/ImageCarousel";
-import { motion } from "framer-motion";
 import Publication from "../common/Publication";
+import { Page, Reveal } from "../common/Motion";
+import { projects } from "../../constants/projects";
+import { PROJECT_PLACEHOLDER } from "../common/ProjectCard";
 
 export default function Project() {
-  const location = useLocation();
-  const project = location.state || {};
+  const { name } = useParams();
+  const project =
+    projects.find((p) => p.slug === name || p.title === name) || {};
   const language = useAtomValue(languageAtom);
   const isMobileMatch = useMediaQuery("(max-width:600px)");
+  const t = (en, zh) => getCurrentLanguageText(language, en, zh);
 
-  if (project.title) {
-    document.title = `Jimmy | ${getCurrentLanguageText(
-      language,
-      project.title,
-      project.title_chinese,
-    )}`;
-  }
+  useEffect(() => {
+    if (project.title)
+      document.title = `${t(project.title, project.title_chinese)} | Heng (Jimmy) Sun`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.title, language]);
+
+  if (!project.title) return <NotFound />;
+
+  const images = project.images || [PROJECT_PLACEHOLDER];
 
   return (
-    <motion.div
-      className="d-flex flex-column"
-      initial={{ y: 10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -10, opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="px-5 my-5 d-flex justify-content-center">
-        <div className="w-75">
-          <Link className="text-success" to={NAV_BAR.projects.path}>
-            <ArrowBackIcon></ArrowBackIcon>
-          </Link>
+    <Page className="detail">
+      <Link className="back-link" to={NAV_BAR.projects.path}>
+        <ArrowBackRoundedIcon fontSize="small" />
+        {t("All projects", "全部项目")}
+      </Link>
+
+      <div className="detail__hero">
+        <div className="tech-row">
+          {project.techStack.map((tech) => (
+            <TechStackIcon key={`project-tech-stack-${tech}`} stack={tech} />
+          ))}
+        </div>
+        <h1 className="detail__title">
+          {t(project.title, project.title_chinese)}
+        </h1>
+        <div className="card-meta fs-6">
+          {t(project.time, project.time_chinese)}
         </div>
       </div>
-      {Object.keys(project).length === 0 ? (
-        <NotFound />
-      ) : (
-        <div className="d-flex justify-content-center">
-          <div className="text-center m-3 w-75">
-            {project.techStack.map((tech) => (
-              <TechStackIcon key={`project-tech-stack-${tech}`} stack={tech} />
+
+      <Reveal className="card-surface detail__body">
+        <ul>
+          {(language === LANGUAGE.chinese.value
+            ? project?.description_chinese
+            : project?.description
+          )?.map((des) => (
+            <li key={`project-description-${des}`}>{des}</li>
+          ))}
+        </ul>
+      </Reveal>
+
+      {project?.papers && (
+        <section className="mt-5">
+          <h2 className="subsection-title mx-0">
+            {t("Related Publications", "相关刊物")}
+          </h2>
+          <div className="stack px-0">
+            {project.papers.map((paper) => (
+              <Publication
+                key={paper.link || paper.title}
+                publication={paper}
+              />
             ))}
-            <h1>
-              {getCurrentLanguageText(
-                language,
-                project.title,
-                project.title_chinese,
-              )}
-            </h1>
-            <h2>
-              {getCurrentLanguageText(
-                language,
-                project.time,
-                project.time_chinese,
-              )}
-            </h2>
-            <ul className="text-start">
-              {(language === LANGUAGE.chinese.value
-                ? project?.description_chinese
-                : project?.description
-              )?.map((des) => (
-                <li key={`project-description-${des}`}>{des}</li>
-              ))}
-            </ul>
-
-            {project?.papers && (
-              <div className="mt-5">
-                <h2>
-                  {getCurrentLanguageText(
-                    language,
-                    "Related Publications",
-                    "相关刊物",
-                  )}
-                </h2>
-
-                {project.papers.map((paper) => (
-                  <Publication publication={paper}></Publication>
-                ))}
-              </div>
-            )}
-            {isMobileMatch ? (
-              project?.images && (
-                <Grid
-                  container
-                  className="d-flex mt-5"
-                  justifyContent={"center"}
-                  alignItems={"baseline"}
-                >
-                  {project.images.map((img) => (
-                    <Grid
-                      item
-                      md={5}
-                      className="m-2"
-                      key={`project-images-${img}`}
-                    >
-                      <img src={img} alt="project" className="img-fluid"></img>
-                    </Grid>
-                  ))}
-                  <Grid
-                    item
-                    md={5}
-                    className="m-2"
-                    key={`project-images-placeholder`}
-                  ></Grid>
-                </Grid>
-              )
-            ) : (
-              <ImageCarousel
-                images={
-                  project?.images || [
-                    "https://res.cloudinary.com/ds4h9nepa/image/upload/v1770679077/project_lzgyse.png",
-                  ]
-                }
-              ></ImageCarousel>
-            )}
           </div>
-        </div>
+        </section>
       )}
-    </motion.div>
+
+      <Reveal className="mt-5">
+        {isMobileMatch ? (
+          <div className="detail__gallery">
+            {images.map((img) => (
+              <img
+                key={`project-images-${img}`}
+                src={img}
+                alt="project"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        ) : (
+          <ImageCarousel images={images} />
+        )}
+      </Reveal>
+    </Page>
   );
 }

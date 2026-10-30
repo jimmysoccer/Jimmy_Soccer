@@ -17,6 +17,7 @@ import wechat from "./wechat.png";
 import UF from "./UF.png";
 import aquinas from "./aquinas.jpg";
 import emory from "./emory.jpg";
+import emory_logo from "./emory_logo.png";
 import dial_adventure_1 from "./dial_adventure_1.png";
 import dial_adventure_2 from "./dial_adventure_2.gif";
 import dial_adventure_3 from "./dial_adventure_3.jpg";
@@ -82,6 +83,8 @@ export const wechatImage = wechat;
 export const UFImage = UF;
 export const aquinasImage = aquinas;
 export const emoryImage = emory;
+// Tightly cropped wordmark (the original JPG has large empty margins)
+export const emoryLogoImage = emory_logo;
 export const dialAdventure1Image = dial_adventure_1;
 export const dialAdventure2Image = dial_adventure_2;
 export const dialAdventure3Image = dial_adventure_3;

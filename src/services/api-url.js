@@ -1,14 +1,11 @@
-let fastApiHost;
-let fastApiPort;
 let fastAPiUrl;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   // dev code
-  fastApiHost = "http://127.0.0.1";
-  fastApiPort = 8000;
-  fastAPiUrl = `${fastApiHost}:${fastApiPort}`;
+  fastAPiUrl = "http://127.0.0.1:8000";
 } else {
   // production code
-  fastApiHost = "https://backend-dot-jimmysoccer.uc.r.appspot.com";
-  fastAPiUrl = fastApiHost;
+  fastAPiUrl = "https://backend-dot-jimmysoccer.uc.r.appspot.com";
 }
-export const getUserAuthenUrl = `${fastAPiUrl}/jimmy_website/login`;
+
+export const apiBaseUrl = `${fastAPiUrl}/jimmy_website`;
+export const getUserAuthenUrl = `${apiBaseUrl}/login`;

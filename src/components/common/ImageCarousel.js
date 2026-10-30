@@ -1,12 +1,11 @@
 import { Box, Dialog, DialogContent, IconButton, Paper } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import { ArrowBackIos, ArrowForwardIos, Close } from "@mui/icons-material";
 
 export default function ImageCarousel({ images }) {
   const [open, setOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log("currentIndex", currentIndex);
   const handleOpen = (index) => {
     setCurrentIndex(index);
     setOpen(true);
@@ -26,27 +25,59 @@ export default function ImageCarousel({ images }) {
     );
   };
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
   if (!images) return <div></div>;
   return (
     <>
-      <Carousel navButtonsAlwaysVisible className="mt-5">
+      <Carousel
+        navButtonsAlwaysVisible
+        animation="slide"
+        duration={450}
+        className="card-surface p-3"
+        indicatorIconButtonProps={{ style: { color: "#cbd5e1", padding: 4 } }}
+        activeIndicatorIconButtonProps={{ style: { color: "#14b8a6" } }}
+        navButtonsProps={{
+          style: { backgroundColor: "rgba(15,23,42,0.55)", borderRadius: 999 },
+        }}
+      >
         {images.map((image, index) => (
           <Paper
             key={`carousel-image-${index}`}
             className="d-flex justify-content-center shadow-none"
-            style={{ height: "500px" }}
+            style={{ height: "500px", background: "transparent" }}
             onClick={() => handleOpen(index)}
           >
             <img
               src={image}
               alt="projects_carousel"
               className="img-fluid h-100"
-              style={{ cursor: "pointer" }}
+              loading="lazy"
+              style={{
+                cursor: "zoom-in",
+                objectFit: "contain",
+                borderRadius: 12,
+              }}
             ></img>
           </Paper>
         ))}
       </Carousel>
-      <Dialog open={open} onClose={handleClose} maxWidth="lg">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="lg"
+        PaperProps={{ sx: { borderRadius: 4, overflow: "hidden" } }}
+        slotProps={{ backdrop: { sx: { backdropFilter: "blur(4px)" } } }}
+      >
         <DialogContent sx={{ position: "relative", p: 0 }}>
           {/* Close Button */}
           <IconButton
@@ -82,8 +113,9 @@ export default function ImageCarousel({ images }) {
             alt={`img-${currentIndex}`}
             style={{
               display: "block",
-              minHeight: "500px",
+              maxHeight: "80vh",
               width: "100%",
+              objectFit: "contain",
             }}
           />
 
@@ -113,11 +145,14 @@ export default function ImageCarousel({ images }) {
             {images.map((_, index) => (
               <Box
                 key={index}
+                onClick={() => setCurrentIndex(index)}
                 sx={{
                   width: 10,
                   height: 10,
                   borderRadius: "50%",
-                  backgroundColor: index === currentIndex ? "black" : "gray",
+                  backgroundColor:
+                    index === currentIndex ? "#14b8a6" : "#cbd5e1",
+                  cursor: "pointer",
                   transition: "background-color 0.3s ease",
                 }}
               />

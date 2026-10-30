@@ -134,7 +134,7 @@ const JSIHCalendar = () => {
     if (number === 0) return "#388e3c"; // Green
     if (number === 1) return "#fbc02d"; // Yellow
     if (number >= 2) return "#d32f2f"; // Red
-    return "#1976d2"; // Blue fallback
+    return "#0d9488"; // Blue fallback
   };
 
   const calculateMonthStats = () => {
@@ -203,7 +203,7 @@ const JSIHCalendar = () => {
             borderRadius: 3,
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
             background:
-              "linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%)",
+              "linear-gradient(135deg, rgba(20,184,166, 0.5) 0%, rgba(13,148,136, 0.5) 100%)",
             color: "black",
           }}
         >
@@ -472,7 +472,7 @@ const JSIHCalendar = () => {
                 {avgNumber > 0 && (
                   <Typography
                     variant="h6"
-                    sx={{ fontWeight: 600, color: "#667eea" }}
+                    sx={{ fontWeight: 600, color: "#14b8a6" }}
                   >
                     Avg (Days/Sum): {avgNumber.toFixed(1)}
                   </Typography>
@@ -480,7 +480,7 @@ const JSIHCalendar = () => {
                 {avgOccurrences > 0 && (
                   <Typography
                     variant="body2"
-                    sx={{ fontWeight: 500, color: "#764ba2" }}
+                    sx={{ fontWeight: 500, color: "#0d9488" }}
                   >
                     Avg (Days/Occ): {avgOccurrences.toFixed(1)}
                   </Typography>
@@ -529,7 +529,7 @@ const JSIHCalendar = () => {
                   ? "rgba(255, 255, 255, 0.95)"
                   : "rgba(255, 255, 255, 0.7)",
                 border: isToday
-                  ? "2px solid #667eea"
+                  ? "2px solid #14b8a6"
                   : "1px solid rgba(255, 255, 255, 0.3)",
                 borderRadius: 2,
                 position: "relative",
@@ -627,7 +627,7 @@ const JSIHCalendar = () => {
           borderRadius: 4,
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
           background:
-            "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
+            "linear-gradient(135deg, rgba(20,184,166, 0.1) 0%, rgba(13,148,136, 0.1) 100%)",
           color: "black",
         }}
       >
@@ -800,7 +800,7 @@ const JSIHCalendar = () => {
                     borderColor: "rgba(0, 0, 0, 0.5)",
                   },
                   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#1976d2",
+                    borderColor: "#0d9488",
                   },
                   "& .MuiSelect-select": {
                     color: "black",

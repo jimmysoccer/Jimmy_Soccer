@@ -1,28 +1,12 @@
-import axios from "axios";
+import { privateApi } from "./auth";
 
-let fastApiHost;
-let fastApiPort;
-let fastAPiUrl;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  // dev code
-  fastApiHost = "http://127.0.0.1";
-  fastApiPort = 8000;
-  fastAPiUrl = `${fastApiHost}:${fastApiPort}`;
-} else {
-  // production code
-  fastApiHost = "https://backend-dot-jimmysoccer.uc.r.appspot.com";
-  fastAPiUrl = fastApiHost;
-}
-
-const baseUrl = `${fastAPiUrl}/jimmy_website`;
+// All JS-IH-1 endpoints are private and require a valid session token.
+const BASE = "/js-ih-1";
 
 // Add a new record
 export const addJSIHRecord = async (date, number) => {
   try {
-    const response = await axios.post(`${baseUrl}/js-ih-1/add`, {
-      date: date,
-      number: number,
-    });
+    const response = await privateApi.post(`${BASE}/add`, { date, number });
     return response.data;
   } catch (error) {
     console.error("Error adding record:", error);
@@ -33,7 +17,7 @@ export const addJSIHRecord = async (date, number) => {
 // Get records by year
 export const getJSIHByYear = async (year) => {
   try {
-    const response = await axios.get(`${baseUrl}/js-ih-1/year/${year}`);
+    const response = await privateApi.get(`${BASE}/year/${year}`);
     return response.data;
   } catch (error) {
     console.error("Error getting records by year:", error);
@@ -44,9 +28,7 @@ export const getJSIHByYear = async (year) => {
 // Get records by month
 export const getJSIHByMonth = async (year, month) => {
   try {
-    const response = await axios.get(
-      `${baseUrl}/js-ih-1/month/${year}/${month}`,
-    );
+    const response = await privateApi.get(`${BASE}/month/${year}/${month}`);
     return response.data;
   } catch (error) {
     console.error("Error getting records by month:", error);
@@ -57,7 +39,7 @@ export const getJSIHByMonth = async (year, month) => {
 // Get records by week
 export const getJSIHByWeek = async (year, week) => {
   try {
-    const response = await axios.get(`${baseUrl}/js-ih-1/week/${year}/${week}`);
+    const response = await privateApi.get(`${BASE}/week/${year}/${week}`);
     return response.data;
   } catch (error) {
     console.error("Error getting records by week:", error);
@@ -68,7 +50,7 @@ export const getJSIHByWeek = async (year, week) => {
 // Get all records
 export const getAllJSIHRecords = async () => {
   try {
-    const response = await axios.get(`${baseUrl}/js-ih-1/all`);
+    const response = await privateApi.get(`${BASE}/all`);
     return response.data;
   } catch (error) {
     console.error("Error getting all records:", error);

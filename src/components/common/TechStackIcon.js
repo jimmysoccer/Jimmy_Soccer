@@ -25,6 +25,7 @@ import {
   aiImage,
   windowsImage,
   mobileImage,
+  fastAPIImage,
 } from "../../assets/images/images";
 import "../../assets/styles/style.css";
 
@@ -60,11 +61,7 @@ export default function TechStackIcon({ stack }) {
       );
     case techStack.fastAPI:
       return (
-        <img
-          src="https://res.cloudinary.com/ds4h9nepa/image/upload/v1762267696/fastapi_ppfocr.webp"
-          alt="fastAPI"
-          className="project-logo"
-        ></img>
+        <img src={fastAPIImage} alt="fastAPI" className="project-logo"></img>
       );
     case techStack.windows:
       return (
