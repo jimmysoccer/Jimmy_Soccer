@@ -1,18 +1,18 @@
-import { projects } from "../../constants/projects";
-import { PROJECT_CATEGORIES } from "../../constants/project-categories";
-import { useNavigate } from "react-router-dom";
-import { NAV_BAR } from "../../constants/navbar-items";
-import { useState } from "react";
-import { useAtomValue } from "jotai";
-import { AnimatePresence, motion } from "framer-motion";
-import { languageAtom } from "../../atoms/primitive.atom";
-import { getCurrentLanguageText } from "../../utils/get-current-language-text";
-import { EASE, Page, PageHeader, Reveal } from "../common/Motion";
-import ProjectCard from "../common/ProjectCard";
-import ProjectModal from "../common/ProjectModal";
+import { projects } from '../../constants/projects';
+import { PROJECT_CATEGORIES } from '../../constants/project-categories';
+import { useNavigate } from 'react-router-dom';
+import { NAV_BAR } from '../../constants/navbar-items';
+import { useState } from 'react';
+import { useAtomValue } from 'jotai';
+import { AnimatePresence, motion } from 'framer-motion';
+import { languageAtom } from '../../atoms/primitive.atom';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { EASE, Page, PageHeader, Reveal } from '../common/Motion';
+import ProjectCard from '../common/ProjectCard';
+import ProjectModal from '../common/ProjectModal';
 
 const countOf = (key) =>
-  key === "all"
+  key === 'all'
     ? projects.length
     : projects.filter((p) => p.category === key).length;
 
@@ -20,7 +20,7 @@ export default function Projects({ hideHeader = false }) {
   const language = useAtomValue(languageAtom);
   const t = (en, zh) => getCurrentLanguageText(language, en, zh);
   const navigate = useNavigate();
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -69,38 +69,38 @@ export default function Projects({ hideHeader = false }) {
   }
 
   const groups = PROJECT_CATEGORIES.filter(
-    (c) => filter === "all" || c.key === filter,
+    (c) => filter === 'all' || c.key === filter
   );
 
   return (
     <Page>
       <PageHeader
-        eyebrow={t("Projects", "项目")}
-        title={t("From Ideas to Systems", "从想法到系统")}
+        eyebrow={t('Projects', '项目')}
+        title={t('From Ideas to Systems', '从想法到系统')}
         lead={t(
-          "Selected research systems, AI applications, and software engineering projects — described by the problem they address and what I contributed, not just the tools used.",
-          "精选的科研系统、AI 应用与软件工程项目——重点介绍它们要解决的问题以及我的贡献，而不只是所用的技术。",
+          'Selected research systems, AI applications, and software engineering projects — described by the problem they address and what I contributed, not just the tools used.',
+          '精选的科研系统、AI 应用与软件工程项目——重点介绍它们要解决的问题以及我的贡献，而不只是所用的技术。'
         )}
       />
 
       <div
         className="filter-bar"
         role="toolbar"
-        aria-label={t("Filter projects", "筛选项目")}
+        aria-label={t('Filter projects', '筛选项目')}
       >
-        {[{ key: "all", en: "All", zh: "全部" }, ...PROJECT_CATEGORIES].map(
+        {[{ key: 'all', en: 'All', zh: '全部' }, ...PROJECT_CATEGORIES].map(
           (f) => (
             <button
               key={f.key}
               type="button"
-              className={`chip ${filter === f.key ? "is-active" : ""}`}
+              className={`chip ${filter === f.key ? 'is-active' : ''}`}
               aria-pressed={filter === f.key}
               onClick={() => setFilter(f.key)}
             >
               <span>{t(f.en, f.zh)}</span>
               <span className="chip-count">{countOf(f.key)}</span>
             </button>
-          ),
+          )
         )}
       </div>
 

@@ -1,10 +1,10 @@
-import { Modal, IconButton, Button, Fade } from "@mui/material";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import TechStackIcon from "./TechStackIcon";
-import { PROJECT_PLACEHOLDER, projectKeywords } from "./ProjectCard";
-import { LANGUAGE } from "../../constants/navbar-items";
-import { getCurrentLanguageText } from "../../utils/get-current-language-text";
+import { Modal, IconButton, Button, Fade } from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
+import TechStackIcon from './TechStackIcon';
+import { PROJECT_PLACEHOLDER, projectKeywords } from './ProjectCard';
+import { LANGUAGE } from '../../constants/navbar-items';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
 
 export default function ProjectModal({
   project,
@@ -25,8 +25,8 @@ export default function ProjectModal({
         backdrop: {
           timeout: 300,
           sx: {
-            backgroundColor: "rgba(15,23,42,0.45)",
-            backdropFilter: "blur(4px)",
+            backgroundColor: 'rgba(15,23,42,0.45)',
+            backdropFilter: 'blur(4px)',
           },
         },
       }}
@@ -47,7 +47,7 @@ export default function ProjectModal({
                 <IconButton
                   onClick={onClose}
                   aria-label="Close"
-                  sx={{ bgcolor: "rgba(15,23,42,0.05)" }}
+                  sx={{ bgcolor: 'rgba(15,23,42,0.05)' }}
                 >
                   <CloseRoundedIcon />
                 </IconButton>
@@ -55,7 +55,7 @@ export default function ProjectModal({
               {project.summary && (
                 <p
                   className="page-lead mt-3 mb-2"
-                  style={{ fontSize: "1.02rem" }}
+                  style={{ fontSize: '1.02rem' }}
                 >
                   {t(project.summary, project.summary_chinese)}
                 </p>
@@ -67,10 +67,20 @@ export default function ProjectModal({
                   </span>
                 ))}
               </div>
-              <div className="tech-row mt-3">
-                {project.techStack.map((tech) => (
-                  <TechStackIcon key={`modal-tech-${tech}`} stack={tech} />
-                ))}
+              <div className="d-flex flex-wrap align-items-center gap-3 mt-3">
+                <div className="tech-row">
+                  {project.techStack.map((tech) => (
+                    <TechStackIcon key={`modal-tech-${tech}`} stack={tech} />
+                  ))}
+                </div>
+                <Button
+                  variant="contained"
+                  onClick={onViewDetails}
+                  endIcon={<ArrowForwardRoundedIcon />}
+                  sx={{ ml: 'auto', flexShrink: 0, whiteSpace: 'nowrap' }}
+                >
+                  {t('View Full Details', '查看完整详情')}
+                </Button>
               </div>
               {(project.images || showPlaceholder) && (
                 <div className="modal-card__media">
@@ -88,16 +98,6 @@ export default function ProjectModal({
                   <li key={`modal-des-${idx}`}>{description}</li>
                 ))}
               </ul>
-              <div className="d-flex justify-content-end mt-4">
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={onViewDetails}
-                  endIcon={<ArrowForwardRoundedIcon />}
-                >
-                  {t("View Full Details", "查看完整详情")}
-                </Button>
-              </div>
             </>
           )}
         </div>

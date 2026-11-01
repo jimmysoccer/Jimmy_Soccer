@@ -38,9 +38,16 @@ export const gallery = [
   },
 ];
 
+/**
+ * HOBBIES: each item can have a small photo shown as its thumbnail.
+ * Put square-ish photos in `public/hobbies/` using the file names below
+ * (or change `image`). Small files are best (~300×300). If a photo is
+ * missing, the default icon is shown instead.
+ */
 export const hobbies = [
   {
     key: 'soccer',
+    image: '/hobbies/soccer.jpg',
     en: 'Soccer',
     zh: '足球',
     den: "Playing whenever I can — it's where the “jimmysoccer” handle comes from.",
@@ -48,6 +55,7 @@ export const hobbies = [
   },
   {
     key: 'realmadrid',
+    image: '/hobbies/realmadrid.jpg',
     en: 'Real Madrid',
     zh: '皇家马德里',
     den: 'A lifelong Madridista. ¡Hala Madrid!',
@@ -55,6 +63,7 @@ export const hobbies = [
   },
   {
     key: 'skiing',
+    image: '/hobbies/skiing.jpg',
     en: 'Skiing',
     zh: '滑雪',
     den: 'Chasing snow and good runs in the winter.',
@@ -62,6 +71,7 @@ export const hobbies = [
   },
   {
     key: 'travel',
+    image: '/hobbies/travel.jpg',
     en: 'Travel',
     zh: '旅行',
     den: 'Exploring new cities, food, and experiences.',
@@ -69,6 +79,7 @@ export const hobbies = [
   },
   {
     key: 'cinnamoroll',
+    image: '/hobbies/cinnamoroll.jpg',
     en: 'Cinnamoroll',
     zh: '大耳狗',
     den: 'A little bit of cuteness never hurts. ☁️',

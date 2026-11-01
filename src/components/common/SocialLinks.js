@@ -28,8 +28,8 @@ export const SOCIALS = [
   {
     key: 'email',
     label: 'Email',
-    href: 'mailto:jimmysoccer.sun@gmail.com',
-    handle: 'jimmysoccer.sun@gmail.com',
+    href: 'mailto:heng.sun@emory.edu',
+    handle: 'heng.sun@emory.edu',
     Icon: EmailRoundedIcon,
   },
   {

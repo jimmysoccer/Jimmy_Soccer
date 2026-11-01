@@ -24,9 +24,30 @@ const HOBBY_ICONS = {
   tech: MemoryRoundedIcon,
 };
 
-function Block({ id, title, children }) {
+/** Small photo for a hobby; falls back to the icon if the photo is missing. */
+function HobbyThumb({ src, Icon, alt }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) {
+    return (
+      <span className="hobby-thumb hobby-thumb--icon" aria-hidden>
+        <Icon />
+      </span>
+    );
+  }
   return (
-    <section id={id} className="section about-block">
+    <img
+      className="hobby-thumb"
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+function Block({ id, title, children, style = {} }) {
+  return (
+    <section id={id} className="section about-block" style={style}>
       <Reveal className="section-head">
         <h2 className="section-title">{title}</h2>
       </Reveal>
@@ -42,14 +63,14 @@ export default function About() {
 
   const intro = zh
     ? [
-        '嗨，我是 Jimmy！工作之外的我，大部分时间都和足球有关——不是在球场上踢球，就是在看皇马的比赛。',
-        '我喜欢到处走走：去新的城市、尝当地的美食，冬天有机会就去滑雪。旅行总能带给我新的视角和灵感。',
-        '我也一直喜欢动手做东西，经常拿新技术做些小项目，这个网站就是其中之一。如果你也喜欢足球、旅行或者科技，欢迎来聊聊！',
+        `嗨，我是 Jimmy！在研究之余，我喜欢踢足球，并为皇家马德里队加油。足球是我生活中重要的一部分，也是“jimmysoccer”的灵感来源。`,
+        `我还喜欢滑雪、旅行和亲近大自然。我曾参观过许多国家公园，总是期待探索新的徒步路线，欣赏美丽的风景，或品尝当地美食。在冬季，你经常会看到我期待下一次滑雪的日子。`,
+        `在安静的时光里，我是大耳狗的忠实粉丝。我也喜欢通过小型副项目来构建事物和学习新技术——这个网站就是其中之一。如果你也有这些兴趣，我很乐意与你交流！`,
       ]
     : [
-        "Hi, I'm Jimmy! When I'm not working, there's a good chance I'm thinking about soccer — either playing it or watching Real Madrid.",
-        'I love getting out and exploring: new cities, local food, and, when winter comes around, a day on the slopes. Travel keeps giving me fresh perspectives and ideas.',
-        "I've also always enjoyed making things, and I often pick up new technologies through small side projects — this website is one of them. If you're into soccer, travel, or tech, I'd love to chat.",
+        `Hi, I'm Jimmy! Outside of research, I love playing soccer and cheering on Real Madrid. Soccer is a big part of my life — and the inspiration behind "jimmysoccer."`,
+        `I also enjoy skiing, traveling, and spending time in nature. I've visited many national parks and am always excited to explore a new trail, take in a beautiful landscape, or try local food along the way. In winter, you'll often find me looking forward to my next day on the slopes.`,
+        `On the quieter side, I'm a big fan of Cinnamoroll. I also enjoy building things and learning new technologies through small side projects — this website is one of them. If you share any of these interests, I'd love to chat!`,
       ];
 
   const [lightbox, setLightbox] = useState(null);
@@ -64,7 +85,7 @@ export default function About() {
           eyebrow={t('About', '关于')}
           title={t('Beyond the Code', '代码之外')}
         >
-          <div className="about-prose mt-3">
+          <div className="page-lead mt-3">
             {intro.map((p) => (
               <p key={p}>{p}</p>
             ))}
@@ -75,16 +96,18 @@ export default function About() {
         </Reveal>
       </div>
 
-      <Block id="interests" title={t('Interests & Hobbies', '兴趣爱好')}>
+      <Block
+        id="interests"
+        title={t('Interests & Hobbies', '兴趣爱好')}
+        style={{ 'margin-top': '0' }}
+      >
         <div className="hobby-grid">
           {hobbies.map((h, i) => {
             const Icon = HOBBY_ICONS[h.key] || AutoAwesomeRoundedIcon;
             return (
               <Reveal key={h.key} delay={(i % 5) * 0.05}>
                 <div className="card-surface hobby-card">
-                  <span className="research-card__icon" aria-hidden>
-                    <Icon fontSize="small" />
-                  </span>
+                  <HobbyThumb src={h.image} Icon={Icon} alt={t(h.en, h.zh)} />
                   <h3 className="card-title">{t(h.en, h.zh)}</h3>
                   <p className="card-meta mb-0">{t(h.den, h.dzh)}</p>
                 </div>
@@ -112,7 +135,8 @@ export default function About() {
                   className="gallery-tile gallery-tile--button"
                   onClick={() => setLightbox(i)}
                   aria-label={
-                    t(g.caption, g.caption_chinese) || t('Open photo', '查看照片')
+                    t(g.caption, g.caption_chinese) ||
+                    t('Open photo', '查看照片')
                   }
                 >
                   <img

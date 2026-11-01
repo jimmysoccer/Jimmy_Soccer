@@ -96,7 +96,7 @@ export default function Home() {
           <motion.div variants={item} className="hero__intro">
             <p>
               {t(
-                "Hi, I'm Heng (Jimmy) Sun, a Ph.D. student in Computer Science at Emory University, advised by Dr. Xiao Hu and co-advised by Dr. Carl Yang.",
+                "Hi, I'm Heng (Jimmy) Sun, a Ph.D. student in Computer Science and Informatics at Emory University, advised by Dr. Xiao Hu and co-advised by Dr. Carl Yang.",
                 '你好，我是孙恒（Jimmy），埃默里大学计算机科学专业博士生，导师为 Xiao Hu 博士，联合导师为 Carl Yang 博士。'
               )}
             </p>
@@ -170,7 +170,7 @@ export default function Home() {
               </dt>
               <dd>
                 {t(
-                  'Ph.D. in Computer Science, Emory University',
+                  'Ph.D. in Computer Science and Informatics, Emory University',
                   '埃默里大学 计算机科学博士'
                 )}
               </dd>

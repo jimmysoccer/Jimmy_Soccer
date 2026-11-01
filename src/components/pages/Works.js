@@ -80,9 +80,8 @@ export default function ExperienceSection() {
   return (
     <>
       <ExperienceGrid list={research} language={language} single />
-      <h3 className="subsection-title subsection-title--minor">
+      <h3 className="subsection-title">
         {t('Industry Experience', '业界经历')}
-        <span className="count">{industry.length}</span>
       </h3>
       <ExperienceGrid list={industry} language={language} />
     </>

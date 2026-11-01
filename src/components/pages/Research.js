@@ -150,6 +150,11 @@ export default function Research() {
                       {t(e.advisor, e.advisor_chinese)}
                     </div>
                   )}
+                  {e.courses && (
+                    <div className="mt-2 fw-semibold small">
+                      {t(e.courses, e.courses_chinese).join(' · ')}
+                    </div>
+                  )}
                 </div>
               </div>
             </Reveal>

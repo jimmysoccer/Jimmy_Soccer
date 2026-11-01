@@ -1,20 +1,21 @@
-import { useAtomValue } from "jotai";
-import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
-import { languageAtom } from "../../atoms/primitive.atom";
-import { getCurrentLanguageText } from "../../utils/get-current-language-text";
-import { Reveal } from "../common/Motion";
-import { SOCIALS } from "../common/SocialLinks";
+import { useAtomValue } from 'jotai';
+import ArrowOutwardRoundedIcon from '@mui/icons-material/ArrowOutwardRounded';
+import { languageAtom } from '../../atoms/primitive.atom';
+import { getCurrentLanguageText } from '../../utils/get-current-language-text';
+import { Reveal } from '../common/Motion';
+import { SOCIALS } from '../common/SocialLinks';
 
 /** Contact cards (email, LinkedIn, GitHub), rendered on the About page. */
 export default function ContactCards() {
   const language = useAtomValue(languageAtom);
   const t = (en, zh) => getCurrentLanguageText(language, en, zh);
   const labels = {
-    github: t("Follow on GitHub", "关注我的GitHub"),
-    linkedin: t("Connect on LinkedIn", "关注我的领英"),
-    email: t("Send an email", "发送电子邮件"),
+    github: t('Follow on GitHub', '关注我的GitHub'),
+    linkedin: t('Connect on LinkedIn', '关注我的领英'),
+    email: t('Send an email', '发送电子邮件'),
+    'google-scholar': t('View on Google Scholar', '查看我的谷歌学术'),
   };
-  const order = ["email", "linkedin", "github"];
+  const order = ['email', 'linkedin', 'github', 'google-scholar'];
 
   return (
     <div className="card-grid card-grid--3">
@@ -25,7 +26,7 @@ export default function ContactCards() {
             <a
               className="box contact-card"
               href={href}
-              target={key === "email" ? undefined : "_blank"}
+              target={key === 'email' ? undefined : '_blank'}
               rel="noreferrer"
             >
               <span className="contact-card__icon">
